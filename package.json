@@ -16,7 +16,6 @@
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
-    "postinstall": "echo '****************** DON'T FORGET TO CREATE YOUR SECRETS FILE FOR GOOGLE AUTH********************'",
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
