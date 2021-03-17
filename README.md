@@ -4,7 +4,7 @@ _Good things come in pairs_
 
 Looking to mix up a backend with `express`/`sequelize` and a frontend with
 `react`/`redux`? That's `boilermaker`!
-11
+
 Follow along with the boilerplate workshop to make your own! This canonical
 version can serve as a reference, or a starting point. For an in depth
 discussion into the code that makes up this repository, see the
