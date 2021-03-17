@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "gender-performance",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "app that analyzes your voice",
   "engines": {
     "node": "~12.11.1"
   },
