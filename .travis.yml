@@ -13,14 +13,14 @@ notifications:
 install:
 - npm ci
 before_script:
-- psql -c 'create database "gender-performance-test";' -U postgres
+- psql -c 'create database "performanio1";' -U postgres
 script:
 - npm test
 - npm run build-client
 deploy:
   skip_cleanup: true
   provider: heroku
-  app: gender-performance
+  app: performanio1
   on:
     branch: master
   api_key:
