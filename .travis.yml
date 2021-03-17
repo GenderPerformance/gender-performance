@@ -1,27 +1,27 @@
 language: node_js
 node_js:
-  - 14 # uses version 14
+- 14
 services:
-  - postgresql # starts up postgres
+- postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+- npm ci
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+- psql -c 'create database "gender-performance-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+- npm test
+- npm run build-client
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  app: gender-performance
+  on:
+    branch: master
+  api_key:
+    secure: YLy7HkMVkHDbo0pLzE1Nj4Vn977nZwGvkFgCCw2h5oMsit/8OgtiKgdRMdw0ClHGj0MQYQ1/fAU5u4rFgw73Qg+nr7PwYeYv4iAwPz03VjGwAWjB2a6aedq4UoJ7HzytF4l715I0R/q5tmSdhihHo1Y1Ie41XgZzODeUK+xQ9h9diq6Gpyeciv6s4h/Ljycy9H4vknqFN3Ax7NGJ/7oHlaIlS8+P16Vcqe3a2XMesyc+OPa7OCUHt6H185Iu1sn9yR9Iw0yjHbDWL8xQ6MZb9BlVY6mu2DqH9SKTWCVTGwb6v06m5l8AZoc+Dm+qsBydT3+bNLijO4ehcWrJXttKd6TvaNN10ouC1pK0bZ+Oq1hCUGCtC3glrJWh4rfadUR2zFagmRUdlMjQkxnn27cV9TEzL/rySB+T+KHeH0UN7QB4UzLB+gwN7xeJCbRvTRbHzy9/xE6LEJBH1tcD0RvxehrrpvDpG6CcNZkUqjkC/slXjXW0e1Mdd/9orttLM9/l7UDjeuNVe9IiZLv0MF3v3zl1neoeseSwGXyksR3FPtK1Z06dt5EfztdaX1bPmgyIyadi/NxTJFEyc9wBxSFQvqphkNph16wiaBdYH0Jdgx/vNMddbWzZ91SFF8b2Vp8Nf3rqZBm+2JpGHVDWnSB/wtq8XdyMPKlANfzRE1csS6I=
