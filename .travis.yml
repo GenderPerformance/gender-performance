@@ -13,9 +13,9 @@ jobs:
           on_success: change
           on_failure: always
       install:
-      - pip3 install -r gendervoicemodel/requirements.txt
-      install:
       - npm ci
+      install:
+      - pip install -r gendervoicemodel/requirements.txt
       before_script:
       - psql -c 'create database "performanio1";' -U postgres
       script:
