@@ -6,7 +6,7 @@ import numpy as np
 from sys import byteorder
 from array import array
 from struct import pack
-
+import asyncio
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -158,7 +158,8 @@ def extract_feature(file_name, **kwargs):
         result = np.hstack((result, tonnetz))
     return result
 
-
+#check scope if wrapping in a function
+#async def execute():
 if __name__ == "__main__":
     # load the saved model (after training)
     # model = pickle.load(open("result/mlp_classifier.model", "rb"))
@@ -189,6 +190,7 @@ if __name__ == "__main__":
     # show the result!
     #print("Result:", gender)
     print(f"Probabilities:     Male: {male_prob*100:.2f}%    Female: {female_prob*100:.2f}%")
+
 
 
 
