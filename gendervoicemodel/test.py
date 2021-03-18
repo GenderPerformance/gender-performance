@@ -173,14 +173,14 @@ if __name__ == "__main__":
     model = create_model()
     # load the saved/trained weights
     model.load_weights(os.path.join(os.getcwd(),"gendervoicemodel/results/model.h5"))
-    if not file or not os.path.isfile(file):
-        # if file not provided, or it doesn't exist, use your voice
-        print("Please talk")
-        # put the file name here
-        file = "test.wav"
-        # record the file (start talking)
-        record_to_file(file)
-    # extract features and reshape it
+    # if not file or not os.path.isfile(file):
+    #     # if file not provided, or it doesn't exist, use your voice
+    #     print("Please talk")
+    #     # put the file name here
+    #     file = "test.wav"
+    #     # record the file (start talking)
+    #     record_to_file(file)
+    # # extract features and reshape it
     features = extract_feature(file, mel=True).reshape(1, -1)
     # predict the gender!
     male_prob = model.predict(features)[0][0]

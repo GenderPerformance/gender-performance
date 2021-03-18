@@ -3,13 +3,17 @@ const fs = require('fs')
 const path = require('path')
 const router = require('express').Router()
 module.exports = router
+let realResult
 
 router.get('/', async (req, res, next) => {
   try {
     checkDir('../../gendervoicemodel')
-    await getPrediction()
-    let result = realResult
-    res.json(result)
+    await getPrediction().then(data => {
+      console.log('got out of get prediction fxn')
+      let result = realResult
+      console.log('.then promise result', data)
+      res.json(result)
+    })
   } catch (err) {
     next(err)
   }
@@ -25,8 +29,6 @@ function checkDir(dir) {
 }
 const fileDir = '../../gendervoicemodel/test-samples/britneytribute.wav'
 
-let realResult
-
 async function getPrediction() {
   return await exec(
     `python ${path.join(
@@ -35,15 +37,15 @@ async function getPrediction() {
     )} --file ${path.join(__dirname, fileDir)}`,
     (error, data, getter) => {
       if (error) {
-        console.log('error', error.message)
+        console.log('exec error trying to run python test.py', error.message)
         return
       }
       if (getter) {
-        console.log('data', data)
+        console.log('data getter', data)
         realResult = data
-        return
+        return data
       }
-      console.log('data', data)
+      console.log('no error and no getter', data)
     }
   )
 }

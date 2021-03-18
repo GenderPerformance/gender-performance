@@ -16,8 +16,8 @@ Cloning the repository:
     git clone https://github.com/x4nth055/gender-recognition-by-voice
 
 Installing the required libraries:
-
-    pip3 install -r requirements.txt
+install from gender-performance directory
+pip3 install -r gendervoicemodel/requirements.txt
 
 Installing on Unix:
 
