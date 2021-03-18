@@ -12,7 +12,7 @@ notifications:
     on_failure: always
 install:
 - npm ci
-- pip3 install -r gendervoicemodel/requirements.txt
+- pip install -r gendervoicemodel/requirements.txt
 before_script:
 - psql -c 'create database "performanio1";' -U postgres
 
