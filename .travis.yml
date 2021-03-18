@@ -13,7 +13,7 @@ jobs:
           on_success: change
           on_failure: always
       install:
-        pip install -r /gendervoicemodel/requirements.txt
+        pip3 install -r gendervoicemodel/requirements.txt
       install:
       - npm ci
       before_script:
