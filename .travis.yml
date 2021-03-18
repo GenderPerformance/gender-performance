@@ -20,7 +20,6 @@ jobs:
       - npm ci
       before_script:
       - psql -c 'create database "performanio1";' -U postgres
-
       - npm test
       - npm run build-client
       deploy:
