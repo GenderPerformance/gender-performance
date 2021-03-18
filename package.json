@@ -41,6 +41,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "audio-react-recorder": "^1.0.4",
     "axios": "^0.19.0",
     "caniuse-lite": "^1.0.30001202",
     "compression": "^1.7.3",
