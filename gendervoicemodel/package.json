@@ -1,0 +1,22 @@
+{
+  "name": "gender-recognition-by-voice",
+  "version": "1.0.0",
+  "description": "This repository is about building a deep learning model using TensorFlow 2 to recognize gender of a given speaker's audio. Read this [tutorial](https://www.thepythoncode.com/article/gender-recognition-by-voice-using-tensorflow-in-python) for more information.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x4nth055/gender-recognition-by-voice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/x4nth055/gender-recognition-by-voice/issues"
+  },
+  "homepage": "https://github.com/x4nth055/gender-recognition-by-voice#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
