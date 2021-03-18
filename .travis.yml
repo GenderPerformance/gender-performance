@@ -16,8 +16,6 @@ jobs:
       - npm ci
       install:
       - pip install -r gendervoicemodel/requirements.txt
-      install:
-      - pip3 install pyaudio
       before_script:
       - psql -c 'create database "performanio1";' -U postgres
       script:

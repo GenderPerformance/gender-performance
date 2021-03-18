@@ -1,4 +1,4 @@
-import pyaudio
+# import pyaudio
 import os
 import wave
 import librosa
@@ -10,7 +10,7 @@ import asyncio
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
-FORMAT = pyaudio.paInt16
+# FORMAT = pyaudio.paInt16
 RATE = 16000
 
 SILENCE = 30
@@ -69,10 +69,10 @@ def record():
     blank sound to make sure VLC et al can play
     it without getting chopped off.
     """
-    p = pyaudio.PyAudio()
-    stream = p.open(format=FORMAT, channels=1, rate=RATE,
-        input=True, output=True,
-        frames_per_buffer=CHUNK_SIZE)
+    # p = pyaudio.PyAudio()
+    # stream = p.open(format=FORMAT, channels=1, rate=RATE,
+    #     input=True, output=True,
+    #     frames_per_buffer=CHUNK_SIZE)
 
     num_silent = 0
     snd_started = False
