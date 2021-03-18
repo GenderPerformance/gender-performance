@@ -1,16 +1,28 @@
 const router = require('express').Router()
 const {exec} = require('child_process')
+const fs = require('fs')
+const path = require('path')
 module.exports = router
 
 router.use('/users', require('./users'))
 
-const fileDir = '../../gendervoicemodel/test-samples/cloudbufferin.wav'
+function checkDir(dir) {
+  if (!fs.existsSync(path.join(__dirname, dir))) {
+    console.log('your directory does not exist', dir)
+  } else {
+    console.log('your directory exists', dir)
+  }
+}
+const fileDir = '../../gendervoicemodel/test-samples/britneytribute.wav'
 
 let realResult
 
 async function getPrediction() {
   return await exec(
-    `python ../../gendervoicemodel/test.py --file ${fileDir}`,
+    `python ${path.join(
+      __dirname,
+      '../../gendervoicemodel/test.py'
+    )} --file ${path.join(__dirname, fileDir)}`,
     (error, data, getter) => {
       if (error) {
         console.log('error', error.message)
@@ -28,6 +40,7 @@ async function getPrediction() {
 
 router.get('/predictions', async (req, res, next) => {
   try {
+    checkDir('../../gendervoicemodel')
     await getPrediction()
     let result = realResult
     res.json(result)

@@ -172,7 +172,7 @@ if __name__ == "__main__":
     # construct the model
     model = create_model()
     # load the saved/trained weights
-    model.load_weights("results/model.h5")
+    model.load_weights(os.path.join(os.getcwd(),"gendervoicemodel/results/model.h5"))
     if not file or not os.path.isfile(file):
         # if file not provided, or it doesn't exist, use your voice
         print("Please talk")
