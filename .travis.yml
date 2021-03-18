@@ -1,5 +1,10 @@
 jobs:
   include:
+    - language: python
+      - 3.8.5
+      install:
+      - pip install -r gendervoicemodel/requirements.txt
+      - pip3 install pyaudio
     - language: node_js
       node_js:
       - 14
@@ -14,9 +19,6 @@ jobs:
           on_failure: always
       install:
       - npm ci
-      install:
-      - pip install -r gendervoicemodel/requirements.txt
-      - pip3 install pyaudio
       before_script:
       - psql -c 'create database "performanio1";' -U postgres
       script:
