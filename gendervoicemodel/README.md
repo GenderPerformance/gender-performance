@@ -19,6 +19,13 @@ Installing the required libraries:
 
     pip3 install -r requirements.txt
 
+Installing on Unix:
+
+Installing on Windows:
+either run the install commands in anaconda or bash.
+if error on pyAudio install: npm install pipwin then pipwin install pyaudio
+since pyaudio errors, librosa will not install so then manually install librosa
+
 ## Dataset used
 
 [Mozilla's Common Voice](https://www.kaggle.com/mozillaorg/common-voice) large dataset is used here, and some preprocessing has been performed:
@@ -68,6 +75,6 @@ You can customize your model in [`utils.py`](utils.py) file under the `create_mo
 
 * To make inference on your voice instead, you need to:
 
-   python test.py
+  python test.py
 
   Wait until you see `"Please speak"` prompt and start talking, it will stop recording as long as you stop talking.
