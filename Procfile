@@ -1,2 +1,2 @@
-web: node index.js
+web: npm run build-client
 pipinstall: pip install -r requirements.txt
