@@ -1,10 +1,6 @@
 jobs:
   include:
-    - language: python
-      python: 3.8
-      script:
-      - npm run python-install
-    - language: node_js
+    - language: generic
       node_js:
       - 14
       services:
@@ -19,13 +15,14 @@ jobs:
       install:
       - npm ci
       before_script:
+      - npm run python-install
       - psql -c 'create database "performanio1";' -U postgres
       - npm test
       - npm run build-client
+      - npm run python-install
       deploy:
         skip_cleanup: true
         provider: heroku
-        buildpack: heroku/nodejs
         app: performanio1
         on:
           branch: deployment
