@@ -1,7 +1,10 @@
 jobs:
   include:
-    - language: generic
-      python: 3.8.6
+    - language: python
+      python: 3.8
+      script:
+      - npm run python-install
+    - language: node_js
       node_js:
       - 14
       services:
