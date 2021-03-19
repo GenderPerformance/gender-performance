@@ -1,4 +1,4 @@
-tensorflow
+tensorflow-cpu
 sklearn
 numpy==1.19.2
 pandas
