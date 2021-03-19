@@ -89,7 +89,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     recordClip: clip => dispatch(recordClip(clip)),
-    analyzeClip: clip => dispatch(analyzeClip(clip))
+    analyzeClip: blob => dispatch(analyzeClip(blob))
   }
 }
 

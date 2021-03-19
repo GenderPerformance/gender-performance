@@ -23,9 +23,12 @@ export const recordClip = clip => ({type: RECORD_CLIP, clip})
 /**
  * THUNK CREATORS
  */
-export const analyzeClip = clip => async dispatch => {
+export const analyzeClip = blob => async dispatch => {
   try {
-    const {data} = await axios.post('/api/voice-clips', clip)
+    const formData = new FormData()
+    formData.append('soundBlob', blob, 'testfilename.wav')
+    const {data} = await axios.post('/api/voice-clips/upload', formData)
+    console.log(data)
     const prediction = data.prediction
     dispatch(_analyzeClip(prediction))
   } catch (error) {

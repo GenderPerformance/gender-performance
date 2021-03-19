@@ -1,10 +1,23 @@
 const router = require('express').Router()
+const multer = require('multer') //use multer to upload blob data
+const upload = multer() // set multer to be the upload variable (just like express, see above ( include it, then use it/set it up))
+const fs = require('fs')
+const path = require('path')
 module.exports = router
 
-router.post('/', async (req, res, next) => {
+router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
-    console.log('Helloooooooooo', req.body)
-    res.json(true)
+    console.log('Helloooooooooo', req.file)
+    let uploadLocation = path.join(
+      __dirname,
+      '../../public/uploads/',
+      req.file.originalname
+    )
+    fs.writeFileSync(
+      uploadLocation,
+      Buffer.from(new Uint8Array(req.file.buffer))
+    )
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
