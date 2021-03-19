@@ -10,9 +10,8 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     //calls the function get Prediction waits for data to return before res.json
-    getPrediction().then(data => {
-      res.json(data.stdout)
-    })
+    const data = await getPrediction()
+    res.json(data.stdout)
   } catch (err) {
     next(err)
   }
