@@ -16,6 +16,7 @@
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
+    "python-install": "pip install -r requirements.txt",
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
@@ -41,14 +42,17 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "audio-react-recorder": "^1.0.4",
     "axios": "^0.19.0",
     "caniuse-lite": "^1.0.30001202",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
+    "fs": "^0.0.1-security",
     "history": "^4.9.0",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.3.2",
@@ -61,8 +65,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.3.1",
-    "socket.io": "^2.2.0"
+    "sequelize": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

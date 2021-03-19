@@ -5,4 +5,6 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
+export {default as Analysis} from './Analysis'
+export {default as Recorder} from './Recorder'
 export {Login, Signup} from './auth-form'
