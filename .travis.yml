@@ -1,6 +1,7 @@
 jobs:
   include:
     - language: generic
+      python: 3.8.6
       node_js:
       - 14
       services:
