@@ -19,11 +19,9 @@ jobs:
       install:
       - npm ci
       before_script:
-      - npm run python-install
       - psql -c 'create database "performanio1";' -U postgres
       - npm test
       - npm run build-client
-      - npm run python-install
       deploy:
         skip_cleanup: true
         provider: heroku
