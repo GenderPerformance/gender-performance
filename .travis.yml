@@ -25,7 +25,7 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: heroku
-        buildpack: https://github.com/heroku/heroku-buildpack-nodejs
+        buildpack: heroku/nodejs
         app: performanio1
         on:
           branch: deployment
