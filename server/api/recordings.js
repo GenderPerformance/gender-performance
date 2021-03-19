@@ -19,6 +19,11 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       uploadLocation,
       Buffer.from(new Uint8Array(req.file.buffer))
     )
+    fs.unlink(uploadLocation, err => {
+      if (err) {
+        console.error(err)
+      }
+    })
     res.sendStatus(200)
   } catch (err) {
     next(err)
