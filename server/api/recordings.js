@@ -13,12 +13,13 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     const uploadLocation = path.join(
       __dirname,
       '../../public/uploads/',
-      `recording-${dbRecord.id}.wav`
+      `recording-2.wav`
     )
     fs.writeFileSync(
       uploadLocation,
       Buffer.from(new Uint8Array(req.file.buffer))
     )
+    const soundfile = Buffer.from(new Uint8Array(req.file.buffer))
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     /*

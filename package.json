@@ -16,7 +16,7 @@
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
-    "python-install": "pip install -r requirements.txt",
+    "python-install": "pip3 install -r requirements.txt",
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
