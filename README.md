@@ -1,9 +1,9 @@
 # Performance
 
 npm install first
-install python dependencies. Look in /gendervoicemodel for directions
+install python dependencies using npm run python-install
 make sure to build
-1
+
 _Good things come in pairs_
 1
 Looking to mix up a backend with `express`/`sequelize` and a frontend with
