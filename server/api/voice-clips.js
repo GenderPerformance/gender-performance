@@ -3,15 +3,17 @@ const multer = require('multer') //use multer to upload blob data
 const upload = multer() // set multer to be the upload variable (just like express, see above ( include it, then use it/set it up))
 const fs = require('fs')
 const path = require('path')
+const {Recording} = require('../db/models')
 module.exports = router
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
     console.log('Helloooooooooo', req.file)
-    let uploadLocation = path.join(
+    const dbRecord = await Recording.create({userId: 1})
+    const uploadLocation = path.join(
       __dirname,
       '../../public/uploads/',
-      req.file.originalname
+      `recording-${dbRecord.id}.wav`
     )
     fs.writeFileSync(
       uploadLocation,
