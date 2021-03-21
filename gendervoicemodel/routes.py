@@ -21,10 +21,13 @@ soundFile = 1
 def sound():
     if request.method == "POST" :
       print( "=============[REQUEST DATA FROM PYROUTE]==========", request.data)
-      # if request.files:
+      if request.files:
+        print('request.files here',request.files)
       #       sound = request.files["audio"]
       #       sound.save(os.path.join(app.config["SOUND_FILES"], sound.filename))
       #       print(sound)
+      # for item in request:
+      #   print(item.keys())
       return request.data
     else:
       return "no sound file send"
