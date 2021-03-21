@@ -3,6 +3,7 @@ app = Flask(__name__)
 port = 4000
 import os
 from flask_cors import CORS
+import base64
 CORS(app)
 
 
@@ -21,14 +22,19 @@ soundFile = 1
 def sound():
     if request.method == "POST" :
       # The information from the request is on request.data
-      print( "=============[REQUEST DATA FROM PYROUTE]==========",len(request.data))
-      if request.files:
-        print('request.files here',request.files)
+      print( "=============[REQUEST DATA FROM PYROUTE]==========")
+      # decode the base 64 data and save it to a file.
+      decodedData = base64.b64decode(request.data)
+      with open('myfile.wav', mode='bx') as f:
+        f.write(decodedData)
+      if request.files['file']:
+        print('request.files here')
       #       sound = request.files["audio"]
       #       sound.save(os.path.join(app.config["SOUND_FILES"], sound.filename))
       #       print(sound)
       # for item in request:
       #   print(item.keys())
+
       return request.data
     else:
       return "no sound file send"
