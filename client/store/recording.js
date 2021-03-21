@@ -27,7 +27,10 @@ export const analyzeClip = blob => async dispatch => {
   try {
     const formData = new FormData()
     formData.append('soundBlob', blob)
-    const {data} = await axios.post('/api/recordings/upload', formData)
+    //const {data} = await axios.post('http://localhost:4000/api/sound', formData)
+    const {data} = await axios.post('http://192.168.2.234:4000/api/sound', {
+      data: formData
+    })
     console.log(data)
     const prediction = data.prediction
     dispatch(_analyzeClip(prediction))
