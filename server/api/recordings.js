@@ -19,16 +19,20 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     )
     // fs.writeFileSync(
     //   uploadLocation,
-    const wavFile = Buffer.from(new Uint8Array(req.file.buffer))
-    console.log(
-      'about to hit the python route from node backend with wavFile length',
-      [...wavFile].length
-    )
+    // const wavFile = Buffer.from(new Uint8Array(req.file.buffer))
+    //console.log(
+    //   'about to hit the python route from node backend with wavFile length',
+    //   [...wavFile].length
+    // )
     //axios doesn't seem to work for sending stuff to python. using old school deprecated
     //request seems to work
+
+    //encode to base64
+    let buff = new Buffer(req.file.buffer)
+    let base64data = buff.toString('base64')
     request.post(
       'http://localhost:4000/api/sound',
-      {json: {lala: wavFile}},
+      {json: base64data},
       (error, res, body) => {
         if (error) {
           console.error(error)
