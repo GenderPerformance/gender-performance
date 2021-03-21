@@ -20,7 +20,8 @@ soundFile = 1
 @app.route("/api/sound", methods= ["POST", "GET"])
 def sound():
     if request.method == "POST" :
-      print( "=============[REQUEST DATA FROM PYROUTE]==========", request.data)
+      # The information from the request is on request.data
+      print( "=============[REQUEST DATA FROM PYROUTE]==========",len(request.data))
       if request.files:
         print('request.files here',request.files)
       #       sound = request.files["audio"]

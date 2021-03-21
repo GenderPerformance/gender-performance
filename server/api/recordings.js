@@ -4,6 +4,8 @@ const upload = multer() // set multer to be the upload variable (just like expre
 const fs = require('fs')
 const path = require('path')
 const {Recording} = require('../db/models')
+const request = require('request')
+const axios = require('axios')
 module.exports = router
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
@@ -15,15 +17,33 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       '../../public/uploads/',
       `recording-${dbRecord.id}.wav`
     )
-    fs.writeFileSync(
-      uploadLocation,
-      Buffer.from(new Uint8Array(req.file.buffer))
+    // fs.writeFileSync(
+    //   uploadLocation,
+    const wavFile = Buffer.from(new Uint8Array(req.file.buffer))
+    console.log(
+      'about to hit the python route from node backend with wavFile length',
+      [...wavFile].length
     )
-    fs.unlink(uploadLocation, err => {
-      if (err) {
-        console.error(err)
+    //axios doesn't seem to work for sending stuff to python. using old school deprecated
+    //request seems to work
+    request.post(
+      'http://localhost:4000/api/sound',
+      {json: {lala: wavFile}},
+      (error, res, body) => {
+        if (error) {
+          console.error(error)
+          return
+        }
+        console.log('statuscode', res.statusCode)
+        console.log('body', body)
       }
-    })
+    )
+    //)
+    // fs.unlink(uploadLocation, err => {
+    //   if (err) {
+    //     console.error(err)
+    //   }
+    // })
     res.sendStatus(200)
   } catch (err) {
     next(err)
