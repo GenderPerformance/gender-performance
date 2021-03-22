@@ -6,6 +6,16 @@ a {
   text-decoration: none;
 }
 
+a:link {
+  color: black;
+}
+a:visited {
+  color: gray;
+}
+a:hover {
+  color: red;
+}
+
 label {
   display: block;
 }
@@ -18,4 +28,28 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.audioButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+h4 {
+  display: flex;
+  justify-content: center;
+}
+
+.Card {
+  background-color: black;
+}
+
+p {
+  padding: 10px;
 }

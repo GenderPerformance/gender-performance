@@ -3,6 +3,7 @@ import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
 import {useDispatch, connect} from 'react-redux'
 import {recordClip, analyzeClip} from '../store'
+import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
 class Recorder extends React.Component {
   constructor(props) {
@@ -44,38 +45,49 @@ class Recorder extends React.Component {
     const {recordState, recordingBlob} = this.state
 
     return (
-      <div>
-        <AudioReactRecorder state={recordState} onStop={this.onStop} />
-
+      <Container maxWidth="sm">
         <div>
+          <Card style={{backgroundColor: '#cbae82'}}>
+            <h1>Performance</h1>
+          </Card>
+          <h4>RECORD</h4>
+          <AudioReactRecorder
+            text-align="center"
+            state={recordState}
+            onStop={this.onStop}
+          />
           <audio
             id="audio"
             controls
             src={this.state.recordingUrl ? this.state.recordingUrl : null}
           />
           <br />
-          <button type="button" id="record" onClick={this.start}>
-            Start
-          </button>
-          <button type="button" id="pause" onClick={this.pause}>
-            Pause
-          </button>
-          <button type="button" id="stop" onClick={this.stop}>
-            Stop
-          </button>
-          {recordingBlob ? (
-            <Link to="/analysis">
-              <button
+          <ButtonGroup
+            variant="contained"
+            color="primary"
+            aria-label="contained primary button group"
+          >
+            <Button size="small" type="button" id="record" onClick={this.start}>
+              Start
+            </Button>
+            <Button type="button" id="pause" onClick={this.pause}>
+              Pause
+            </Button>
+            <Button type="button" id="stop" onClick={this.stop}>
+              Stop
+            </Button>
+            {recordingBlob ? (
+              <Button
                 type="button"
                 id="analysis"
                 onClick={() => this.props.analyzeClip(this.state.recordingBlob)}
               >
                 Analyze
-              </button>
-            </Link>
-          ) : null}
+              </Button>
+            ) : null}
+          </ButtonGroup>
         </div>
-      </div>
+      </Container>
     )
   }
 }
