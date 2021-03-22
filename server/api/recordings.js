@@ -39,16 +39,8 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     )
     result = await getPrediction()
     console.log(result)
-    //const soundfile = Buffer.from(new Uint8Array(req.file.buffer))
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
-    /*
-    Delete file after analysis
-    fs.unlink(uploadLocation, err => {
-      if (err) {
-        console.error(err)
-      }
-    }) */
     res.send(result)
   } catch (err) {
     next(err)
