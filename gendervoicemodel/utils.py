@@ -33,9 +33,9 @@ def load_data(vector_length=128):
     n_male_samples = len(df[df['gender'] == 'male'])
     # get total female samples
     n_female_samples = len(df[df['gender'] == 'female'])
-    print("Total samples:", n_samples)
-    print("Total male samples:", n_male_samples)
-    print("Total female samples:", n_female_samples)
+    #print("Total samples:", n_samples)
+    #print("Total male samples:", n_male_samples)
+    #print("Total female samples:", n_female_samples)
     # initialize an empty array for all audio features
     X = np.zeros((n_samples, vector_length))
     # initialize an empty array for all audio labels (1 for male and 0 for female)
@@ -44,7 +44,7 @@ def load_data(vector_length=128):
         features = np.load(filename)
         X[i] = features
         y[i] = label2int[gender]
-    # save the audio features and labels into files
+    # save the audio features and labelimport zipfile as zf import soundfile as sf import io with zf.ZipFile('test.zip') as myzip: with myzip.open('stereo_file.wav') as myfile: tmp = io.BytesIO(myfile.read()) data, samplerate = sf.read(tmp)  into files
     # so we won't load each one of them next run
     np.save("results/features", X)
     np.save("results/labels", y)
@@ -85,5 +85,5 @@ def create_model(vector_length=128):
     # using binary crossentropy as it's male/female classification (binary)
     model.compile(loss="binary_crossentropy", metrics=["accuracy"], optimizer="adam")
     # print summary of the model
-    model.summary()
+    #model.summary()
     return model

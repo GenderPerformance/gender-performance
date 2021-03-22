@@ -54,16 +54,16 @@ if not os.path.isdir(dirname):
 csv_files = glob.glob("*.csv")
 
 for j, csv_file in enumerate(csv_files):
-    print("[+] Preprocessing", csv_file)
+    #print("[+] Preprocessing", csv_file)
     df = pd.read_csv(csv_file)
     # only take filename and gender columns
     new_df = df[["filename", "gender"]]
-    print("Previously:", len(new_df), "rows")
+    #print("Previously:", len(new_df), "rows")
     # take only male & female genders (i.e droping NaNs & 'other' gender)
     new_df = new_df[np.logical_or(new_df['gender'] == 'female', new_df['gender'] == 'male')]
-    print("Now:", len(new_df), "rows")
+    #print("Now:", len(new_df), "rows")
     new_csv_file = os.path.join(dirname, csv_file)
-    # save new preprocessed CSV 
+    # save new preprocessed CSV
     new_df.to_csv(new_csv_file, index=False)
     # get the folder name
     folder_name, _ = csv_file.split(".")
