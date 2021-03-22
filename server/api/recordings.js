@@ -11,16 +11,19 @@ const exec = util.promisify(require('child_process').exec)
 
 module.exports = router
 const fileDir = '../../tmp/recording-1.wav'
+
 //function that actually calls the test.py command
 async function getPrediction() {
   try {
     //calls and returns the new promisified exec function on test.py
+    //with the saved file as the arg
     const resultOfExec = await exec(
       `python ${path.join(
         __dirname,
         '../../gendervoicemodel/test.py'
       )} --file ${path.join(__dirname, fileDir)}`
     )
+    //returns the result of the exec function
     return resultOfExec
   } catch (err) {
     console.log(err)
@@ -29,16 +32,19 @@ async function getPrediction() {
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
-    console.log('Helloooooooooo', req.file)
+    //need to change saved file with a variable name.
+    //make sure to adjust filDir variable as well
     const dbRecord = await Recording.create({userId: 1})
     const uploadLocation = path.join(__dirname, '../../tmp', `recording-1.wav`)
+    //saves the file to tmp directory. create a new file if it does not exist
+    //this file will only exist on heroku while this route is running.
     fs.writeFileSync(
       uploadLocation,
       Buffer.from(new Uint8Array(req.file.buffer)),
       {flag: 'w+'}
     )
+    //run the ML Model and save the result.
     result = await getPrediction()
-    console.log(result)
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     res.send(result)
@@ -46,16 +52,3 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     next(err)
   }
 })
-
-// const express = require('express'); //make express available
-// const app = express(); //invoke express
-// const multer  = require('multer') //use multer to upload blob data
-// const upload = multer(); // set multer to be the upload variable (just like express, see above ( include it, then use it/set it up))
-// const fs = require('fs'); //use the file system so we can save files
-
-// app.post('/upload', upload.single('soundBlob'), function (req, res, next) {
-//   // console.log(req.file); // see what got uploaded
-//   let uploadLocation = __dirname + '/public/uploads/' + req.file.originalname // where to save the file to. make sure the incoming name has a .wav extension
-//   fs.writeFileSync(uploadLocation, Buffer.from(new Uint8Array(req.file.buffer))); // write the blob to the server as a file
-//   res.sendStatus(200); //send back that everything went ok
-// })
