@@ -4,6 +4,11 @@ const upload = multer() // set multer to be the upload variable (just like expre
 const fs = require('fs')
 const path = require('path')
 const {Recording} = require('../db/models')
+//util will bring in the promisify function
+const util = require('util')
+//promisifies the exec function from child_process
+const exec = util.promisify(require('child_process').exec)
+
 module.exports = router
 const fileDir = '../../tmp/recording-1.wav'
 //function that actually calls the test.py command
@@ -29,9 +34,10 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     const uploadLocation = path.join(__dirname, '../../tmp', `recording-1.wav`)
     fs.writeFileSync(
       uploadLocation,
-      Buffer.from(new Uint8Array(req.file.buffer))
+      Buffer.from(new Uint8Array(req.file.buffer)),
+      {flag: 'w+'}
     )
-    result = getPrediction()
+    result = await getPrediction()
     console.log(result)
     //const soundfile = Buffer.from(new Uint8Array(req.file.buffer))
     //TODO: Add call of ML analysis
