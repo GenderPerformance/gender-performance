@@ -7,6 +7,7 @@ from sys import byteorder
 from array import array
 from struct import pack
 import asyncio
+from routes import helloCats
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -120,18 +121,19 @@ def record_to_file(path):
 
 
 
-def extract_feature(file_name, **kwargs):
+def extract_feature(file_name, **kwargs): #<-----
     """
     Extract feature from audio file `file_name`
         Features supported:
             - MFCC (mfcc)
             - Chroma (chroma)
-            - MEL Spectrogram Frequency (mel)
+            - MEL Spectrogram Frequency (mel) <-----(WOW)
             - Contrast (contrast)
             - Tonnetz (tonnetz)
         e.g:
         `features = extract_feature(path, mel=True, mfcc=True)`
     """
+    helloCats()
     mfcc = kwargs.get("mfcc")
     chroma = kwargs.get("chroma")
     mel = kwargs.get("mel")
@@ -170,6 +172,7 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--file", help="The path to the file, preferred to be in WAV format")
     args = parser.parse_args()
     file = args.file
+     #file =
     # construct the model
     model = create_model()
     # load the saved/trained weights
@@ -182,7 +185,7 @@ if __name__ == "__main__":
     #     # record the file (start talking)
     #     record_to_file(file)
     # # extract features and reshape it
-    features = extract_feature(file, mel=True).reshape(1, -1)
+    features = extract_feature(file, mel=True).reshape(1, -1) #<---Called
     # predict the gender!
     male_prob = model.predict(features)[0][0]
     female_prob = 1 - male_prob
@@ -190,7 +193,6 @@ if __name__ == "__main__":
     # show the result!
     #print("Result:", gender)
     print(f"Probabilities:     Male: {male_prob*100:.2f}%    Female: {female_prob*100:.2f}%")
-
 
 
 

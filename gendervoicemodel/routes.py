@@ -17,6 +17,8 @@ app.config["SOUND_FILES"] = "/home/anclaudys/Documents/sr-2101-fsa/firstdeployed
 
 soundFile = 1
 
+# def grabFile(theFile):
+#   return theFile
 
 @app.route("/api/sound", methods= ["POST", "GET"])
 def sound():
@@ -26,7 +28,8 @@ def sound():
       # decode the base 64 data and save it to a file.
       decodedData = base64.b64decode(request.data)
       with open('myfile.wav', mode='bx') as f:
-        f.write(decodedData)
+        soundFile = decodedData
+        f.write(decodedData) #<-------
       if request.files['file']:
         print('request.files here')
       #       sound = request.files["audio"]
@@ -37,8 +40,11 @@ def sound():
 
       return request.data
     else:
-      return "no sound file send"
+      return "This is the python sound route"
 
 if __name__ == "__main__":
   app.run( port = port)
+
+
+
 
