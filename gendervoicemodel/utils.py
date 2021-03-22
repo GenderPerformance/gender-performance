@@ -85,5 +85,5 @@ def create_model(vector_length=128):
     # using binary crossentropy as it's male/female classification (binary)
     model.compile(loss="binary_crossentropy", metrics=["accuracy"], optimizer="adam")
     # print summary of the model
-    model.summary()
+    # model.summary()
     return model

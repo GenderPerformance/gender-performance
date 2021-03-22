@@ -5,21 +5,35 @@ const fs = require('fs')
 const path = require('path')
 const {Recording} = require('../db/models')
 module.exports = router
+const fileDir = '../../tmp/recording-1.wav'
+//function that actually calls the test.py command
+async function getPrediction() {
+  try {
+    //calls and returns the new promisified exec function on test.py
+    const resultOfExec = await exec(
+      `python ${path.join(
+        __dirname,
+        '../../gendervoicemodel/test.py'
+      )} --file ${path.join(__dirname, fileDir)}`
+    )
+    return resultOfExec
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
     console.log('Helloooooooooo', req.file)
     const dbRecord = await Recording.create({userId: 1})
-    const uploadLocation = path.join(
-      __dirname,
-      '../../public/uploads/',
-      `recording-2.wav`
-    )
+    const uploadLocation = path.join(__dirname, '../../tmp', `recording-1.wav`)
     fs.writeFileSync(
       uploadLocation,
       Buffer.from(new Uint8Array(req.file.buffer))
     )
-    const soundfile = Buffer.from(new Uint8Array(req.file.buffer))
+    result = getPrediction()
+    console.log(result)
+    //const soundfile = Buffer.from(new Uint8Array(req.file.buffer))
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     /*
@@ -29,7 +43,7 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
         console.error(err)
       }
     }) */
-    res.sendStatus(200)
+    res.send(result)
   } catch (err) {
     next(err)
   }
