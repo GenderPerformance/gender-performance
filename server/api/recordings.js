@@ -10,10 +10,10 @@ const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 
 module.exports = router
-const fileDir = '../../tmp/recording-1.wav'
 
 //function that actually calls the test.py command
-async function getPrediction() {
+async function getPrediction(userId) {
+  const fileDir = `../../tmp/recording-${userId}.wav`
   try {
     //calls and returns the new promisified exec function on test.py
     //with the saved file as the arg
@@ -32,10 +32,15 @@ async function getPrediction() {
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
+    console.log('the user accessing the route is:', req.user)
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well
     const dbRecord = await Recording.create({userId: 1})
-    const uploadLocation = path.join(__dirname, '../../tmp', `recording-1.wav`)
+    const uploadLocation = path.join(
+      __dirname,
+      '../../tmp',
+      `recording-${req.user.id}.wav`
+    )
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     fs.writeFileSync(
@@ -44,7 +49,7 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       {flag: 'w+'}
     )
     //run the ML Model and save the result.
-    result = await getPrediction()
+    result = await getPrediction(req.user.id)
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     res.send(result)
