@@ -32,7 +32,7 @@ async function getPrediction(userId) {
 
 router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
   try {
-    console.log('the user accessing the route is:', req.user)
+    console.log('the user accessing the route is:', req.user.email, req.user.id)
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well
     const dbRecord = await Recording.create({userId: 1})
