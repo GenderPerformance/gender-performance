@@ -28,12 +28,6 @@ class Recorder extends React.Component {
     })
   }
 
-  pause = () => {
-    this.setState({
-      recordState: RecordState.PAUSE
-    })
-  }
-
   //audioData contains blob and blobUrl
   onStop = audioData => {
     console.log('audioData', audioData)
@@ -46,15 +40,18 @@ class Recorder extends React.Component {
 
     return (
       <Container maxWidth="sm">
-        <div>
-          <Card style={{backgroundColor: '#cbae82'}}>
-            <h1>Performance</h1>
+        <div className="recorder">
+          <br />
+          <Card style={{backgroundColor: '#55e7ff'}}>
+            <div className="performance">Performance</div>
           </Card>
-          <h4>RECORD</h4>
+          <br />
           <AudioReactRecorder
             text-align="center"
             state={recordState}
             onStop={this.onStop}
+            backgroundColor="rgb(57,28,113,.01)"
+            foregroundColor="rgb(85,231,255,.4)"
           />
           <audio
             id="audio"
@@ -68,10 +65,7 @@ class Recorder extends React.Component {
             aria-label="contained primary button group"
           >
             <Button size="small" type="button" id="record" onClick={this.start}>
-              Start
-            </Button>
-            <Button type="button" id="pause" onClick={this.pause}>
-              Pause
+              Record
             </Button>
             <Button type="button" id="stop" onClick={this.stop}>
               Stop

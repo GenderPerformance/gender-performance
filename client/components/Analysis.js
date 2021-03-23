@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Card} from '@material-ui/core'
 
-export default class Recorder extends React.Component {
+export class Recorder extends React.Component {
   render() {
     return (
       <Container maxWidth="sm">

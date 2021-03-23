@@ -10,7 +10,7 @@ export const UserHome = props => {
   const {email} = props
 
   return (
-    <div>
+    <div className="welcome">
       <h3>Welcome, {email}</h3>
       <Recorder />
     </div>

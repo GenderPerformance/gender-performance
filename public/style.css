@@ -7,13 +7,13 @@ a {
 }
 
 a:link {
-  color: black;
+  color: #2011a2;
 }
 a:visited {
-  color: gray;
+  color: #00ccfd;
 }
 a:hover {
-  color: red;
+  color: #ff34b3;
 }
 
 label {
@@ -36,9 +36,25 @@ form div {
   justify-content: center;
 }
 
-h1 {
+@font-face {
+  font-family: 'myFont';
+  src: url('Retronoid.ttf');
+}
+
+.performance {
   display: flex;
   justify-content: center;
+  color: #ff34b3;
+  font-family: 'myFont';
+  font-size: 4rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.recorder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h4 {
@@ -52,4 +68,13 @@ h4 {
 
 p {
   padding: 10px;
+}
+
+body {
+  background-image: url('synthsunset.png');
+  background-size: cover;
+}
+
+.welcome {
+  color: #ffd319;
 }
