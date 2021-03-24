@@ -25,8 +25,12 @@ export const recordClip = recordingData => ({type: RECORD_CLIP, recordingData})
  */
 export const analyzeClip = (userId, blob) => async dispatch => {
   try {
+    //create file ref in db
+    const res = await axios.post('api/recordings/upload')
+    const fileName = res.data
+
     //upload file to S3
-    const clip = new File([blob], `user-${userId}-test.wav`)
+    const clip = new File([blob], fileName)
     const response = await axios.get(
       `/auth/aws/s3-sign?file-name=${clip.name}&file-type=${clip.type}`
     )
@@ -36,7 +40,7 @@ export const analyzeClip = (userId, blob) => async dispatch => {
 
     //prepare file for analysis
     const formData = new FormData()
-    formData.append('soundBlob', blob, 'recording.wav')
+    formData.append('soundBlob', blob, fileName)
     //analyze
     const {data} = await axios.post('/api/recordings/analyze', formData)
     //log prediction
