@@ -28,12 +28,6 @@ class Recorder extends React.Component {
     })
   }
 
-  pause = () => {
-    this.setState({
-      recordState: RecordState.PAUSE
-    })
-  }
-
   //audioData contains blob and blobUrl
   onStop = audioData => {
     console.log('audioData', audioData)
@@ -46,47 +40,62 @@ class Recorder extends React.Component {
 
     return (
       <Container maxWidth="sm">
-        <div>
-          <Card style={{backgroundColor: '#cbae82'}}>
-            <h1>Performance</h1>
-          </Card>
-          <h4>RECORD</h4>
-          <AudioReactRecorder
-            text-align="center"
-            state={recordState}
-            onStop={this.onStop}
-          />
-          <audio
-            id="audio"
-            controls
-            src={this.state.recordingUrl ? this.state.recordingUrl : null}
-          />
-          <br />
-          <ButtonGroup
-            variant="contained"
-            color="primary"
-            aria-label="contained primary button group"
-          >
-            <Button size="small" type="button" id="record" onClick={this.start}>
-              Start
-            </Button>
-            <Button type="button" id="pause" onClick={this.pause}>
-              Pause
-            </Button>
-            <Button type="button" id="stop" onClick={this.stop}>
-              Stop
-            </Button>
-            {recordingBlob ? (
+        <Card
+          style={{
+            backgroundColor: '#cbae82',
+            paddingLeft: '2em',
+            paddingRight: '2em'
+          }}
+        >
+          <h1>Performance</h1>
+        </Card>
+        <br />
+        <Card style={{backgroundColor: '#ffe0b2'}}>
+          <div className="recorder">
+            <AudioReactRecorder
+              text-align="center"
+              state={recordState}
+              onStop={this.onStop}
+              backgroundColor="rgb(255,255,255)"
+              foregroundColor="rgb(203,174,129)"
+            />
+            <audio
+              id="audio"
+              controls
+              src={this.state.recordingUrl ? this.state.recordingUrl : null}
+            />
+            <br />
+            <ButtonGroup
+              variant="contained"
+              color="inherit"
+              aria-label="contained primary button group"
+            >
               <Button
+                size="small"
                 type="button"
-                id="analysis"
-                onClick={() => this.props.analyzeClip(this.state.recordingBlob)}
+                id="record"
+                onClick={this.start}
               >
-                Analyze
+                Record
               </Button>
-            ) : null}
-          </ButtonGroup>
-        </div>
+              <Button type="button" id="stop" onClick={this.stop}>
+                Stop
+              </Button>
+              {recordingBlob ? (
+                <Button
+                  type="button"
+                  id="analysis"
+                  onClick={() =>
+                    this.props.analyzeClip(this.state.recordingBlob)
+                  }
+                >
+                  Analyze
+                </Button>
+              ) : null}
+            </ButtonGroup>
+            <br />
+          </div>
+        </Card>
       </Container>
     )
   }
