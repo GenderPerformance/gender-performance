@@ -11,34 +11,21 @@ const RECORD_CLIP = 'RECORD_CLIP'
 /**
  * INITIAL STATE
  */
-const defaultState = {recordingBlob: {}, recordingURL: '', prediction: null}
+const defaultState = {recordingBlob: null, recordingURL: '', prediction: null}
 
 /**
  * ACTION CREATORS
  */
-const _analyzeClip = prediction => ({type: ANALYZE_CLIP, prediction})
+const _analyzeClip = recordingData => ({type: ANALYZE_CLIP, recordingData})
 const removeClip = () => ({type: REMOVE_CLIP})
-export const _recordClip = clip => ({type: RECORD_CLIP, clip})
+export const recordClip = recordingData => ({type: RECORD_CLIP, recordingData})
 
 /**
  * THUNK CREATORS
  */
-export const analyzeClip = blob => async dispatch => {
+export const analyzeClip = (userId, blob) => async dispatch => {
   try {
-    const formData = new FormData()
-    formData.append('soundBlob', blob, 'recording.wav')
-    //analyze
-    const {data} = await axios.post('/api/recordings/analyze', formData)
-    console.log(data)
-    const prediction = data.prediction
-    dispatch(_analyzeClip(prediction))
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const recordClip = (userId, blob) => async dispatch => {
-  try {
+    //upload file to S3
     const clip = new File([blob], `user-${userId}-test.wav`)
     const response = await axios.get(
       `/auth/aws/s3-sign?file-name=${clip.name}&file-type=${clip.type}`
@@ -47,9 +34,19 @@ export const recordClip = (userId, blob) => async dispatch => {
 
     const s3response = await axios.put(signedUrl, clip)
 
-    console.log('🚀 ~ file: recording.js ~ line 48 ~ s3response', s3response)
-
-    dispatch(_recordClip({url: url}))
+    //prepare file for analysis
+    const formData = new FormData()
+    formData.append('soundBlob', blob, 'recording.wav')
+    //analyze
+    const {data} = await axios.post('/api/recordings/analyze', formData)
+    //log prediction
+    console.log(data)
+    const prediction = data.prediction
+    const audioData = {
+      s3Url: url,
+      prediction
+    }
+    dispatch(_analyzeClip(audioData))
   } catch (error) {
     console.error(error)
   }
@@ -61,11 +58,15 @@ export const recordClip = (userId, blob) => async dispatch => {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case ANALYZE_CLIP:
-      return {...state, prediction: action.prediction}
+      return {
+        ...state,
+        recordingURL: action.recordingData.s3Url,
+        prediction: action.recordingData.prediction
+      }
     case RECORD_CLIP:
       return {
-        recordingBlob: action.clip.blob,
-        recordingURL: action.clip.url,
+        recordingBlob: action.recordingData.blob,
+        recordingURL: action.recordingData.url,
         prediction: null
       }
     case REMOVE_CLIP:
