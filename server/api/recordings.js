@@ -30,7 +30,7 @@ async function getPrediction() {
   }
 }
 
-router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
+router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   try {
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well

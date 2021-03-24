@@ -35,8 +35,7 @@ class Recorder extends React.Component {
 
   //audioData contains blob and blobUrl
   onStop = audioData => {
-    console.log('audioData', audioData)
-    this.props.recordClip(audioData.blob)
+    this.props.recordClip(this.props.userId, audioData.blob)
     this.setState({recordingUrl: audioData.url})
   }
 
@@ -55,9 +54,9 @@ class Recorder extends React.Component {
             state={recordState}
             onStop={this.onStop}
           />
-          {this.props.s3Url ? (
-            <audio id="audio" controls="controls" preload="auto">
-              <source src={this.props.s3Url} />
+          {this.props.recordingUrl ? (
+            <audio id="audio" controls="controls" preload="none">
+              <source src={this.state.recordingUrl} />
             </audio>
           ) : null}
           <br />
@@ -92,15 +91,14 @@ class Recorder extends React.Component {
 }
 
 const mapState = state => {
-  console.log('THIS IS THE S3 URL CAN IT STREAM', state.recording.recordingURL)
   return {
-    s3Url: state.recording.recordingURL
+    userId: state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    recordClip: blob => dispatch(recordClip(blob)),
+    recordClip: (userId, blob) => dispatch(recordClip(userId, blob)),
     analyzeClip: blob => dispatch(analyzeClip(blob))
   }
 }
