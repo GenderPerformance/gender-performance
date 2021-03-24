@@ -18,7 +18,7 @@ const defaultState = {recordingBlob: {}, recordingURL: '', prediction: null}
  */
 const _analyzeClip = prediction => ({type: ANALYZE_CLIP, prediction})
 const removeClip = () => ({type: REMOVE_CLIP})
-export const recordClip = clip => ({type: RECORD_CLIP, clip})
+export const _recordClip = clip => ({type: RECORD_CLIP, clip})
 
 /**
  * THUNK CREATORS
@@ -31,6 +31,27 @@ export const analyzeClip = blob => async dispatch => {
     console.log(data)
     const prediction = data.prediction
     dispatch(_analyzeClip(prediction))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const recordClip = blob => async dispatch => {
+  console.log(blob)
+  try {
+    const clip = new File([blob], 'test123.wav')
+
+    const response = await axios.get(
+      `/auth/aws/s3-sign?file-name=${clip.name}&file-type=${clip.type}`
+    )
+
+    const {signedUrl, url} = response.data
+
+    const s3response = await axios.put(signedUrl, clip)
+
+    console.log('🚀 ~ file: recording.js ~ line 48 ~ s3response', s3response)
+
+    dispatch(_recordClip({url: url}))
   } catch (error) {
     console.error(error)
   }
