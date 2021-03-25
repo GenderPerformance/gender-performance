@@ -43,6 +43,7 @@ class Recorder extends React.Component {
 
   render() {
     const {recordState, recordingBlob} = this.state
+    console.log('PROPS:', this.props)
 
     return (
       <Container maxWidth="sm">
@@ -94,7 +95,8 @@ class Recorder extends React.Component {
 
 const mapState = state => {
   return {
-    audioData: state.recordingBlob
+    audioData: state.recordingBlob,
+    prediction: state.prediction
   }
 }
 

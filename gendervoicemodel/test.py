@@ -189,7 +189,12 @@ if __name__ == "__main__":
     gender = "male" if male_prob > female_prob else "female"
     # show the result!
     #print("Result:", gender)
-    print(f"Probabilities:     Male: {male_prob*100:.2f}%    Female: {female_prob*100:.2f}%")
+    # print(f"Probabilities:     Male: {male_prob*100:.2f}%    Female: {female_prob*100:.2f}%")
+
+
+    print("{\"mp\":", male_prob, ", \"fp\":", female_prob, "}")
+
+
 
 
 
