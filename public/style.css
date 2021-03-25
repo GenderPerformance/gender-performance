@@ -1,5 +1,8 @@
-body {
+html {
   font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
 }
 
 a {
@@ -46,15 +49,11 @@ h4 {
   justify-content: center;
 }
 
-.Card {
-  background-color: black;
-}
-
 p {
   padding: 10px;
 }
 
-.circleProgress {
+.recorder {
   display: flex;
   flex-direction: column;
   align-items: center;

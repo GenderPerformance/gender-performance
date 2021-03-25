@@ -38,12 +38,6 @@ class Recorder extends React.Component {
     })
   }
 
-  pause = () => {
-    this.setState({
-      recordState: RecordState.PAUSE
-    })
-  }
-
   //audioData contains blob and blobUrl
   onStop = audioData => {
     console.log('audioData', audioData)
@@ -53,22 +47,36 @@ class Recorder extends React.Component {
 
   render() {
     const {recordState, recordingBlob} = this.state
+
+    return (
+
+        </Card>
+ 
     console.log('render props', this.props)
     if (!this.props.user) {
       console.log(this.props.user)
       return <div>Loading...</div>
     } else {
       return (
-        <Container maxWidth="sm">
-          <div>
-            <Card style={{backgroundColor: '#cbae82'}}>
-              <h1>Performance</h1>
-            </Card>
+      <Container maxWidth="sm">
+              <br />
+        <Card style={{backgroundColor: '#ffe0b2'}}>
+          <div className="recorder">
+          style={{
+            backgroundColor: '#cbae82',
+            paddingLeft: '2em',
+            paddingRight: '2em'
+          }}
+        >
+          <h1>Performance</h1>
+        </Card>
             <h4>RECORD</h4>
             <AudioReactRecorder
               text-align="center"
               state={recordState}
               onStop={this.onStop}
+              backgroundColor="rgb(255,224,177)"
+              foregroundColor="rgb(151,180,151)"
             />
             <audio
               id="audio"
@@ -78,7 +86,7 @@ class Recorder extends React.Component {
             <br />
             <ButtonGroup
               variant="contained"
-              color="primary"
+              color="secondary"
               aria-label="contained primary button group"
             >
               <Button
@@ -87,10 +95,7 @@ class Recorder extends React.Component {
                 id="record"
                 onClick={this.start}
               >
-                Start
-              </Button>
-              <Button type="button" id="pause" onClick={this.pause}>
-                Pause
+                Record
               </Button>
               <Button type="button" id="stop" onClick={this.stop}>
                 Stop
@@ -107,6 +112,7 @@ class Recorder extends React.Component {
                 </Button>
               ) : null}
             </ButtonGroup>
+
             {this.props.recording.recordingURL ? <Analysis /> : <div />}
           </div>
         </Container>
