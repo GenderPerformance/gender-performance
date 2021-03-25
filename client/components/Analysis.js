@@ -1,13 +1,17 @@
 import React from 'react'
 import {Container, Card} from '@material-ui/core'
+import {connect} from 'react-redux'
 
-export default class Recorder extends React.Component {
+class Analysis extends React.Component {
   render() {
     if (!this.props.recording) {
       return <div>Loading...</div>
     } else {
+      const SpectrogramPlugin = window.WaveSurfer.spectrogram
+
       const wavesurfer = WaveSurfer.create({
-        container: '#waveform'
+        container: '#waveform',
+        plugins: []
       })
       wavesurfer.load(this.props.recording.recordingURL)
       return (
@@ -28,3 +32,14 @@ export default class Recorder extends React.Component {
     }
   }
 }
+
+const mapState = state => {
+  return {
+    //mapping in user and recording state for a loading screen
+    user: state.user,
+    recording: state.recording,
+    //what is audioData supposed to be?
+    audioData: state.recordingBlob
+  }
+}
+export default connect(mapState)(Analysis)
