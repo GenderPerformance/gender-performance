@@ -53,3 +53,9 @@ h4 {
 p {
   padding: 10px;
 }
+
+.circleProgress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

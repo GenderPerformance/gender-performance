@@ -192,7 +192,7 @@ if __name__ == "__main__":
     # print(f"Probabilities:     Male: {male_prob*100:.2f}%    Female: {female_prob*100:.2f}%")
 
 
-    print("{\"mp\":", male_prob, ", \"fp\":", female_prob, "}")
+    print("{\"mp\":", f'{male_prob*100:.2f}', ", \"fp\":", f'{female_prob*100:.2f}', "}")
 
 
 

@@ -2,8 +2,14 @@ import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
 import {useDispatch, connect} from 'react-redux'
-import {recordClip, analyzeClip} from '../store'
-import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import {recordClip, analyzeClip, _isLoading} from '../store'
+import {
+  Container,
+  ButtonGroup,
+  Button,
+  Card,
+  CircularProgress
+} from '@material-ui/core'
 import Analysis from './Analysis'
 
 class Recorder extends React.Component {
@@ -115,7 +121,8 @@ const mapState = state => {
     user: state.user,
     recording: state.recording,
     //what is audioData supposed to be?
-    audioData: state.recordingBlob
+    audioData: state.recordingBlob,
+    loading: state.loading
   }
 }
 

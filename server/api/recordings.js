@@ -43,6 +43,7 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       '../../tmp',
       `recording-${req.user.id}-${dbRecord.id}.wav`
     )
+    console.log('DBRECORD:', Object.keys(dbRecord.dataValues))
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
@@ -61,6 +62,11 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     res.send(result)
+
+    //Saves the results to the DB
+    dbRecord.femaleConfidence = await result.fp
+    dbRecord.maleConfidence = await result.mp
+    await dbRecord.save()
   } catch (err) {
     next(err)
   }

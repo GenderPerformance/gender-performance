@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container, Card} from '@material-ui/core'
 import {connect} from 'react-redux'
+import {CircularProgress} from '@material-ui/core'
 
 class Analysis extends React.Component {
   render() {
@@ -21,10 +22,22 @@ class Analysis extends React.Component {
             <br />
             <Card style={{backgroundColor: '#cbae82'}}>
               <h4>Analysis</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consecteturadipiscing elit. Donec
-                viverra eget nullavitae ornare.
-              </p>
+              {this.props.recording.loading ? (
+                <div className="circleProgress">
+                  <CircularProgress />
+                  <br />
+                </div>
+              ) : this.props.recording.prediction ? (
+                <p>
+                  Female Probability Confidence:{' '}
+                  {this.props.recording.prediction.fp}%
+                  <br />
+                  Male Probability Confidence:{' '}
+                  {this.props.recording.prediction.mp}%
+                </p>
+              ) : (
+                <p>Please hit ANALYZE to get m/f confidence score.</p>
+              )}
             </Card>
           </div>
         </Container>
