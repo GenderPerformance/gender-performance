@@ -56,8 +56,8 @@ class Recorder extends React.Component {
               text-align="center"
               state={recordState}
               onStop={this.onStop}
-              backgroundColor="rgb(255,255,255)"
-              foregroundColor="rgb(203,174,129)"
+              backgroundColor="rgb(255,224,177)"
+              foregroundColor="rgb(151,180,151)"
             />
             <audio
               id="audio"
@@ -67,7 +67,7 @@ class Recorder extends React.Component {
             <br />
             <ButtonGroup
               variant="contained"
-              color="inherit"
+              color="secondary"
               aria-label="contained primary button group"
             >
               <Button
