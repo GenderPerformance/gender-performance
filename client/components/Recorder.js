@@ -2,8 +2,15 @@ import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
 import {useDispatch, connect} from 'react-redux'
-import {recordClip, analyzeClip} from '../store'
-import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import {recordClip, analyzeClip, _isLoading} from '../store'
+import {
+  Container,
+  ButtonGroup,
+  Button,
+  Card,
+  CircularProgress
+} from '@material-ui/core'
+import Analysis from './Analysis'
 
 class Recorder extends React.Component {
   constructor(props) {
@@ -14,6 +21,9 @@ class Recorder extends React.Component {
       recordingUrl: null,
       recordingBlob: null
     }
+  }
+  componentDidMount() {
+    console.log('compoenent did mount', this.props)
   }
 
   start = () => {
@@ -39,8 +49,19 @@ class Recorder extends React.Component {
     const {recordState, recordingBlob} = this.state
 
     return (
+
+        </Card>
+ 
+    console.log('render props', this.props)
+    if (!this.props.user) {
+      console.log(this.props.user)
+      return <div>Loading...</div>
+    } else {
+      return (
       <Container maxWidth="sm">
-        <Card
+              <br />
+        <Card style={{backgroundColor: '#ffe0b2'}}>
+          <div className="recorder">
           style={{
             backgroundColor: '#cbae82',
             paddingLeft: '2em',
@@ -49,9 +70,7 @@ class Recorder extends React.Component {
         >
           <h1>Performance</h1>
         </Card>
-        <br />
-        <Card style={{backgroundColor: '#ffe0b2'}}>
-          <div className="recorder">
+            <h4>RECORD</h4>
             <AudioReactRecorder
               text-align="center"
               state={recordState}
@@ -93,17 +112,23 @@ class Recorder extends React.Component {
                 </Button>
               ) : null}
             </ButtonGroup>
-            <br />
+
+            {this.props.recording.recordingURL ? <Analysis /> : <div />}
           </div>
-        </Card>
-      </Container>
-    )
+        </Container>
+      )
+    }
   }
 }
 
 const mapState = state => {
   return {
-    audioData: state.recordingBlob
+    //mapping in user and recording state for a loading screen
+    user: state.user,
+    recording: state.recording,
+    //what is audioData supposed to be?
+    audioData: state.recordingBlob,
+    loading: state.loading
   }
 }
 

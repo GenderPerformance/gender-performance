@@ -2,14 +2,11 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Recording = db.define('recording', {
-  duration: {
-    type: Sequelize.STRING
+  maleConfidence: {
+    type: Sequelize.FLOAT
   },
-  prediction: {
-    type: Sequelize.STRING
-  },
-  confidenceScore: {
-    type: Sequelize.STRING
+  femaleConfidence: {
+    type: Sequelize.FLOAT
   }
 })
 
