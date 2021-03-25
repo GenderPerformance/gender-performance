@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {useDispatch, connect} from 'react-redux'
 import {recordClip, analyzeClip} from '../store'
 import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import Analysis from './Analysis'
 
 class Recorder extends React.Component {
   constructor(props) {
@@ -14,6 +15,9 @@ class Recorder extends React.Component {
       recordingUrl: null,
       recordingBlob: null
     }
+  }
+  componentDidMount() {
+    console.log('compoenent did mount', this.props)
   }
 
   start = () => {
@@ -43,60 +47,75 @@ class Recorder extends React.Component {
 
   render() {
     const {recordState, recordingBlob} = this.state
-    console.log('PROPS:', this.props)
-
-    return (
-      <Container maxWidth="sm">
-        <div>
-          <Card style={{backgroundColor: '#cbae82'}}>
-            <h1>Performance</h1>
-          </Card>
-          <h4>RECORD</h4>
-          <AudioReactRecorder
-            text-align="center"
-            state={recordState}
-            onStop={this.onStop}
-          />
-          <audio
-            id="audio"
-            controls
-            src={this.state.recordingUrl ? this.state.recordingUrl : null}
-          />
-          <br />
-          <ButtonGroup
-            variant="contained"
-            color="primary"
-            aria-label="contained primary button group"
-          >
-            <Button size="small" type="button" id="record" onClick={this.start}>
-              Start
-            </Button>
-            <Button type="button" id="pause" onClick={this.pause}>
-              Pause
-            </Button>
-            <Button type="button" id="stop" onClick={this.stop}>
-              Stop
-            </Button>
-            {recordingBlob ? (
+    console.log('render props', this.props)
+    if (!this.props.user) {
+      console.log(this.props.user)
+      return <div>Loading...</div>
+    } else {
+      return (
+        <Container maxWidth="sm">
+          <div>
+            <Card style={{backgroundColor: '#cbae82'}}>
+              <h1>Performance</h1>
+            </Card>
+            <h4>RECORD</h4>
+            <AudioReactRecorder
+              text-align="center"
+              state={recordState}
+              onStop={this.onStop}
+            />
+            <audio
+              id="audio"
+              controls
+              src={this.state.recordingUrl ? this.state.recordingUrl : null}
+            />
+            <br />
+            <ButtonGroup
+              variant="contained"
+              color="primary"
+              aria-label="contained primary button group"
+            >
               <Button
+                size="small"
                 type="button"
-                id="analysis"
-                onClick={() => this.props.analyzeClip(this.state.recordingBlob)}
+                id="record"
+                onClick={this.start}
               >
-                Analyze
+                Start
               </Button>
-            ) : null}
-          </ButtonGroup>
-        </div>
-      </Container>
-    )
+              <Button type="button" id="pause" onClick={this.pause}>
+                Pause
+              </Button>
+              <Button type="button" id="stop" onClick={this.stop}>
+                Stop
+              </Button>
+              {recordingBlob ? (
+                <Button
+                  type="button"
+                  id="analysis"
+                  onClick={() =>
+                    this.props.analyzeClip(this.state.recordingBlob)
+                  }
+                >
+                  Analyze
+                </Button>
+              ) : null}
+            </ButtonGroup>
+            {this.props.recording.recordingURL ? <Analysis /> : <div />}
+          </div>
+        </Container>
+      )
+    }
   }
 }
 
 const mapState = state => {
   return {
-    audioData: state.recordingBlob,
-    prediction: state.prediction
+    //mapping in user and recording state for a loading screen
+    user: state.user,
+    recording: state.recording,
+    //what is audioData supposed to be?
+    audioData: state.recordingBlob
   }
 }
 
