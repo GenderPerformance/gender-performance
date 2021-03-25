@@ -44,6 +44,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "audio-react-recorder": "^1.0.4",
+    "aws-sdk": "^2.870.0",
     "axios": "^0.19.0",
     "caniuse-lite": "^1.0.30001202",
     "compression": "^1.7.3",

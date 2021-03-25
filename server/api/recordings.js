@@ -30,12 +30,26 @@ async function getPrediction() {
   }
 }
 
-router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
+router.post('/upload', async (req, res, next) => {
+  try {
+    const dbRecord = await Recording.create({userId: req.user.id})
+    const fileName = `user-${req.user.id}-recording-${dbRecord.id}.wav`
+    console.log(fileName)
+    res.send(fileName)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   try {
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well
-    const dbRecord = await Recording.create({userId: 1})
-    const uploadLocation = path.join(__dirname, '../../tmp', `recording-1.wav`)
+    const uploadLocation = path.join(
+      __dirname,
+      '../../tmp',
+      `${req.file.filename}`
+    )
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     fs.writeFileSync(
@@ -44,7 +58,7 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       {flag: 'w+'}
     )
     //run the ML Model and save the result.
-    result = await getPrediction()
+    const result = await getPrediction()
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     res.send(result)

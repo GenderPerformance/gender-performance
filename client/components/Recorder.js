@@ -10,9 +10,7 @@ class Recorder extends React.Component {
     super(props)
 
     this.state = {
-      recordState: null,
-      recordingUrl: null,
-      recordingBlob: null
+      recordState: null
     }
   }
 
@@ -36,13 +34,12 @@ class Recorder extends React.Component {
 
   //audioData contains blob and blobUrl
   onStop = audioData => {
-    console.log('audioData', audioData)
-    this.setState({recordingBlob: audioData.blob, recordingUrl: audioData.url})
     this.props.recordClip(audioData)
   }
 
   render() {
-    const {recordState, recordingBlob} = this.state
+    const {recordState} = this.state
+    const {recordingURL, recordingBlob, userId} = this.props
 
     return (
       <Container maxWidth="sm">
@@ -56,11 +53,9 @@ class Recorder extends React.Component {
             state={recordState}
             onStop={this.onStop}
           />
-          <audio
-            id="audio"
-            controls
-            src={this.state.recordingUrl ? this.state.recordingUrl : null}
-          />
+          {recordingURL ? (
+            <audio id="audio" controls="controls" src={recordingURL} />
+          ) : null}
           <br />
           <ButtonGroup
             variant="contained"
@@ -80,7 +75,7 @@ class Recorder extends React.Component {
               <Button
                 type="button"
                 id="analysis"
-                onClick={() => this.props.analyzeClip(this.state.recordingBlob)}
+                onClick={() => this.props.analyzeClip(userId, recordingBlob)}
               >
                 Analyze
               </Button>
@@ -94,14 +89,16 @@ class Recorder extends React.Component {
 
 const mapState = state => {
   return {
-    audioData: state.recordingBlob
+    userId: state.user.id,
+    recordingURL: state.recording.recordingURL,
+    recordingBlob: state.recording.recordingBlob
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    recordClip: clip => dispatch(recordClip(clip)),
-    analyzeClip: blob => dispatch(analyzeClip(blob))
+    recordClip: blob => dispatch(recordClip(blob)),
+    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
   }
 }
 
