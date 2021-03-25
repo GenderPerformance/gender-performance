@@ -23,8 +23,9 @@ async function getPrediction(userId, recordId) {
         '../../gendervoicemodel/test.py'
       )} --file ${path.join(__dirname, fileDir)}`
     )
+
     //returns the result of the exec function
-    return resultOfExec
+    return JSON.parse(resultOfExec.stdout)
   } catch (err) {
     console.log(err)
   }
