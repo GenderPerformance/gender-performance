@@ -12,8 +12,8 @@ const exec = util.promisify(require('child_process').exec)
 module.exports = router
 
 //function that actually calls the test.py command
-async function getPrediction(userId, recordId) {
-  const fileDir = `../../tmp/recording-${userId}-${recordId}.wav`
+async function getPrediction(filename) {
+  const fileDir = `../../tmp/${filename}`
   try {
     //calls and returns the new promisified exec function on test.py
     //with the saved file as the arg
@@ -31,19 +31,30 @@ async function getPrediction(userId, recordId) {
   }
 }
 
-router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
+router.post('/upload', async (req, res, next) => {
+  try {
+    const dbRecord = await Recording.create({userId: req.user.id})
+    const fileName = `user-${req.user.id}-recording-${dbRecord.id}.wav`
+    console.log(fileName)
+    res.send(fileName)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   try {
     let currTimeStamp = new Date()
+    console.log('file info??', req.file)
+    const fileName = req.file.originalname
+    console.log(
+      '🚀 ~ file: recordings.js ~ line 49 ~ router.post ~ fileName',
+      fileName
+    )
     console.log('the user accessing the route is:', req.user.email, req.user.id)
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well
-    const dbRecord = await Recording.create({userId: req.user.id})
-    const uploadLocation = path.join(
-      __dirname,
-      '../../tmp',
-      `recording-${req.user.id}-${dbRecord.id}.wav`
-    )
-    console.log('DBRECORD:', Object.keys(dbRecord.dataValues))
+    const uploadLocation = path.join(__dirname, '../../tmp', `${fileName}`)
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
@@ -57,16 +68,34 @@ router.post('/upload', upload.single('soundBlob'), async (req, res, next) => {
       'finished writefileSync/starting ML model'
     )
     //run the ML Model and save the result.
-    result = await getPrediction(req.user.id, dbRecord.id)
+    const result = await getPrediction(fileName)
+    console.log(
+      '🚀 ~ file: recordings.js ~ line 71 ~ router.post ~ result',
+      result
+    )
     console.log(Date.now() - currTimeStamp, 'finished ML model')
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
     res.send(result)
 
     //Saves the results to the DB
-    dbRecord.femaleConfidence = await result.fp
-    dbRecord.maleConfidence = await result.mp
-    await dbRecord.save()
+    const dbRecordId = parseInt(
+      fileName.slice(fileName.lastIndexOf('-') + 1, fileName.lastIndexOf('.')),
+      10
+    )
+
+    console.log('db record id!! ', dbRecordId, typeof dbRecordId)
+    await Recording.update(
+      {
+        femaleConfidence: result.fp,
+        maleConfidence: result.mp
+      },
+      {
+        where: {
+          id: dbRecordId
+        }
+      }
+    )
   } catch (err) {
     next(err)
   }

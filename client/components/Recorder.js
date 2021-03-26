@@ -1,25 +1,16 @@
 import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
-import {useDispatch, connect} from 'react-redux'
-import {recordClip, analyzeClip, _isLoading} from '../store'
-import {
-  Container,
-  ButtonGroup,
-  Button,
-  Card,
-  CircularProgress
-} from '@material-ui/core'
-import Analysis from './Analysis'
+import {connect} from 'react-redux'
+import {recordClip, analyzeClip} from '../store'
+import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
 class Recorder extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      recordState: null,
-      recordingUrl: null,
-      recordingBlob: null
+      recordState: null
     }
   }
   componentDidMount() {
@@ -40,14 +31,13 @@ class Recorder extends React.Component {
 
   //audioData contains blob and blobUrl
   onStop = audioData => {
-    console.log('audioData', audioData)
-    this.setState({recordingBlob: audioData.blob, recordingUrl: audioData.url})
     this.props.recordClip(audioData)
   }
 
   render() {
-    const {recordState, recordingBlob} = this.state
-    if (!this.props.user) {
+    const {recordState} = this.state
+    const {recordingURL, recordingBlob, userId} = this.props
+    if (!this.props.userId) {
       return <div>Loading...</div>
     } else {
       return (
@@ -81,7 +71,7 @@ class Recorder extends React.Component {
               <audio
                 id="audio"
                 controls
-                src={this.state.recordingUrl ? this.state.recordingUrl : null}
+                src={recordingURL ? recordingURL : null}
               />
               <br />
               <ButtonGroup
@@ -101,21 +91,22 @@ class Recorder extends React.Component {
                   Stop
                 </Button>
                 {recordingBlob ? (
-                  <Button
-                    type="button"
-                    id="analysis"
-                    onClick={() =>
-                      this.props.analyzeClip(this.state.recordingBlob)
-                    }
-                  >
-                    Analyze
-                  </Button>
+                  <Link to="/Analysis">
+                    <Button
+                      type="button"
+                      id="analysis"
+                      onClick={() =>
+                        this.props.analyzeClip(userId, recordingBlob)
+                      }
+                    >
+                      Analyze
+                    </Button>
+                  </Link>
                 ) : null}
               </ButtonGroup>
               <br />
             </div>
           </Card>
-          {this.props.recording.recordingURL ? <Analysis /> : <div />}
         </Container>
       )
     }
@@ -124,19 +115,17 @@ class Recorder extends React.Component {
 
 const mapState = state => {
   return {
-    //mapping in user and recording state for a loading screen
-    user: state.user,
-    recording: state.recording,
-    //what is audioData supposed to be?
-    audioData: state.recordingBlob,
+    userId: state.user.id,
+    recordingURL: state.recording.recordingURL,
+    recordingBlob: state.recording.recordingBlob,
     loading: state.loading
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    recordClip: clip => dispatch(recordClip(clip)),
-    analyzeClip: blob => dispatch(analyzeClip(blob))
+    recordClip: blob => dispatch(recordClip(blob)),
+    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
   }
 }
 
