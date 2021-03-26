@@ -3,7 +3,6 @@ const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 module.exports = router
-
 /**
  * For OAuth keys and other secrets, your Node process will search
  * process.env to find environment variables. On your production server,
@@ -25,7 +24,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   //for macs
   //if (process.env.NODE_ENV !== 'production') require('../secrets')
   //for PC
-  if (process.env.PGHOST === 'localhost') {
+  if (!process.env.TRAVIS) {
     callbackURL = 'http://localhost:8080/auth/google/callback'
   } else {
     callbackURL = 'https://performanio1.herokuapp.com/auth/google/callback'
