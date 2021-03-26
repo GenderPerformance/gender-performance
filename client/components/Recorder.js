@@ -47,74 +47,75 @@ class Recorder extends React.Component {
 
   render() {
     const {recordState, recordingBlob} = this.state
-
-    return (
-
-        </Card>
- 
-    console.log('render props', this.props)
     if (!this.props.user) {
-      console.log(this.props.user)
       return <div>Loading...</div>
     } else {
       return (
-      <Container maxWidth="sm">
+        <Container maxWidth="sm">
+          <br />
+          <Card
+            style={{
+              backgroundColor: '#cbae82',
+              paddingLeft: '2em',
+              paddingRight: '2em'
+            }}
+          >
+            <h1>Performance</h1>
+          </Card>
+          <br />
+          <Card
+            style={{
+              backgroundColor: '#ffe0b2'
+            }}
+          >
+            <div className="recorder">
+              <h4>RECORD</h4>
+              <AudioReactRecorder
+                text-align="center"
+                state={recordState}
+                onStop={this.onStop}
+                backgroundColor="rgb(255,224,177)"
+                foregroundColor="rgb(151,180,151)"
+                canvasHeight="100"
+              />
+              <audio
+                id="audio"
+                controls
+                src={this.state.recordingUrl ? this.state.recordingUrl : null}
+              />
               <br />
-        <Card style={{backgroundColor: '#ffe0b2'}}>
-          <div className="recorder">
-          style={{
-            backgroundColor: '#cbae82',
-            paddingLeft: '2em',
-            paddingRight: '2em'
-          }}
-        >
-          <h1>Performance</h1>
-        </Card>
-            <h4>RECORD</h4>
-            <AudioReactRecorder
-              text-align="center"
-              state={recordState}
-              onStop={this.onStop}
-              backgroundColor="rgb(255,224,177)"
-              foregroundColor="rgb(151,180,151)"
-            />
-            <audio
-              id="audio"
-              controls
-              src={this.state.recordingUrl ? this.state.recordingUrl : null}
-            />
-            <br />
-            <ButtonGroup
-              variant="contained"
-              color="secondary"
-              aria-label="contained primary button group"
-            >
-              <Button
-                size="small"
-                type="button"
-                id="record"
-                onClick={this.start}
+              <ButtonGroup
+                variant="contained"
+                color="secondary"
+                aria-label="contained primary button group"
               >
-                Record
-              </Button>
-              <Button type="button" id="stop" onClick={this.stop}>
-                Stop
-              </Button>
-              {recordingBlob ? (
                 <Button
+                  size="small"
                   type="button"
-                  id="analysis"
-                  onClick={() =>
-                    this.props.analyzeClip(this.state.recordingBlob)
-                  }
+                  id="record"
+                  onClick={this.start}
                 >
-                  Analyze
+                  Record
                 </Button>
-              ) : null}
-            </ButtonGroup>
-
-            {this.props.recording.recordingURL ? <Analysis /> : <div />}
-          </div>
+                <Button type="button" id="stop" onClick={this.stop}>
+                  Stop
+                </Button>
+                {recordingBlob ? (
+                  <Button
+                    type="button"
+                    id="analysis"
+                    onClick={() =>
+                      this.props.analyzeClip(this.state.recordingBlob)
+                    }
+                  >
+                    Analyze
+                  </Button>
+                ) : null}
+              </ButtonGroup>
+              <br />
+            </div>
+          </Card>
+          {this.props.recording.recordingURL ? <Analysis /> : <div />}
         </Container>
       )
     }
