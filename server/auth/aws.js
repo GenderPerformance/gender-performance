@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const aws = require('aws-sdk')
-require('../../secrets')
+if (process.env.NODE_ENV !== 'production') {
+  require('../../secrets')
+}
 const S3_BUCKET = process.env.S3_BUCKET
 
 aws.config.region = 'us-east-2'
