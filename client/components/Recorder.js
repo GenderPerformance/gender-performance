@@ -1,7 +1,7 @@
 import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
-import {useDispatch, connect} from 'react-redux'
+import {connect} from 'react-redux'
 import {recordClip, analyzeClip} from '../store'
 import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
@@ -12,6 +12,9 @@ class Recorder extends React.Component {
     this.state = {
       recordState: null
     }
+  }
+  componentDidMount() {
+    console.log('compoenent did mount', this.props)
   }
 
   start = () => {
@@ -26,12 +29,6 @@ class Recorder extends React.Component {
     })
   }
 
-  pause = () => {
-    this.setState({
-      recordState: RecordState.PAUSE
-    })
-  }
-
   //audioData contains blob and blobUrl
   onStop = audioData => {
     this.props.recordClip(audioData)
@@ -40,50 +37,79 @@ class Recorder extends React.Component {
   render() {
     const {recordState} = this.state
     const {recordingURL, recordingBlob, userId} = this.props
-
-    return (
-      <Container maxWidth="sm">
-        <div>
-          <Card style={{backgroundColor: '#cbae82'}}>
+    if (!this.props.userId) {
+      return <div>Loading...</div>
+    } else {
+      return (
+        <Container maxWidth="sm">
+          <br />
+          <Card
+            style={{
+              backgroundColor: '#cbae82',
+              paddingLeft: '2em',
+              paddingRight: '2em'
+            }}
+          >
             <h1>Performance</h1>
           </Card>
-          <h4>RECORD</h4>
-          <AudioReactRecorder
-            text-align="center"
-            state={recordState}
-            onStop={this.onStop}
-          />
-          {recordingURL ? (
-            <audio id="audio" controls="controls" src={recordingURL} />
-          ) : null}
           <br />
-          <ButtonGroup
-            variant="contained"
-            color="primary"
-            aria-label="contained primary button group"
+          <Card
+            style={{
+              backgroundColor: '#ffe0b2'
+            }}
           >
-            <Button size="small" type="button" id="record" onClick={this.start}>
-              Start
-            </Button>
-            <Button type="button" id="pause" onClick={this.pause}>
-              Pause
-            </Button>
-            <Button type="button" id="stop" onClick={this.stop}>
-              Stop
-            </Button>
-            {recordingBlob ? (
-              <Button
-                type="button"
-                id="analysis"
-                onClick={() => this.props.analyzeClip(userId, recordingBlob)}
+            <div className="recorder">
+              <h4>RECORD</h4>
+              <AudioReactRecorder
+                text-align="center"
+                state={recordState}
+                onStop={this.onStop}
+                backgroundColor="rgb(255,224,177)"
+                foregroundColor="rgb(151,180,151)"
+                canvasHeight="100"
+              />
+              <audio
+                id="audio"
+                controls
+                src={recordingURL ? recordingURL : null}
+              />
+              <br />
+              <ButtonGroup
+                variant="contained"
+                color="secondary"
+                aria-label="contained primary button group"
               >
-                Analyze
-              </Button>
-            ) : null}
-          </ButtonGroup>
-        </div>
-      </Container>
-    )
+                <Button
+                  size="small"
+                  type="button"
+                  id="record"
+                  onClick={this.start}
+                >
+                  Record
+                </Button>
+                <Button type="button" id="stop" onClick={this.stop}>
+                  Stop
+                </Button>
+                {recordingBlob ? (
+                  <Link to="/Analysis">
+                    <Button
+                      type="button"
+                      id="analysis"
+                      onClick={() =>
+                        this.props.analyzeClip(userId, recordingBlob)
+                      }
+                    >
+                      Analyze
+                    </Button>
+                  </Link>
+                ) : null}
+              </ButtonGroup>
+              <br />
+            </div>
+          </Card>
+        </Container>
+      )
+    }
   }
 }
 
@@ -91,7 +117,8 @@ const mapState = state => {
   return {
     userId: state.user.id,
     recordingURL: state.recording.recordingURL,
-    recordingBlob: state.recording.recordingBlob
+    recordingBlob: state.recording.recordingBlob,
+    loading: state.loading
   }
 }
 
