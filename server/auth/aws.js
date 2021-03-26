@@ -2,7 +2,7 @@ const router = require('express').Router()
 const aws = require('aws-sdk')
 console.log(process.env)
 //for PC
-if (!process.env.DEPLOYED) {
+if (process.env.PGHOST === 'localhost') {
   //for macs
   //if (process.env.NODE_ENV !== 'production') {
   require('../../secrets')

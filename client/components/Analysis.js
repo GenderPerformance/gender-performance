@@ -1,5 +1,11 @@
 import React from 'react'
-import {Container, Card, CircularProgress} from '@material-ui/core'
+import {
+  Container,
+  Card,
+  CircularProgress,
+  Button,
+  ButtonGroup
+} from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
 class Analysis extends React.Component {
@@ -44,6 +50,15 @@ class Analysis extends React.Component {
                 <br />
                 Male Probability Confidence
                 <strong>{this.props.prediction.mp}%</strong>
+                <ButtonGroup
+                  variant="contained"
+                  color="secondary"
+                  aria-label="contained primary button group"
+                >
+                  <Button onClick={() => this.state.wavesurfer.playPause()}>
+                    Play/Pause
+                  </Button>
+                </ButtonGroup>
               </div>
             )}
             <div id="waveform" />

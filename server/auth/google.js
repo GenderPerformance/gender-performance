@@ -24,7 +24,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   //for macs
   //if (process.env.NODE_ENV !== 'production') require('../secrets')
   //for PC
-  if (!process.env.DEPLOYED) {
+  if (process.env.PGHOST === 'localhost') {
     callbackURL = 'http://localhost:8080/auth/google/callback'
   } else {
     callbackURL = 'https://performanio1.herokuapp.com/auth/google/callback'
