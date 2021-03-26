@@ -50,6 +50,7 @@ class Analysis extends React.Component {
                 <br />
                 Male Probability Confidence
                 <strong>{this.props.prediction.mp}%</strong>
+                <br />
                 <ButtonGroup
                   variant="contained"
                   color="secondary"
