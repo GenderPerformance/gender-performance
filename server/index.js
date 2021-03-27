@@ -28,8 +28,7 @@ if (process.env.NODE_ENV === 'test') {
  */
 if (
   process.env.PGHOST === 'localhost' ||
-  process.env.NODE_ENV !== 'production' ||
-  process.env.TRAVIS
+  (process.env.NODE_ENV !== 'production' && !process.env.TRAVIS)
 ) {
   require('../secrets')
 }
