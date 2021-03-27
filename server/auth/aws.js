@@ -4,7 +4,7 @@ console.log(process.env)
 //for PC
 if (
   process.env.PGHOST === 'localhost' ||
-  process.env.NODE_ENV !== 'production'
+  (process.env.NODE_ENV !== 'production' && !process.env.TRAVIS)
 ) {
   require('../../secrets')
 }

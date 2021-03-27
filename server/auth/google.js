@@ -24,7 +24,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   if (
     process.env.PGHOST === 'localhost' ||
-    process.env.NODE_ENV !== 'production'
+    (process.env.NODE_ENV !== 'production' && !process.env.TRAVIS)
   ) {
     callbackURL = 'http://localhost:8080/auth/google/callback'
   } else {
