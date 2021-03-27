@@ -1,12 +1,15 @@
 # import pyaudio
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import wave
 import librosa
 import numpy as np
 from sys import byteorder
 from array import array
 from struct import pack
-import asyncio
+import io
+import soundfile as sf
+from six.moves.urllib.request import urlopen
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -137,7 +140,7 @@ def extract_feature(file_name, **kwargs):
     mel = kwargs.get("mel")
     contrast = kwargs.get("contrast")
     tonnetz = kwargs.get("tonnetz")
-    X, sample_rate = librosa.core.load(file_name)
+    X, sample_rate = librosa.core.load(io.BytesIO(urlopen(file_name).read()))
     if chroma or contrast:
         stft = np.abs(librosa.stft(X))
     result = np.array([])

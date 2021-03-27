@@ -4,3 +4,5 @@ numpy==1.19.2
 pandas
 tqdm
 librosa
+six
+soundfile
