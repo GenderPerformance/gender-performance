@@ -17,22 +17,23 @@ async function getPrediction(filename) {
   try {
     //calls and returns the new promisified exec function on test.py
     //with the saved file as the arg
-
+    let amazonDir = ''
+    //if localhost, use dev else use prod
     if (
       process.env.PGHOST === 'localhost' ||
       process.env.NODE_ENV !== 'production'
     ) {
-      const resultOfExec = await exec(
-        `python ${path.join(
-          __dirname,
-          '../../gendervoicemodel/test.py'
-        )} --file ${path.join(
-          'https://performance--fsa2101.s3.amazonaws.com/',
-          filename
-        )}`
-      )
+      amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
     } else {
+      amazonDir = 'https://performance--fsa2101.s3.amazonaws.com/'
     }
+
+    const resultOfExec = await exec(
+      `python ${path.join(
+        __dirname,
+        '../../gendervoicemodel/test.py'
+      )} --file ${path.join(amazonDir, filename)}`
+    )
 
     //returns the result of the exec function
     return JSON.parse(resultOfExec.stdout)
