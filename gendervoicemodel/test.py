@@ -10,7 +10,7 @@ from struct import pack
 #import io
 from six.moves.urllib.request import urlopen
 import shutil
-import wget
+
 
 
 THRESHOLD = 500
