@@ -147,7 +147,11 @@ def extract_feature(file_name, **kwargs):
     fileName = file_name[slice(startIdx,-1)]+"v"
     # save the url file to tmp directory
     file="../tmp/"+fileName
-    print(file)
+
+    #add an extra / to url
+    slashIdx = file_name.rindex('performance')
+    fixedFileName = file_name[slice(0,slashIdx)]+r"\\"+file_name[slice(slashIdx,-1)]+'v'
+    print('the file name',fixedFileName)
     with urlopen(file_name) as response, open(file,'wb') as out_file:
         shutil.copyfileobj(response,out_file)
 
