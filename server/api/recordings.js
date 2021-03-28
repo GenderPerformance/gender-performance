@@ -21,7 +21,7 @@ async function getPrediction(filename) {
     //if localhost, use dev else use prod
     if (
       process.env.PGHOST === 'localhost' ||
-      process.env.NODE_ENV !== 'production'
+      (process.env.NODE_ENV !== 'production' && !process.env.TRAVIS)
     ) {
       amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
     } else {
@@ -69,6 +69,7 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
+    // python should be writing the file from the s3 link when it is time
     // fs.writeFileSync(
     //   uploadLocation,
     //   Buffer.from(new Uint8Array(req.file.buffer)),
