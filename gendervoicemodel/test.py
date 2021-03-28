@@ -150,7 +150,8 @@ def extract_feature(file_name, **kwargs):
 
     #add an extra / to url
     slashIdx = file_name.rindex('performance')
-    fixedFileName = file_name[slice(0,slashIdx)]+r"\\"+file_name[slice(slashIdx,-1)]+'v'
+    colonIdx = file_name.rindex(':')
+    fixedFileName = file_name[slice(0,colonIdx)]+":\\"+file_name[slice(slashIdx,-1)]+'v'
     print('the file name',fixedFileName)
     with urlopen(file_name) as response, open(file,'wb') as out_file:
         shutil.copyfileobj(response,out_file)
