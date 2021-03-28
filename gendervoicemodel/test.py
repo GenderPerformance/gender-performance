@@ -8,10 +8,10 @@ from sys import byteorder
 from array import array
 from struct import pack
 #import io
-from six.moves.urllib.request import urlopen
-import shutil
-
-
+#from six.moves.urllib.request import urlopen
+#import shutil
+import requests
+import wave
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -146,17 +146,23 @@ def extract_feature(file_name, **kwargs):
     startIdx = file_name.rindex('user-')
     fileName = file_name[slice(startIdx,-1)]+"v"
     # save the url file to tmp directory
-    file="../tmp/"+fileName
+    file="tmp/"+fileName
 
     #add an extra / to url
     slashIdx = file_name.rindex('performance')
     colonIdx = file_name.rindex(':')
-    fixedFileName = file_name[slice(0,colonIdx)]+"://"+file_name[slice(slashIdx,-1)]+'v'
-    print('the file name',fixedFileName)
-    with urlopen(file_name) as response, open(file,'wb') as out_file:
-        shutil.copyfileobj(response,out_file)
+    fixedURL = file_name[slice(0,colonIdx)]+"://"+file_name[slice(slashIdx,-1)]+'v'
+    print('the file name',fixedURL)
+    # with urlopen(file_name) as response, open(file,'wb') as out_file:
+    #     shutil.copyfileobj(response,out_file)
 
-    X, sample_rate = librosa.core.load(file)
+    response = requests.get(fixedURL)
+    print('response from url get request',response.content)
+    f = open(file,"w")
+    f.write(response.content)
+    f.close()
+
+    X, sample_rate = librosa.core.load(file.read())
 
     if chroma or contrast:
         stft = np.abs(librosa.stft(X))
