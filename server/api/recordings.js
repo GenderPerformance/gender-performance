@@ -25,7 +25,7 @@ async function getPrediction(filename) {
     ) {
       amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
     } else {
-      amazonDir = 'https://performance--fsa2101.s3.amazonaws.com/'
+      amazonDir = 'https:///performance--fsa2101.s3.amazonaws.com/'
     }
 
     const resultOfExec = await exec(
@@ -69,11 +69,11 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
-    fs.writeFileSync(
-      uploadLocation,
-      Buffer.from(new Uint8Array(req.file.buffer)),
-      {flag: 'w+'}
-    )
+    // fs.writeFileSync(
+    //   uploadLocation,
+    //   Buffer.from(new Uint8Array(req.file.buffer)),
+    //   {flag: 'w+'}
+    // )
     console.log(
       Date.now() - currTimeStamp,
       'finished writefileSync/starting ML model'

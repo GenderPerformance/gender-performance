@@ -7,9 +7,11 @@ import numpy as np
 from sys import byteorder
 from array import array
 from struct import pack
-import io
-import soundfile as sf
-from six.moves.urllib.request import urlopen
+#import io
+from six.moves.urllib import request
+import shutil
+
+
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -140,7 +142,14 @@ def extract_feature(file_name, **kwargs):
     mel = kwargs.get("mel")
     contrast = kwargs.get("contrast")
     tonnetz = kwargs.get("tonnetz")
-    X, sample_rate = librosa.core.load(io.BytesIO(urlopen(file_name).read()))
+    # pull out the file name
+    startIdx = file_name.rindex('user-1')
+    fileName = file_name[slice(startIdx,-1)]+"v"
+    print('filename',file_name)
+    with urlopen(file_name) as response, open('tmp/'+fileName,'wb') as out_file:
+        shutil.copyfileobj(response,out_file)
+
+    X, sample_rate = librosa.core.load("tmp/"+fileName)
     if chroma or contrast:
         stft = np.abs(librosa.stft(X))
     result = np.array([])
