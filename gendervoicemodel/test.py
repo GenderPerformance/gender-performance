@@ -8,7 +8,7 @@ from sys import byteorder
 from array import array
 from struct import pack
 #import io
-from six.moves.urllib import request
+from six.moves.urllib.request import urlopen
 import shutil
 
 
