@@ -1,7 +1,7 @@
 jobs:
   include:
     - language: python
-      python: 3.8
+      python: 3.8.8
       script:
       - npm run python-install
     - language: node_js

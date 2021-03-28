@@ -142,14 +142,15 @@ def extract_feature(file_name, **kwargs):
     mel = kwargs.get("mel")
     contrast = kwargs.get("contrast")
     tonnetz = kwargs.get("tonnetz")
-    # pull out the file name
+    # pull out the file name and save to a variable
     startIdx = file_name.rindex('user-1')
     fileName = file_name[slice(startIdx,-1)]+"v"
     print('filename',file_name)
+    # save the url file to tmp directory
     with urlopen(file_name) as response, open('tmp/'+fileName,'wb') as out_file:
         shutil.copyfileobj(response,out_file)
-
-    X, sample_rate = librosa.core.load("tmp/"+fileName)
+    file="tmp/"+fileName
+    X, sample_rate = librosa.core.load(file)
     if chroma or contrast:
         stft = np.abs(librosa.stft(X))
     result = np.array([])

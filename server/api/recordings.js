@@ -25,7 +25,7 @@ async function getPrediction(filename) {
     ) {
       amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
     } else {
-      amazonDir = 'https:///performance--fsa2101.s3.amazonaws.com/'
+      amazonDir = 'https://performance--fsa2101.s3.amazonaws.com/'
     }
 
     const resultOfExec = await exec(
