@@ -8,9 +8,10 @@ from sys import byteorder
 from array import array
 from struct import pack
 #import io
-from six.moves.urllib import request
+from six.moves.urllib.request import urlopen
 import shutil
-import soundfile
+import wget
+
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
@@ -146,12 +147,8 @@ def extract_feature(file_name, **kwargs):
     fileName = file_name[slice(startIdx,-1)]+"v"
     # save the url file to tmp directory
     file="../tmp/"+fileName
-    print('python filename',file)
-    response = request.urlopen(file_name)
-    with open(file,'wb') as saved:
-        saved.write(response.content)
-
-    with request.urlopen(file_name) as response, open(file,'wb') as out_file:
+    print(file)
+    with urlopen(file_name) as response, open(file,'wb') as out_file:
         shutil.copyfileobj(response,out_file)
 
     X, sample_rate = librosa.core.load(file)
