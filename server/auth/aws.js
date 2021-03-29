@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const aws = require('aws-sdk')
-console.log(process.env)
+
 //for PC
 if (process.env.PGHOST === 'localhost') {
   //for macs

@@ -47,6 +47,7 @@
     "aws-sdk": "^2.870.0",
     "axios": "^0.19.0",
     "caniuse-lite": "^1.0.30001202",
+    "chroma-js": "^2.1.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
@@ -68,6 +69,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.3.1",
+    "spectrogram": "0.0.7",
     "wavesurfer.js": "^4.6.0"
   },
   "devDependencies": {

@@ -8,6 +8,9 @@ import {
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
+import Spectrogram from 'spectrogram'
+import chroma from 'chroma-js'
+
 class Analysis extends React.Component {
   constructor() {
     super()
@@ -30,6 +33,48 @@ class Analysis extends React.Component {
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
+
+      // //spectrogram attempt
+      let spectro = Spectrogram(document.getElementById('canvas'), {
+        audio: {
+          enable: false
+        },
+        colors: function(steps) {
+          let baseColors = [
+            [0, 0, 0, 1],
+            [0, 255, 255, 1],
+            [0, 255, 0, 1],
+            [255, 255, 0, 1],
+            [255, 0, 0, 1]
+          ]
+          let positions = [0, 0.15, 0.3, 0.5, 0.75]
+
+          let scale = new chroma.scale(baseColors, positions).domain([0, steps])
+
+          let colors = []
+
+          for (let i = 0; i < steps; ++i) {
+            let color = scale(i)
+            colors.push(color.hex())
+          }
+
+          return colors
+        }
+      })
+
+      let audioContext = new AudioContext()
+      let request = new XMLHttpRequest()
+      request.open('GET', this.props.recordingURL, true)
+      request.responseType = 'arraybuffer'
+
+      request.onload = function() {
+        audioContext.decodeAudioData(request.response, function(buffer) {
+          spectro.connectSource(buffer, audioContext)
+          spectro.start()
+          //setTimeout(spectro.pause(),10000)
+        })
+      }
+      request.send()
     }
     return (
       <Container maxWidth="sm">
