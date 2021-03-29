@@ -45,13 +45,7 @@ router.post('/upload', async (req, res, next) => {
 router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   try {
     let currTimeStamp = new Date()
-    console.log('file info??', req.file)
     const fileName = req.file.originalname
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 49 ~ router.post ~ fileName',
-      fileName
-    )
-    console.log('the user accessing the route is:', req.user.email, req.user.id)
     //need to change saved file with a variable name.
     //make sure to adjust filDir variable as well
     const uploadLocation = path.join(__dirname, '../../tmp', `${fileName}`)
@@ -63,16 +57,8 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
       Buffer.from(new Uint8Array(req.file.buffer)),
       {flag: 'w+'}
     )
-    console.log(
-      Date.now() - currTimeStamp,
-      'finished writefileSync/starting ML model'
-    )
     //run the ML Model and save the result.
     const result = await getPrediction(fileName)
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 71 ~ router.post ~ result',
-      result
-    )
     console.log(Date.now() - currTimeStamp, 'finished ML model')
     //TODO: Add call of ML analysis
     //TODO: Await prediction response
@@ -88,7 +74,8 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     await Recording.update(
       {
         femaleConfidence: result.fp,
-        maleConfidence: result.mp
+        maleConfidence: result.mp,
+        url: req.body.s3Url
       },
       {
         where: {

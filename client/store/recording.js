@@ -44,11 +44,16 @@ export const analyzeClip = (userId, blob) => async dispatch => {
       `/auth/aws/s3-sign?file-name=${clip.name}&file-type=${clip.type}`
     )
     const {signedUrl, url} = response.data
+    console.log(
+      '🚀 ~ file: recording.js ~ line 47 ~ response.data',
+      response.data
+    )
 
     const s3response = await axios.put(signedUrl, clip)
 
     //prepare file for analysis
     const formData = new FormData()
+    formData.append('s3Url', url)
     formData.append('soundBlob', blob, fileName)
     //analyze
     const result = await axios.post('/api/recordings/analyze', formData)
