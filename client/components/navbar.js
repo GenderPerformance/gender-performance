@@ -15,10 +15,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <Link to="/home">Home</Link>
             <Link to="/home">Record</Link>
             <Link to="/userhistory">History</Link>
+            <Link to="/about">About</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
-            <Link to="/about">About</Link>
           </div>
         </AppBar>
       ) : (
