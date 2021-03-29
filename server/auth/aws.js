@@ -1,6 +1,12 @@
 const router = require('express').Router()
 const aws = require('aws-sdk')
-require('../../secrets')
+console.log(process.env)
+//for PC
+if (process.env.PGHOST === 'localhost') {
+  //for macs
+  //if (process.env.NODE_ENV !== 'production') {
+  require('../../secrets')
+}
 const S3_BUCKET = process.env.S3_BUCKET
 
 aws.config.region = 'us-east-2'
