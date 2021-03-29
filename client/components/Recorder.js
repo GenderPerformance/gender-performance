@@ -13,9 +13,7 @@ class Recorder extends React.Component {
       recordState: null
     }
   }
-  componentDidMount() {
-    console.log('compoenent did mount', this.props)
-  }
+  componentDidMount() {}
 
   start = () => {
     this.setState({

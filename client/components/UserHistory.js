@@ -6,14 +6,39 @@ import {
   Button,
   ButtonGroup
 } from '@material-ui/core'
+import {fetchHistory} from '../store'
 import {connect} from 'react-redux'
 
 class UserHistory extends React.Component {
+  componentDidMount() {
+    this.props.fetchHistory(this.props.user.id)
+  }
   render() {
+    const {history} = this.props
+    console.log(history)
     return (
-      <Card>
+      <React.Fragment>
         <h1>History is what you make it, Baby</h1>
-      </Card>
+        {!history.length > 0 ? (
+          <h2>Loading History...</h2>
+        ) : (
+          history.map(recording => {
+            return (
+              <Card key={recording.id}>
+                <audio src={recording.url} />
+                <div className="analysis">
+                  Female Probability Confidence
+                  <strong>{recording.femaleConfidence}%</strong>
+                  <br />
+                  Male Probability Confidence
+                  <strong>{recording.maleConfidence}%</strong>
+                  <br />
+                </div>
+              </Card>
+            )
+          })
+        )}
+      </React.Fragment>
     )
   }
 }
@@ -22,10 +47,13 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    recordingURL: state.recording.recordingURL,
-    recordingBlob: state.recording.recordingBlob,
-    loading: state.recording.loading,
-    prediction: state.recording.prediction
+    history: state.recording.recordingHistory
   }
 }
-export default connect(mapState)(UserHistory)
+
+const mapDispatch = dispatch => {
+  return {
+    fetchHistory: userId => dispatch(fetchHistory(userId))
+  }
+}
+export default connect(mapState, mapDispatch)(UserHistory)
