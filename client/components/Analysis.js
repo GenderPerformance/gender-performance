@@ -10,6 +10,32 @@ import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
 import Spectrogram from 'spectrogram'
 import chroma from 'chroma-js'
+//import * as P5 from "p5"
+//window.myp5 = new P5
+import '../../node_modules/p5/lib/addons/p5.sound'
+import '../../node_modules/p5/lib/addons/p5.dom'
+import p5 from 'p5'
+import Drawing from './Drawing'
+
+const myp5 = new p5()
+
+let sound = myp5.loadSound('./tryp5.mp3')
+function preload() {
+  console.log('SOUND?', sound)
+}
+function togglePlay() {
+  console.log('INSTANCE', myp5)
+  myp5.loadSound()
+  console.log('INSTANCEKEYS', Object.keys(myp5))
+  console.log('p5=====', p5)
+  console.log('p5 SOUND', p5.sound)
+  console.log('p5 KEYS', Object.keys(p5))
+  if (sound.isPlaying()) {
+    sound.pause()
+  } else {
+    sound.loop()
+  }
+}
 
 class Analysis extends React.Component {
   constructor() {
@@ -28,6 +54,10 @@ class Analysis extends React.Component {
       })
       this.setState({wavesurfer: wavesurfer})
     }
+
+    const script = document.createElement('script')
+    script.src = './sketch.js'
+    document.body.appendChild(script)
   }
   render() {
     if (this.props.prediction) {
@@ -104,9 +134,11 @@ class Analysis extends React.Component {
                   <Button onClick={() => this.state.wavesurfer.playPause()}>
                     Play/Pause
                   </Button>
+                  <Button onClick={() => togglePlay()}>P5 Test</Button>
                 </ButtonGroup>
               </div>
             )}
+            <Drawing />
             <div id="waveform" />
           </Card>
         </div>
