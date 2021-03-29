@@ -13,6 +13,29 @@ class UserHistory extends React.Component {
   componentDidMount() {
     this.props.fetchHistory(this.props.user.id)
   }
+
+  /* playRecording(url) {
+
+  } */
+
+  getRecordingDate(dateString) {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ]
+    const month_index = parseInt(arr[1], 10) - 1
+  }
+
   render() {
     const {history} = this.props
     console.log(history)
@@ -25,7 +48,8 @@ class UserHistory extends React.Component {
           history.map(recording => {
             return (
               <Card key={recording.id}>
-                <audio src={recording.url} />
+                {console.log('date type', recording.createdAt)}
+                <audio controls src={recording.url} />
                 <div className="analysis">
                   Female Probability Confidence
                   <strong>{recording.femaleConfidence}%</strong>
