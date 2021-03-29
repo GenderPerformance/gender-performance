@@ -71,3 +71,10 @@ p {
   align-items: center;
   padding-bottom: 2em;
 }
+
+.txtgen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+}
