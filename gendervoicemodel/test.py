@@ -1,16 +1,11 @@
 # import pyaudio
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import wave
 import librosa
 import numpy as np
 from sys import byteorder
 from array import array
 from struct import pack
-#import io
-from six.moves.urllib.request import urlopen
-import shutil
-
 
 
 THRESHOLD = 500
@@ -123,8 +118,6 @@ def record_to_file(path):
     wf.writeframes(data)
     wf.close()
 
-
-
 def extract_feature(file_name, **kwargs):
     """
     Extract feature from audio file `file_name`
@@ -142,22 +135,7 @@ def extract_feature(file_name, **kwargs):
     mel = kwargs.get("mel")
     contrast = kwargs.get("contrast")
     tonnetz = kwargs.get("tonnetz")
-    # pull out the file name and save to a variable
-    startIdx = file_name.rindex('user-')
-    fileName = file_name[slice(startIdx,-1)]+"v"
-    # save the url file to tmp directory
-    file="../tmp/"+fileName
-
-    #add an extra / to url
-    slashIdx = file_name.rindex('performance')
-    colonIdx = file_name.rindex(':')
-    fixedFileName = file_name[slice(0,colonIdx)]+"://"+file_name[slice(slashIdx,-1)]+'v'
-    print('the file name',fixedFileName)
-    with urlopen(file_name) as response, open(file,'wb') as out_file:
-        shutil.copyfileobj(response,out_file)
-
-    X, sample_rate = librosa.core.load(file)
-
+    X, sample_rate = librosa.core.load(file_name)
     if chroma or contrast:
         stft = np.abs(librosa.stft(X))
     result = np.array([])

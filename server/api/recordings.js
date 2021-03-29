@@ -17,22 +17,24 @@ async function getPrediction(filename) {
   try {
     //calls and returns the new promisified exec function on test.py
     //with the saved file as the arg
-    let amazonDir = ''
-    //if localhost, use dev else use prod
-    if (
-      process.env.PGHOST === 'localhost' ||
-      (process.env.NODE_ENV !== 'production' && !process.env.TRAVIS)
-    ) {
-      amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
-    } else {
-      amazonDir = 'https://performance--fsa2101.s3.amazonaws.com/'
-    }
+
+    //sets the amazonDir for locahost vs deployed
+    // let amazonDir = ''
+    // //if localhost, use dev else use prod
+    // if (
+    //   process.env.PGHOST === 'localhost' ||
+    //   process.env.NODE_ENV !== 'production'&&!process.env.TRAVIS
+    // ) {
+    //   amazonDir = 'https://performance--fsa2101-dev.s3.amazonaws.com/'
+    // } else {
+    //   amazonDir = 'https://performance--fsa2101.s3.amazonaws.com/'
+    // }
 
     const resultOfExec = await exec(
       `python ${path.join(
         __dirname,
         '../../gendervoicemodel/test.py'
-      )} --file ${path.join(amazonDir, filename)}`
+      )} --file ${path.join(__dirname, '../../tmp/', filename)}`
     )
 
     //returns the result of the exec function
@@ -69,12 +71,12 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     //saves the file to tmp directory. create a new file if it does not exist
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
-    // python should be writing the file from the s3 link when it is time
-    // fs.writeFileSync(
-    //   uploadLocation,
-    //   Buffer.from(new Uint8Array(req.file.buffer)),
-    //   {flag: 'w+'}
-    // )
+
+    fs.writeFileSync(
+      uploadLocation,
+      Buffer.from(new Uint8Array(req.file.buffer)),
+      {flag: 'w+'}
+    )
     console.log(
       Date.now() - currTimeStamp,
       'finished writefileSync/starting ML model'
