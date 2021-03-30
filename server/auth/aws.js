@@ -1,10 +1,8 @@
 const router = require('express').Router()
 const aws = require('aws-sdk')
 
-//for PC
-//if (process.env.PGHOST === 'localhost') {
-//for macs
-if (process.env.NODE_ENV !== 'production') {
+
+if ((process.env.PGHOST === 'localhost'||process.env.NODE_ENV !== 'production')&&!process.env.TRAVIS) {
   require('../../secrets')
 }
 const S3_BUCKET = process.env.S3_BUCKET
