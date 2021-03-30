@@ -38,44 +38,44 @@ class Drawing extends React.Component {
     // this.draw = this.draw.bind(this)
     // this.togglePlay = this.togglePlay.bind(this)
     // this.preload = this.preload.bind(this)
-    this.sketch=this.sketch.bind(this)
+    this.sketch = this.sketch.bind(this)
   }
 
-  sketch(p){
-  p.preload=()=>{
-    this.setState({sound: myp5.loadSound('./tryp5.wav')})
-  }
-
-  p.setup=()=>{
-    let cnv = createCanvas(800, 400)
-    cnv.mouseClicked(this.togglePlay)
-    this.setState({fft: new p5.FFT()})
-    //this.state.sound.amp(0.2);
-  }
-  p.draw=()=>{
-    p.background('rgba(0,255,0, 0.25)')
-    let spectrum = this.state.fft.analyze()
-    p.noStroke()
-    p.fill(0, 0, 255)
-    for (let i = 0; i < spectrum.length; i++) {
-      let x = map(i, 0, spectrum.length, 0, width)
-      let h = -height + map(spectrum[i], 125, 255, height, 0)
-      p.rect(x, height, width / spectrum.length, h)
+  sketch(p) {
+    p.preload = () => {
+      this.setState({sound: myp5.loadSound('./tryp5.wav')})
     }
 
-    let waveform = this.state.fft.waveform()
-    noFill()
-    beginShape()
-    stroke(20)
-    for (let i = 0; i < waveform.length; i++) {
-      let x = map(i, 0, waveform.length, 0, width)
-      let y = map(waveform[i], -1, 1, 0, height)
-      vertex(x, y)
+    p.setup = () => {
+      let cnv = createCanvas(800, 400)
+      cnv.mouseClicked(this.togglePlay)
+      this.setState({fft: new p5.FFT()})
+      //this.state.sound.amp(0.2);
     }
-    endShape()
+    p.draw = () => {
+      p.background('rgba(0,255,0, 0.25)')
+      let spectrum = this.state.fft.analyze()
+      p.noStroke()
+      p.fill(0, 0, 255)
+      for (let i = 0; i < spectrum.length; i++) {
+        let x = map(i, 0, spectrum.length, 0, width)
+        let h = -height + map(spectrum[i], 125, 255, height, 0)
+        p.rect(x, height, width / spectrum.length, h)
+      }
 
-    text('tap to play', 20, 20)
-  }
+      let waveform = this.state.fft.waveform()
+      noFill()
+      beginShape()
+      stroke(20)
+      for (let i = 0; i < waveform.length; i++) {
+        let x = map(i, 0, waveform.length, 0, width)
+        let y = map(waveform[i], -1, 1, 0, height)
+        vertex(x, y)
+      }
+      endShape()
+
+      text('tap to play', 20, 20)
+    }
   }
   togglePlay() {
     console.log('===STATE SOUND====', this.state.sound)
@@ -87,22 +87,21 @@ class Drawing extends React.Component {
     }
   }
 
-
   render() {
     console.log(`DRAWING PROPS======`, this.props)
-    if(!this.props.recordingBlob){
-      <div>Loading...</div>
-    }else{
-
-    return (
-      <div>
-        <P5Wrapper sketch={this.sketch}/>
-        <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
-        {/* <Sketch preload={this.preload} setup={this.setup} draw={this.draw} /> */}
-      </div>
-    )
+    if (!this.props.recordingBlob) {
+      ;<div>Loading...</div>
+    } else {
+      return (
+        <div>
+          <P5Wrapper sketch={this.sketch} />
+          <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
+          {/* <Sketch preload={this.preload} setup={this.setup} draw={this.draw} /> */}
+        </div>
+      )
+    }
   }
-}}
+}
 
 const mapState = state => {
   return {

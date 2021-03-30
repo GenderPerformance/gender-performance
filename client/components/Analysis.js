@@ -18,11 +18,11 @@ import p5 from 'p5'
 import Drawing from './Drawing'
 import {myp5} from './Drawing'
 
-
 let sound = myp5.loadSound('./tryp5.mp3')
 function preload() {
   console.log('SOUND?', sound)
 }
+
 function togglePlay() {
   console.log('INSTANCE', myp5)
   myp5.loadSound()
