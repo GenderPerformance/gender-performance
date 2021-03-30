@@ -43,16 +43,17 @@ class Drawing extends React.Component {
 
   sketch(p){
   p.preload=()=>{
-    this.setState({sound: myp5.loadSound('./tryp5.wav')})
+    this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
   }
 
   p.setup=()=>{
-    let cnv = createCanvas(800, 400)
+    let cnv = createCanvas(880, 400)
     cnv.mouseClicked(this.togglePlay)
     this.setState({fft: new p5.FFT()})
     //this.state.sound.amp(0.2);
   }
   p.draw=()=>{
+    p.createCanvas(600, 400, p.WEBGL)
     p.background('rgba(0,255,0, 0.25)')
     let spectrum = this.state.fft.analyze()
     p.noStroke()
