@@ -6,7 +6,10 @@ import P5Wrapper from 'react-p5-wrapper'
 import '../../node_modules/p5/lib/addons/p5.sound'
 import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
+import Plot from 'react-plotly.js';
 
+
+let wave = []
 export const myp5 = new p5()
 //let sound = myp5.loadSound('./tryp5.mp3')
 
@@ -32,7 +35,8 @@ class Drawing extends React.Component {
     super(props)
     this.state = {
       sound: null,
-      fft: null
+      fft: null,
+      wave:[]
     }
     // this.setup = this.setup.bind(this)
     // this.draw = this.draw.bind(this)
@@ -65,6 +69,7 @@ class Drawing extends React.Component {
     }
 
     let waveform = this.state.fft.waveform()
+    this.setState({wave: waveform})
     noFill()
     beginShape()
     stroke(20)
@@ -79,8 +84,9 @@ class Drawing extends React.Component {
   }
   }
   togglePlay() {
-    console.log('===STATE SOUND====', this.state.sound)
-    //console.log('p5 KEYS', Object.keys(p5))
+    console.log('===STATE WAVE====', this.state.wave)
+    //console.log('p5 KEYS', Object.keys(p5)
+    wave = this.state.fft.waveform();
     if (this.state.sound.isPlaying()) {
       this.state.sound.pause()
     } else {
@@ -95,9 +101,31 @@ class Drawing extends React.Component {
       <div>Loading...</div>
     }else{
 
+
+    console.log('STATE=======WAYYYYYYYY', this.state.wave)
     return (
       <div>
+        <Plot
+        data={[
+          {
+            x: [1, 2, 3],
+            y: this.state.wave,
+            type: 'scatter      ',
+            mode: 'markers',
+            marker: {color: 'blue'},
+            transforms: [{
+            type: 'filter',
+            target: 'y',
+            operation: '>',
+            value: 4
+            }]
+          },
+          {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
+        ]}
+        layout={ {width: 320, height: 240, title: 'Will I Change?'} }
+      />
         <P5Wrapper sketch={this.sketch}/>
+        <Button onClick={()=>console.log('ONCLICK STATE WAVEE', this.state.wave)}>WAVE</Button>
         <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
         {/* <Sketch preload={this.preload} setup={this.setup} draw={this.draw} /> */}
       </div>

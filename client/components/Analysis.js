@@ -1,3 +1,8 @@
+//import fs from 'fs'
+//import wav from 'node-wav'
+import FFT from 'fft.js'
+//import plotlib from 'nodeplotlib'
+
 import React from 'react'
 import {
   Container,
@@ -17,7 +22,7 @@ import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import Drawing from './Drawing'
 import {myp5} from './Drawing'
-
+import Fourier from './Fourier'
 
 let sound = myp5.loadSound('./tryp5.mp3')
 function preload() {
@@ -102,6 +107,8 @@ class Analysis extends React.Component {
       }
       request.send()
     }
+//============================================================================\
+//============================================================================\\
     return (
       <Container maxWidth="sm">
         <div>
@@ -133,14 +140,20 @@ class Analysis extends React.Component {
                 </ButtonGroup>
               </div>
             )}
-            <Drawing />
             <div id="waveform" />
+            <Drawing/>
           </Card>
         </div>
       </Container>
     )
   }
 }
+
+
+
+
+
+
 
 const mapState = state => {
   return {
