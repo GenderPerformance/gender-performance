@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Button} from '@material-ui/core'
 
-import Sketch from 'react-p5'
+import Sketch from 'react-p5-wrapper'
 import '../../node_modules/p5/lib/addons/p5.sound'
 import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
@@ -30,7 +30,7 @@ const myp5LoadSound = new p5().loadSound
 //     sound.loop()
 //   }
 //
-export class Drawing extends React.Component {
+class Drawing extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

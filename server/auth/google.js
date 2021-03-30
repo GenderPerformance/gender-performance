@@ -22,7 +22,11 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 } else {
   let callbackURL
 
-  if ((process.env.PGHOST === 'localhost'||process.env.NODE_ENV !== 'production')&&!process.env.TRAVIS){
+  if (
+    (process.env.PGHOST === 'localhost' ||
+       process.env.NODE_ENV !== 'production') &&
+     !process.env.TRAVIS
+  ) {
     callbackURL = 'http://localhost:8080/auth/google/callback'
   } else {
     callbackURL = 'https://performanio1.herokuapp.com/auth/google/callback'
