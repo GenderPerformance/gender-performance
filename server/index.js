@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'test') {
  * Node process on process.env
  */
 if (
-  (process.env.PGHOST === 'localhost'||
+  (process.env.PGHOST === 'localhost' ||
     process.env.NODE_ENV !== 'production') &&
   !process.env.TRAVIS
 ) {
