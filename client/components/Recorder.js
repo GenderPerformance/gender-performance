@@ -13,7 +13,8 @@ class Recorder extends React.Component {
 
     this.state = {
       recordState: null,
-      paragraph: paragraph
+      paragraph: paragraph,
+      blob: null
     }
 
     this.newParagraph = this.newParagraph.bind(this)
@@ -37,6 +38,7 @@ class Recorder extends React.Component {
   //audioData contains blob and blobUrl
   onStop = audioData => {
     this.props.recordClip(audioData)
+    this.setState({blob: audioData})
   }
 
   newParagraph() {
@@ -44,6 +46,7 @@ class Recorder extends React.Component {
   }
 
   render() {
+    console.log('State:', this.state)
     const {recordState} = this.state
     const {recordingURL, recordingBlob, userId} = this.props
     if (!this.props.userId) {
@@ -99,7 +102,7 @@ class Recorder extends React.Component {
                 <Button type="button" id="stop" onClick={this.stop}>
                   Stop
                 </Button>
-                {recordingBlob ? (
+                {this.state.blob ? (
                   <Link component={RouterLink} to="/Analysis" variant="button">
                     <Button
                       style={{
@@ -107,9 +110,10 @@ class Recorder extends React.Component {
                       }}
                       type="button"
                       id="analysis"
-                      onClick={() =>
+                      onClick={() => {
                         this.props.analyzeClip(userId, recordingBlob)
-                      }
+                        this.setState({blob: null})
+                      }}
                     >
                       Analyze
                     </Button>
