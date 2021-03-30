@@ -1,45 +1,49 @@
 import React from 'react'
-import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+const audio = document.createElement('audio')
 import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
 class MediaPlayer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      url: props.audioUrl
+      isPaused: true
     }
   }
+  componentDidMount() {
+    audio.src = this.props.audioUrl
+    audio.load()
+  }
 
+  togglePause() {
+    if (this.state.isPaused) {
+      audio.play()
+      this.setState({isPaused: false})
+    } else {
+      audio.pause()
+      this.setState({isPaused: true})
+    }
+  }
   render() {
-    const {url} = this.state
+    const {isPaused} = this.state
     return (
-      <Container maxWidth="sm">
-        <br />
-        <Card
-          style={{
-            backgroundColor: '#cbae82',
-            paddingLeft: '2em',
-            paddingRight: '2em'
-          }}
-        >
-          <div className="player">
-            <audio id="audio" controls src={url} />
-            <br />
+      <Container>
+        <div className="player">
+          <div id="player-controls">
+            <div className="row center">
+              <i
+                className={
+                  isPaused ? 'fa fa-play-circle' : 'fa fa-pause-circle'
+                }
+                onClick={() => {
+                  this.togglePause()
+                }}
+              />
+            </div>
           </div>
-        </Card>
+        </div>
       </Container>
     )
   }
 }
 
-const mapState = state => {
-  return {}
-}
-
-const mapDispatch = dispatch => {
-  return {}
-}
-
-export default connect(mapState, mapDispatch)(MediaPlayer)
+export default MediaPlayer

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import {Card} from '@material-ui/core'
 
 const About = props => {
   return (
