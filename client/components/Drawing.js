@@ -1,45 +1,109 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {Button} from '@material-ui/core'
+
 import Sketch from 'react-p5'
+import '../../node_modules/p5/lib/addons/p5.sound'
+import '../../node_modules/p5/lib/addons/p5.dom'
+import p5 from 'p5'
+
 let x = 50
 let y = 50
 
-// export default (props) => {
-// 	const setup = (p5, canvasParentRef) => {
-// 		// use parent to render the canvas in this ref
-// 		// (without that p5 will render the canvas outside of your component)
-// 		p5.createCanvas(500, 500).parent(canvasParentRef);
-// 	};
-// 	const draw = (p5) => {
-// 	if (mouseIsPressed) {
-//     fill(0);
-//   } else {
-//     fill(255);
-//   }
-//   ellipse(mouseX, mouseY, 80, 80);
-// 	};
-// 	return <Sketch setup={setup} draw={draw} />;
-// };
+const myp5LoadSound = new p5().loadSound
+//let sound = myp5.loadSound('./tryp5.mp3')
 
-export default class Drawing extends React.Component {
-  constructor() {
-    super()
+// function preload() {
+//   console.log('SOUND?', sound)
+// }
+
+// function togglePlay() {
+//   console.log('INSTANCE', myp5)
+//   myp5.loadSound()
+//   console.log('INSTANCEKEYS', Object.keys(myp5))
+//   console.log('p5=====', p5)
+//   console.log('p5 SOUND', p5.sound)
+//   console.log('p5 KEYS', Object.keys(p5))
+//   if (sound.isPlaying()) {
+//     sound.pause()
+//   } else {
+//     sound.loop()
+//   }
+//
+export class Drawing extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      sound: null,
+      fft: null
+    }
     this.setup = this.setup.bind(this)
     this.draw = this.draw.bind(this)
+    this.togglePlay = this.togglePlay.bind(this)
+    this.preload = this.preload.bind(this)
+  }
+
+  preload() {
+    this.setState({sound: myp5LoadSound(this.props.recordingBlob)})
   }
 
   setup() {
-    createCanvas(400, 400)
+    let cnv = createCanvas(800, 400)
+    cnv.mouseClicked(this.togglePlay)
+    this.setState({fft: new p5.FFT()})
+    //this.state.sound.amp(0.2);
   }
   draw(p5) {
-    if (mouseIsPressed) {
-      fill(0)
-    } else {
-      fill(255)
+    background('rgba(0,255,0, 0.25)')
+    let spectrum = this.state.fft.analyze()
+    noStroke()
+    fill(0, 0, 255)
+    for (let i = 0; i < spectrum.length; i++) {
+      let x = map(i, 0, spectrum.length, 0, width)
+      let h = -height + map(spectrum[i], 125, 255, height, 0)
+      rect(x, height, width / spectrum.length, h)
     }
-    ellipse(mouseX, mouseY, 80, 80)
+
+    let waveform = this.state.fft.waveform()
+    noFill()
+    beginShape()
+    stroke(20)
+    for (let i = 0; i < waveform.length; i++) {
+      let x = map(i, 0, waveform.length, 0, width)
+      let y = map(waveform[i], -1, 1, 0, height)
+      vertex(x, y)
+    }
+    endShape()
+
+    text('tap to play', 20, 20)
+  }
+
+  togglePlay() {
+    console.log('===STATE SOUND====', this.state.sound)
+    //console.log('p5 KEYS', Object.keys(p5))
+    if (this.state.sound.isPlaying()) {
+      this.state.sound.pause()
+    } else {
+      this.state.sound.loop()
+    }
   }
 
   render() {
-    return <Sketch setup={this.setup} draw={this.draw} />
+    console.log(`DRAWING PROPS======`, this.props)
+    return (
+      <div>
+        <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
+        <Sketch preload={this.preload} setup={this.setup} draw={this.draw} />
+      </div>
+    )
   }
 }
+
+const mapState = state => {
+  return {
+    recordingURL: state.recording.recordingURL,
+    recordingBlob: state.recording.recordingBlob
+  }
+}
+
+export default connect(mapState)(Drawing)

@@ -3415,16 +3415,16 @@
           if (rampTime === 0) {
             this.oscillator.frequency.setValueAtTime(val, tFromNow + now)
           } else if (val > 0) {
-              this.oscillator.frequency.exponentialRampToValueAtTime(
-                val,
-                tFromNow + rampTime + now
-              )
-            } else {
-              this.oscillator.frequency.linearRampToValueAtTime(
-                val,
-                tFromNow + rampTime + now
-              )
-            }
+            this.oscillator.frequency.exponentialRampToValueAtTime(
+              val,
+              tFromNow + rampTime + now
+            )
+          } else {
+            this.oscillator.frequency.linearRampToValueAtTime(
+              val,
+              tFromNow + rampTime + now
+            )
+          }
 
           if (this.phaseAmount) {
             this.phase(this.phaseAmount)
@@ -4871,7 +4871,6 @@
 
       p5.PolySynth.prototype._updateAfter = function(time, value) {
         if (this._voicesInUse._searchAfter(time) === null) {
-          
         } else {
           this._voicesInUse._searchAfter(time).value += value
 
@@ -6998,10 +6997,10 @@
         if (!unit) {
           this.panner.connect(p5sound.input)
         } else if (unit.hasOwnProperty('input')) {
-            this.panner.connect(unit.input)
-          } else {
-            this.panner.connect(unit)
-          }
+          this.panner.connect(unit.input)
+        } else {
+          this.panner.connect(unit)
+        }
       }
       /**
        * Disconnects the output of this p5sound object.
@@ -13121,7 +13120,6 @@
         var secondsFromNow = tickTime - p5sound.audiocontext.currentTime
 
         if (elapsedTime - this.tatumTime <= -0.02) {
-          
         } else {
           this.prevTick = tickTime
 
@@ -13580,8 +13578,8 @@
           this.callback(time)
           this.partStep += 1
         } else if (!this.looping && this.partStep === this.length - 1) {
-            this.onended()
-          }
+          this.onended()
+        }
       }
       /**
        *  Set the function that will be called at every step. This will clear the previous function.

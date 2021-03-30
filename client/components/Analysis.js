@@ -54,10 +54,6 @@ class Analysis extends React.Component {
       })
       this.setState({wavesurfer: wavesurfer})
     }
-
-    const script = document.createElement('script')
-    script.src = './sketch.js'
-    document.body.appendChild(script)
   }
   render() {
     if (this.props.prediction) {
@@ -134,7 +130,6 @@ class Analysis extends React.Component {
                   <Button onClick={() => this.state.wavesurfer.playPause()}>
                     Play/Pause
                   </Button>
-                  <Button onClick={() => togglePlay()}>P5 Test</Button>
                 </ButtonGroup>
               </div>
             )}
