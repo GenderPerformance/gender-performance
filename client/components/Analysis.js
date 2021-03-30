@@ -16,8 +16,8 @@ import '../../node_modules/p5/lib/addons/p5.sound'
 import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import Drawing from './Drawing'
+import {myp5} from './Drawing'
 
-const myp5 = new p5()
 
 let sound = myp5.loadSound('./tryp5.mp3')
 function preload() {

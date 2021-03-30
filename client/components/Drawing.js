@@ -7,10 +7,7 @@ import '../../node_modules/p5/lib/addons/p5.sound'
 import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
 
-let x = 50
-let y = 50
-
-const myp5LoadSound = new p5().loadSound
+export const myp5 = new p5()
 //let sound = myp5.loadSound('./tryp5.mp3')
 
 // function preload() {
@@ -46,7 +43,7 @@ class Drawing extends React.Component {
 
   sketch(p){
   p.preload=()=>{
-    this.setState({sound: myp5LoadSound('./tryp5.wav')})
+    this.setState({sound: myp5.loadSound('./tryp5.wav')})
   }
 
   p.setup=()=>{
