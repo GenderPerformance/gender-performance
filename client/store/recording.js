@@ -5,9 +5,9 @@ import history from '../history'
  * ACTION TYPES
  */
 const ANALYZE_CLIP = 'ANALYZE_CLIP'
-const REMOVE_CLIP = 'REMOVE_CLIP'
 const RECORD_CLIP = 'RECORD_CLIP'
 const IS_LOADING = 'IS_LOADING'
+const FETCH_HISTORY = 'FETCH_HISTORY'
 
 /**
  * INITIAL STATE
@@ -16,7 +16,8 @@ const defaultState = {
   recordingBlob: null,
   recordingURL: '',
   prediction: null,
-  loading: false
+  loading: false,
+  recordingHistory: []
 }
 
 /**
@@ -24,8 +25,8 @@ const defaultState = {
  */
 const _analyzeClip = recordingData => ({type: ANALYZE_CLIP, recordingData})
 const _isLoading = loading => ({type: IS_LOADING, loading})
-const removeClip = () => ({type: REMOVE_CLIP})
 export const recordClip = recordingData => ({type: RECORD_CLIP, recordingData})
+const _fetchHistory = userHistory => ({type: FETCH_HISTORY, userHistory})
 
 /**
  * THUNK CREATORS
@@ -36,7 +37,6 @@ export const analyzeClip = (userId, blob) => async dispatch => {
     //create file ref in db
     const res = await axios.post('api/recordings/upload')
     const fileName = res.data
-    console.log('🚀 ~ file: recording.js ~ line 34 ~ fileName', fileName)
 
     //upload file to S3
     const clip = new File([blob], fileName)
@@ -49,10 +49,10 @@ export const analyzeClip = (userId, blob) => async dispatch => {
 
     //prepare file for analysis
     const formData = new FormData()
+    formData.append('s3Url', url)
     formData.append('soundBlob', blob, fileName)
     //analyze
     const result = await axios.post('/api/recordings/analyze', formData)
-    console.log('🚀 ~ file: recording.js ~ line 49 ~ result', result)
     //log prediction
     const prediction = result.data
     const audioData = {
@@ -61,6 +61,18 @@ export const analyzeClip = (userId, blob) => async dispatch => {
     }
     dispatch(_analyzeClip(audioData))
     dispatch(_isLoading(false))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const fetchHistory = userId => async dispatch => {
+  try {
+    console.log('fetching history?')
+    const response = await axios.get(`/api/recordings/user/${userId}`)
+    console.log('🚀 ~ file: recording.js ~ line 73 ~ response', response)
+    const userHistory = response.data
+    dispatch(_fetchHistory(userHistory))
   } catch (error) {
     console.error(error)
   }
@@ -85,8 +97,11 @@ export default function(state = defaultState, action) {
         recordingURL: action.recordingData.url,
         prediction: null
       }
-    case REMOVE_CLIP:
-      return defaultState
+    case FETCH_HISTORY:
+      return {
+        ...state,
+        recordingHistory: action.userHistory
+      }
     default:
       return state
   }

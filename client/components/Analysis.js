@@ -18,7 +18,6 @@ class Analysis extends React.Component {
 
   componentDidMount() {
     if (!this.state.wavesurfer) {
-      console.log('wavesurfing???')
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
         plugins: []

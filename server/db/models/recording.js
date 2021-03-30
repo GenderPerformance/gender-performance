@@ -7,6 +7,9 @@ const Recording = db.define('recording', {
   },
   femaleConfidence: {
     type: Sequelize.FLOAT
+  },
+  url: {
+    type: Sequelize.STRING
   }
 })
 
