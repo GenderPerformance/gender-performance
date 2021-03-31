@@ -8,9 +8,11 @@ class MediaPlayer extends React.Component {
   componentDidMount() {
     audio.src = this.props.recordingURL
     audio.load()
+    audio.onended = () => this.props.pause()
   }
 
   togglePause() {
+    console.log('toggling!')
     if (this.props.isPaused) {
       this.props.play()
       audio.play()

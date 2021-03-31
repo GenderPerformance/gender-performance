@@ -16,11 +16,12 @@ class Recorder extends React.Component {
       recordState: null,
       paragraph: paragraph
     }
-
     this.newParagraph = this.newParagraph.bind(this)
+    this.start = this.start.bind(this)
+    this.stop = this.stop.bind(this)
+    this.onStop = this.onStop.bind(this)
   }
   componentDidMount() {}
-
   start() {
     this.props.clearRecording()
     this.setState({
