@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link as RouterLink} from 'react-router-dom'
 import {recordClip, analyzeClip} from '../store'
 import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
+import MenuBar from './MenuBar'
 const txtgen = require('txtgen')
 const paragraph = txtgen.paragraph()
 

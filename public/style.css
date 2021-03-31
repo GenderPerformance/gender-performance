@@ -78,3 +78,14 @@ p {
   align-items: center;
   padding: 1em;
 }
+
+.Menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.title {
+  padding-left: 2em;
+}

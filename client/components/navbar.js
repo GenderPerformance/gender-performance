@@ -4,20 +4,27 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {AppBar} from '@material-ui/core'
+import MenuBar from './MenuBar'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <nav>
       {isLoggedIn ? (
         <AppBar position="static">
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <Link to="/home">Record</Link>
-            <Link to="/userhistory">History</Link>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
+          <div className="Menu">
+            <div className="title">
+              {/* The navbar will show these links after you log in */}
+              <h1>PERFORMANCE</h1>
+              {/* <Link to="/home">Home</Link>
+              <Link to="/home">Record</Link>
+              <Link to="/userhistory">History</Link>
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a> */}
+            </div>
+            <div>
+              <MenuBar />
+            </div>
           </div>
         </AppBar>
       ) : (
