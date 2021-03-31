@@ -13,9 +13,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <AppBar position="static">
           <div className="Menu">
             <div className="title">
-              {/* The navbar will show these links after you log in */ console.log(
-                Navbar.propTypes
-              )}
+              {/* The navbar will show these links after you log in */}
               <h1>PERFORMANCE</h1>
               {/* <Link to="/home">Home</Link>
               <Link to="/home">Record</Link>

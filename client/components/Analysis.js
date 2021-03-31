@@ -54,7 +54,6 @@ class Analysis extends React.Component {
                 <br />
                 <ButtonGroup
                   variant="contained"
-                  color="secondary"
                   aria-label="contained primary button group"
                 >
                   <Button onClick={() => this.state.wavesurfer.playPause()}>

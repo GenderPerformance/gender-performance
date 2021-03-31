@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {Link as RouterLink} from 'react-router-dom'
 import {recordClip, analyzeClip} from '../store'
 import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
-import MenuBar from './MenuBar'
 const txtgen = require('txtgen')
 const paragraph = txtgen.paragraph()
 
@@ -19,9 +18,6 @@ class Recorder extends React.Component {
     }
 
     this.newParagraph = this.newParagraph.bind(this)
-  }
-  componentDidMount() {
-    console.log('compoenent did mount', this.props)
   }
 
   start = () => {
@@ -47,7 +43,6 @@ class Recorder extends React.Component {
   }
 
   render() {
-    console.log('State:', this.state)
     const {recordState} = this.state
     const {recordingURL, recordingBlob, userId} = this.props
     if (!this.props.userId) {
@@ -58,7 +53,6 @@ class Recorder extends React.Component {
           <Container className="recordButtonParagraph">
             <ButtonGroup
               variant="contained"
-              color="secondary"
               aria-label="contained primary button group"
             >
               <Button
@@ -75,9 +69,7 @@ class Recorder extends React.Component {
               {this.state.blob ? (
                 <Link component={RouterLink} to="/Analysis" variant="button">
                   <Button
-                    style={{
-                      backgroundColor: '#c8e6c8'
-                    }}
+                    style={{}}
                     type="button"
                     id="analysis"
                     onClick={() => {
@@ -90,34 +82,29 @@ class Recorder extends React.Component {
                 </Link>
               ) : null}
             </ButtonGroup>
-            <Card style={{backgroundColor: '#c8e6c7'}}>
-              <div className="txtgen">
-                Press record then say:
-                <h4>{`${this.state.paragraph}`}</h4>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.newParagraph}
-                >
-                  New Paragraph
-                </Button>
-              </div>
+            <Card className="txtgen">
+              Press record then say:
+              <h4>{`${this.state.paragraph}`}</h4>
+              <Button variant="contained" onClick={this.newParagraph}>
+                New Paragraph
+              </Button>
             </Card>
           </Container>
-          <Card>
+          <div className="audio">
             <AudioReactRecorder
               state={recordState}
               onStop={this.onStop}
-              backgroundColor="rgb(255,224,177)"
-              foregroundColor="rgb(151,180,151)"
-              canvasHeight="100"
+              backgroundColor="rgb(255,255,255)"
+              foregroundColor="rgb(159,48,226)"
+              canvasHeight="150"
+              canvasWidth="900"
             />
             <audio
               id="audio"
               controls={recordingURL}
               src={recordingURL ? recordingURL : null}
             />
-          </Card>
+          </div>
         </Container>
       )
     }
