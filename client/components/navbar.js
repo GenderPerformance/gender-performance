@@ -13,7 +13,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <AppBar position="static">
           <div className="Menu">
             <div className="title">
-              {/* The navbar will show these links after you log in */}
+              {/* The navbar will show these links after you log in */ console.log(
+                Navbar.propTypes
+              )}
               <h1>PERFORMANCE</h1>
               {/* <Link to="/home">Home</Link>
               <Link to="/home">Record</Link>
@@ -21,6 +23,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <a href="#" onClick={handleClick}>
                 Logout
               </a> */}
+              <a href="#" onClick={handleClick}>
+                Logout
+              </a>
             </div>
             <div>
               <MenuBar />

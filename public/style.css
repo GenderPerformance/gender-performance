@@ -83,9 +83,12 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 }
 
 .title {
   padding-left: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
