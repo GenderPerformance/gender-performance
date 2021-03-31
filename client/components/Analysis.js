@@ -36,15 +36,12 @@ function togglePlay() {
   }
 }
 
-
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
       wavesurfer: null
     }
-    this.spectroRestart=this.spectroRestart.bind(this)
-    this.spectroStop=this.spectroStop.bind(this)
   }
 
   componentDidMount() {
