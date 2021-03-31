@@ -21,7 +21,10 @@ class Recorder extends React.Component {
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
   }
-  componentDidMount() {}
+  componentDidMount() {
+    //clear any recording from previous analysis
+    this.props.clearRecording()
+  }
   start() {
     this.props.clearRecording()
     this.setState({
@@ -63,73 +66,81 @@ class Recorder extends React.Component {
             <h1>Performance</h1>
           </Card>
           <br />
-          <Card
-            style={{
-              backgroundColor: '#ffe0b2'
-            }}
-          >
-            <div className="recorder">
+          <div id="recording-prompt">
+            <Card
+              style={{
+                backgroundColor: '#ffe0b2'
+              }}
+            >
               <h4>RECORD</h4>
-              {recordingURL && <MediaPlayer />}
-              <AudioReactRecorder
-                text-align="center"
-                state={recordState}
-                onStop={this.onStop}
-                backgroundColor="rgb(255,224,177)"
-                foregroundColor="rgb(151,180,151)"
-                canvasHeight={recordState === RecordState.START ? '100' : '0'}
-              />
-              <br />
               <ButtonGroup
                 variant="contained"
                 color="secondary"
                 aria-label="contained primary button group"
               >
-                <Button
-                  size="small"
-                  type="button"
-                  id="record"
-                  onClick={this.start}
-                >
-                  Record
-                </Button>
-                <Button type="button" id="stop" onClick={this.stop}>
-                  Stop
-                </Button>
-                {recordingBlob ? (
-                  <Link component={RouterLink} to="/Analysis" variant="button">
-                    <Button
-                      style={{
-                        backgroundColor: '#c8e6c8'
-                      }}
-                      type="button"
-                      id="analysis"
-                      onClick={() =>
-                        this.props.analyzeRecording(userId, recordingBlob)
-                      }
-                    >
-                      Analyze
-                    </Button>
-                  </Link>
-                ) : null}
+                {recordState === RecordState.START ? (
+                  <Button type="button" id="stop" onClick={this.stop}>
+                    Stop
+                  </Button>
+                ) : (
+                  <Button
+                    size="small"
+                    type="button"
+                    id="record"
+                    onClick={this.start}
+                  >
+                    Record
+                  </Button>
+                )}
               </ButtonGroup>
-              <br />
-            </div>
-          </Card>
+            </Card>
+            <br />
+            <Card style={{backgroundColor: '#c8e6c7'}}>
+              <div className="txtgen">
+                Press record then say:
+                <h4>{`${this.state.paragraph}`}</h4>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.newParagraph}
+                >
+                  New Paragraph
+                </Button>
+              </div>
+            </Card>
+          </div>
           <br />
-          <Card style={{backgroundColor: '#c8e6c7'}}>
-            <div className="txtgen">
-              Press record then say:
-              <h4>{`${this.state.paragraph}`}</h4>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.newParagraph}
-              >
-                New Paragraph
-              </Button>
-            </div>
-          </Card>
+          <div id="waveform-and-player">
+            {recordingBlob && (
+              <Link component={RouterLink} to="/Analysis" variant="button">
+                <Button
+                  style={{
+                    backgroundColor: '#c8e6c8'
+                  }}
+                  type="button"
+                  id="analysis"
+                  onClick={() =>
+                    this.props.analyzeRecording(userId, recordingBlob)
+                  }
+                >
+                  Analyze
+                </Button>
+              </Link>
+            )}
+            <br />
+            {recordingURL && <MediaPlayer />}
+            <AudioReactRecorder
+              text-align="center"
+              state={recordState}
+              onStop={this.onStop}
+              backgroundColor="rgb(255,224,177)"
+              foregroundColor="rgb(151,180,151)"
+              canvasHeight={recordState === RecordState.START ? '100' : '0'}
+            />
+            <br />
+            <br />
+          </div>
+          <br />
         </Container>
       )
     }

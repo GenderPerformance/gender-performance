@@ -9,12 +9,7 @@ import Recorder from './Recorder'
 export const UserHome = props => {
   const {email} = props
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-      <Recorder />
-    </div>
-  )
+  return <Recorder />
 }
 
 /**

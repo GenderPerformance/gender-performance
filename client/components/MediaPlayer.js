@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {playRecording, pauseRecording} from '../store'
 const audio = document.createElement('audio')
-import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import {Button, Card} from '@material-ui/core'
 
 class MediaPlayer extends React.Component {
   componentDidMount() {
@@ -12,7 +12,6 @@ class MediaPlayer extends React.Component {
   }
 
   togglePause() {
-    console.log('toggling!')
     if (this.props.isPaused) {
       this.props.play()
       audio.play()
@@ -25,11 +24,11 @@ class MediaPlayer extends React.Component {
   render() {
     const {isPaused} = this.props
     return (
-      <Container>
+      <Card>
         <div className="player">
           <div id="player-controls">
             <div className="row center">
-              <i
+              <Button
                 className={
                   isPaused ? 'fa fa-play-circle' : 'fa fa-pause-circle'
                 }
@@ -40,7 +39,7 @@ class MediaPlayer extends React.Component {
             </div>
           </div>
         </div>
-      </Container>
+      </Card>
     )
   }
 }
