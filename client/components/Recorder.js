@@ -15,8 +15,7 @@ class Recorder extends React.Component {
 
     this.state = {
       recordState: null,
-      paragraph: paragraph,
-      blob: null
+      paragraph: paragraph
     }
     this.newParagraph = this.newParagraph.bind(this)
     this.start = this.start.bind(this)
@@ -43,7 +42,6 @@ class Recorder extends React.Component {
   //audioData contains blob and blobUrl
   onStop(audioData) {
     this.props.recordClip(audioData)
-    this.setState({blob: audioData})
   }
 
   newParagraph() {
@@ -51,7 +49,6 @@ class Recorder extends React.Component {
   }
 
   render() {
-    console.log('State:', this.state)
     const {recordState} = this.state
     const {recordingURL, recordingBlob, userId} = this.props
     if (!this.props.userId) {
