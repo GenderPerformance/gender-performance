@@ -35,7 +35,6 @@ router.post('/upload', async (req, res, next) => {
   try {
     const dbRecord = await Recording.create({userId: req.user.id})
     const fileName = `user-${req.user.id}-recording-${dbRecord.id}.wav`
-    console.log(fileName)
     res.send(fileName)
   } catch (err) {
     console.error(err)
@@ -45,17 +44,9 @@ router.post('/upload', async (req, res, next) => {
 router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   try {
     let currTimeStamp = new Date()
-    console.log('file info??', req.file)
     const fileName = req.file.originalname
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 49 ~ router.post ~ fileName',
-      fileName
-    )
-    console.log('the user accessing the route is:', req.user.email, req.user.id)
-    //need to change saved file with a variable name.
-    //make sure to adjust filDir variable as well
     const uploadLocation = path.join(__dirname, '../../tmp', `${fileName}`)
-    //saves the file to tmp directory. create a new file if it does not exist
+    //saves the file to tmp directory
     //this file will only exist on heroku while this route is running.
     console.log(Date.now() - currTimeStamp, 'starting writefileSync')
     fs.writeFileSync(
@@ -63,19 +54,9 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
       Buffer.from(new Uint8Array(req.file.buffer)),
       {flag: 'w+'}
     )
-    console.log(
-      Date.now() - currTimeStamp,
-      'finished writefileSync/starting ML model'
-    )
     //run the ML Model and save the result.
     const result = await getPrediction(fileName)
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 71 ~ router.post ~ result',
-      result
-    )
     console.log(Date.now() - currTimeStamp, 'finished ML model')
-    //TODO: Add call of ML analysis
-    //TODO: Await prediction response
     res.send(result)
 
     //Saves the results to the DB
@@ -84,11 +65,11 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
       10
     )
 
-    console.log('db record id!! ', dbRecordId, typeof dbRecordId)
     await Recording.update(
       {
         femaleConfidence: result.fp,
-        maleConfidence: result.mp
+        maleConfidence: result.mp,
+        url: req.body.s3Url
       },
       {
         where: {
@@ -98,5 +79,23 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     )
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/user/:userId', async (req, res, next) => {
+  try {
+    const recordings = await Recording.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    console.log(
+      '🚀 ~ file: recordings.js ~ line 92 ~ router.get ~ response',
+      recordings
+    )
+
+    res.send(recordings)
+  } catch (err) {
+    console.error(err)
   }
 })

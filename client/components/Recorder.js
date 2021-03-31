@@ -18,9 +18,7 @@ class Recorder extends React.Component {
 
     this.newParagraph = this.newParagraph.bind(this)
   }
-  componentDidMount() {
-    console.log('compoenent did mount', this.props)
-  }
+  componentDidMount() {}
 
   start = () => {
     this.setState({
