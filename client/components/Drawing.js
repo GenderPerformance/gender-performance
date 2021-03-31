@@ -54,7 +54,7 @@ class Drawing extends React.Component {
     }
     p.draw = () => {
       //p.createCanvas(600, 400, p.WEBGL)
-      p.background('rgba(0,0,0, 0.25)')
+      p.background('rgba(255,255,0, 0.25)')
       let spectrum = this.state.fft.analyze()
       p.stroke(10)
       p.noFill()

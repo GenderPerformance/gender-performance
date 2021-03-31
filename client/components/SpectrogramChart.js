@@ -16,8 +16,10 @@ class SpectrogramChart extends React.Component {
     super()
     this.state = {
     }
-    this.spectroRestart=this.spectroRestart.bind(this)
-    this.spectroStop=this.spectroStop.bind(this)
+    this.spectroReset=this.spectroReset.bind(this)
+    this.spectroPause=this.spectroPause.bind(this)
+    this.spectroStart=this.spectroStart.bind(this)
+    this.spectroResume=this.spectroResume.bind(this)
     this.createSpectrogram=this.createSpectrogram.bind(this)
     this.drawSpectrogram=this.drawSpectrogram.bind(this)
   }
@@ -77,40 +79,68 @@ class SpectrogramChart extends React.Component {
       request.send()
   }
 
-  spectroRestart(spectro,url){
-    spectro.clear()
-    this.drawSpectrogram(spectro,url)
+  //start the spectro waveform after a reset and the waveform is loaded
+  //each time start is hit, it will rerender the spectro waveform. It
+  //is possible to have multiple of the same waveform on the canvas which
+  //could be confusing.
+  spectroStart(url){
+    this.drawSpectrogram(this.state.spectro,url)
+    console.log('inside spectro start',this.state.spectro)
   }
 
-  spectroStop(spectro){
-    spectro.pause()
-  }
-
-  render() {
-    let spectro
-    console.log(this.props)
-    let DOMelement= document.getElementById('canvas1')
-    if (DOMelement&&this.props.recordingURL) {
-      //create the spectrogram canvas object object(length,width,elementId)
-      spectro = this.createSpectrogram(500,350,DOMelement)
-      //draw the spectrogram on analysis
-      this.drawSpectrogram(spectro,this.props.recordingURL)
-    }else{
-      return <div>Loading...</div>
+  //need to call this function first before anything will be rendered
+  //on the canvas. this establishes where the waveform will be drawn and
+  //rerenders onto the canvas each time. It will also clear the canvas
+  //if called even if there is a spectrogram moving across it.
+  spectroReset(){
+    if(this.state.spectro){
+      this.state.spectro.clear()
     }
-    console.log('render spectro',spectro)
+    let DOMelement= document.getElementById('canvas1')
+    let spectro = this.createSpectrogram(500,350,DOMelement)
+    console.log("inside spectro reset",this.state)
+    this.setState({spectro})
+  }
+
+  //this pauses the spectrogram but it is buggy.
+  //if the spectrogram waveform is not finished drawing, it will cut off
+  //the rest when pausing
+  spectroPause(){
+    this.state.spectro.pause()
+  }
+
+  //resume the spectro waveform if it is paused
+  spectroResume(){
+    this.state.spectro.resume()
+  }
+  render() {
+    if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
+      return <div>Loading...</div>
+    }else{
     return (
       <Container maxWidth="sm">
         <ButtonGroup
         variant="contained"
         color="secondary"
         aria-label="contained primary button group">
-          {spectro!==undefined?<div><Button onClick={()=>this.spectroRestart(spectro,this.props.recordingURL)}>Spectro restart</Button><Button onClick={()=>this.spectroStop(spectro)}>Spectro stop</Button></div>:<div></div>}
+            <div>
+              <Button onClick={()=>
+                this.spectroReset()}>Spectro reset</Button>
+              <Button onClick={()=>
+                this.spectroPause()}>pause</Button>
+              <Button onClick={()=>
+                this.spectroStart(this.props.recordingURL)}>Start</Button>
+              <Button onClick={()=>
+                this.spectroResume()}>Resume</Button>
+              </div>
         </ButtonGroup>
       </Container>
     )
   }
 }
+}
+
+
 
 const mapState = state => {
   return {
