@@ -1,18 +1,23 @@
 import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
-import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import MediaPlayer from './MediaPlayer'
 import {recordClip, analyzeRecording, clearRecording} from '../store'
-import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
+import {Link as RouterLink} from 'react-router-dom'
+import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
+const txtgen = require('txtgen')
+const paragraph = txtgen.paragraph()
 
 class Recorder extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      recordState: null
+      recordState: null,
+      paragraph: paragraph
     }
+
+    this.newParagraph = this.newParagraph.bind(this)
   }
   componentDidMount() {}
 
@@ -32,6 +37,10 @@ class Recorder extends React.Component {
   //audioData contains blob and blobUrl
   onStop(audioData) {
     this.props.recordClip(audioData)
+  }
+
+  newParagraph() {
+    this.setState({paragraph: txtgen.paragraph()})
   }
 
   render() {
@@ -87,8 +96,11 @@ class Recorder extends React.Component {
                   Stop
                 </Button>
                 {recordingBlob ? (
-                  <Link to="/Analysis">
+                  <Link component={RouterLink} to="/Analysis" variant="button">
                     <Button
+                      style={{
+                        backgroundColor: '#c8e6c8'
+                      }}
                       type="button"
                       id="analysis"
                       onClick={() =>
@@ -101,6 +113,20 @@ class Recorder extends React.Component {
                 ) : null}
               </ButtonGroup>
               <br />
+            </div>
+          </Card>
+          <br />
+          <Card style={{backgroundColor: '#c8e6c7'}}>
+            <div className="txtgen">
+              Press record then say:
+              <h4>{`${this.state.paragraph}`}</h4>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.newParagraph}
+              >
+                New Paragraph
+              </Button>
             </div>
           </Card>
         </Container>
