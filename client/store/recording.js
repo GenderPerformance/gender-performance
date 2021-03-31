@@ -8,6 +8,7 @@ const ANALYZE_CLIP = 'ANALYZE_CLIP'
 const REMOVE_CLIP = 'REMOVE_CLIP'
 const RECORD_CLIP = 'RECORD_CLIP'
 const IS_LOADING = 'IS_LOADING'
+const FOURIER_ANALYSIS= 'FOURIER_ANALYSIS'
 
 /**
  * INITIAL STATE
@@ -26,6 +27,13 @@ const _analyzeClip = recordingData => ({type: ANALYZE_CLIP, recordingData})
 const _isLoading = loading => ({type: IS_LOADING, loading})
 const removeClip = () => ({type: REMOVE_CLIP})
 export const recordClip = recordingData => ({type: RECORD_CLIP, recordingData})
+
+const _fourierAnalysis = (fourierArray) => {
+  return {
+    type: FOURIER_ANALYSIS,
+    fourierArray
+  }
+}
 
 /**
  * THUNK CREATORS
@@ -52,6 +60,8 @@ export const analyzeClip = (userId, blob) => async dispatch => {
     formData.append('soundBlob', blob, fileName)
     //analyze
     const result = await axios.post('/api/recordings/analyze', formData)
+    //const fourier = await axios.post('/api/analysis', formData)
+    //console.log('FOURIERARRAY', fourier.data)
     console.log('🚀 ~ file: recording.js ~ line 49 ~ result', result)
     //log prediction
     const prediction = result.data
@@ -61,6 +71,7 @@ export const analyzeClip = (userId, blob) => async dispatch => {
     }
     dispatch(_analyzeClip(audioData))
     dispatch(_isLoading(false))
+    //dispatch(_fourierAnalysis(fourier.data))
   } catch (error) {
     console.error(error)
   }

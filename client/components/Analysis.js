@@ -18,24 +18,6 @@ import p5 from 'p5'
 import Drawing from './Drawing'
 import {myp5} from './Drawing'
 
-let sound = myp5.loadSound('./tryp5.mp3')
-function preload() {
-  console.log('SOUND?', sound)
-}
-
-function togglePlay() {
-  console.log('INSTANCE', myp5)
-  myp5.loadSound()
-  console.log('INSTANCEKEYS', Object.keys(myp5))
-  console.log('p5=====', p5)
-  console.log('p5 SOUND', p5.sound)
-  console.log('p5 KEYS', Object.keys(p5))
-  if (sound.isPlaying()) {
-    sound.pause()
-  } else {
-    sound.loop()
-  }
-}
 
 class Analysis extends React.Component {
   constructor() {
