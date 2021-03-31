@@ -1,10 +1,3 @@
-html {
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-}
-
 a {
   text-decoration: none;
 }
@@ -53,12 +46,6 @@ p {
   padding: 10px;
 }
 
-.recorder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .circleProgress {
   display: flex;
   flex-direction: column;
@@ -72,11 +59,41 @@ p {
   padding-bottom: 2em;
 }
 
-.txtgen {
+.MuiPaper-root.txtgen {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1em;
+  width: 45%;
+}
+
+.Menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  padding-left: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.MuiContainer-root.recordPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  width: 100%;
+}
+.MuiContainer-root.recordButtonParagraph {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+  justify-content: space-evenly;
 }
 
 .Menu {

@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const FETCH_HISTORY = 'FETCH_HISTORY'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const _fetchHistory = userHistory => ({type: FETCH_HISTORY, userHistory})
 
 /**
  * THUNK CREATORS
@@ -56,6 +58,18 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const fetchHistory = userId => async dispatch => {
+  try {
+    console.log('fetching history?')
+    const response = await axios.get(`/api/recordings/user/${userId}`)
+    console.log('🚀 ~ file: recording.js ~ line 73 ~ response', response)
+    const userHistory = response.data
+    dispatch(_fetchHistory(userHistory))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -65,6 +79,11 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case FETCH_HISTORY:
+      return {
+        ...state,
+        recordingHistory: action.userHistory
+      }
     default:
       return state
   }
