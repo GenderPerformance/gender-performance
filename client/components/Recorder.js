@@ -5,6 +5,7 @@ import MediaPlayer from './MediaPlayer'
 import {recordClip, analyzeRecording, clearRecording} from '../store'
 import {Link as RouterLink} from 'react-router-dom'
 import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
+import MenuBar from './MenuBar'
 const txtgen = require('txtgen')
 const paragraph = txtgen.paragraph()
 

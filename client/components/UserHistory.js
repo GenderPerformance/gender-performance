@@ -71,7 +71,7 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    history: state.recording.recordingHistory
+    history: state.user.recordingHistory
   }
 }
 
