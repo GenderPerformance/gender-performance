@@ -4,39 +4,41 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const ANALYZE_CLIP = 'ANALYZE_CLIP'
+const ANALYZE_RECORDING = 'ANALYZE_RECORDING'
 const RECORD_CLIP = 'RECORD_CLIP'
 const IS_LOADING = 'IS_LOADING'
+const CLEAR_RECORDING = 'CLEAR_RECORDING'
 
 /**
  * INITIAL STATE
  */
 const defaultState = {
   recordingBlob: null,
-  recordingURL: '',
   prediction: null,
-  loading: false,
-  recordingHistory: []
+  loading: false
 }
 
 /**
  * ACTION CREATORS
  */
-const _analyzeClip = recordingData => ({type: ANALYZE_CLIP, recordingData})
+const _analyzeRecording = recordingData => ({
+  type: ANALYZE_RECORDING,
+  recordingData
+})
 const _isLoading = loading => ({type: IS_LOADING, loading})
 export const recordClip = recordingData => ({type: RECORD_CLIP, recordingData})
-const _fetchHistory = userHistory => ({type: FETCH_HISTORY, userHistory})
+export const clearRecording = () => ({type: CLEAR_RECORDING})
 
 /**
  * THUNK CREATORS
  */
-export const analyzeClip = (userId, blob) => async dispatch => {
+export const analyzeRecording = (userId, blob) => async dispatch => {
   try {
     dispatch(_isLoading(true))
     //create file ref in db
     const res = await axios.post('api/recordings/upload')
     const fileName = res.data
-
+    //direct user to url.com/analysis/user/3/recording/48
     //upload file to S3
     const clip = new File([blob], fileName)
     const response = await axios.get(
@@ -58,20 +60,8 @@ export const analyzeClip = (userId, blob) => async dispatch => {
       s3Url: url,
       prediction
     }
-    dispatch(_analyzeClip(audioData))
+    dispatch(_analyzeRecording(audioData))
     dispatch(_isLoading(false))
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const fetchHistory = userId => async dispatch => {
-  try {
-    console.log('fetching history?')
-    const response = await axios.get(`/api/recordings/user/${userId}`)
-    console.log('🚀 ~ file: recording.js ~ line 73 ~ response', response)
-    const userHistory = response.data
-    dispatch(_fetchHistory(userHistory))
   } catch (error) {
     console.error(error)
   }
@@ -82,7 +72,7 @@ export const fetchHistory = userId => async dispatch => {
  */
 export default function(state = defaultState, action) {
   switch (action.type) {
-    case ANALYZE_CLIP:
+    case ANALYZE_RECORDING:
       return {
         ...state,
         recordingURL: action.recordingData.s3Url,
@@ -93,14 +83,10 @@ export default function(state = defaultState, action) {
     case RECORD_CLIP:
       return {
         recordingBlob: action.recordingData.blob,
-        recordingURL: action.recordingData.url,
         prediction: null
       }
-    case FETCH_HISTORY:
-      return {
-        ...state,
-        recordingHistory: action.userHistory
-      }
+    case CLEAR_RECORDING:
+      return defaultState
     default:
       return state
   }

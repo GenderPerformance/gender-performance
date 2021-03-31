@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
-import {recordClip, analyzeClip} from '../store'
+import {recordClip, analyzeRecording} from '../store'
 
 class Analysis extends React.Component {
   constructor() {
