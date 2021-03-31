@@ -59,7 +59,6 @@ class Recorder extends React.Component {
             <div id="record-buttons">
               <ButtonGroup
                 variant="contained"
-                color="secondary"
                 aria-label="contained primary button group"
               >
                 {recordState === RecordState.START ? (
@@ -90,9 +89,8 @@ class Recorder extends React.Component {
             {recordingBlob && (
               <Link component={RouterLink} to="/Analysis" variant="button">
                 <Button
-                  style={{
-                    backgroundColor: '#c8e6c8'
-                  }}
+                  style={{}}
+                  variant="contained"
                   type="button"
                   id="analysis"
                   onClick={() =>

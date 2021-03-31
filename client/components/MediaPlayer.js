@@ -28,7 +28,7 @@ class MediaPlayer extends React.Component {
       <Card>
         <div className="player">
           <Button
-            ariaLabel="play-pause"
+            aria-label="play-pause"
             onClick={() => {
               this.togglePause()
             }}
