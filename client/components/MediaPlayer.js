@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {playRecording, pauseRecording} from '../store'
 const audio = document.createElement('audio')
 import {Button, Card} from '@material-ui/core'
+import {PauseCircleFilled, PlayCircleFilled} from '@material-ui/icons'
 
 class MediaPlayer extends React.Component {
   componentDidMount() {
@@ -26,18 +27,13 @@ class MediaPlayer extends React.Component {
     return (
       <Card>
         <div className="player">
-          <div id="player-controls">
-            <div className="row center">
-              <Button
-                className={
-                  isPaused ? 'fa fa-play-circle' : 'fa fa-pause-circle'
-                }
-                onClick={() => {
-                  this.togglePause()
-                }}
-              />
-            </div>
-          </div>
+          <Button
+            ariaLabel="play-pause"
+            onClick={() => {
+              this.togglePause()
+            }}
+            startIcon={isPaused ? <PlayCircleFilled /> : <PauseCircleFilled />}
+          />
         </div>
       </Card>
     )
