@@ -56,11 +56,11 @@ class Drawing extends React.Component {
     p.createCanvas(600, 400, p.WEBGL)
     p.background('rgba(0,255,0, 0.25)')
     let spectrum = this.state.fft.analyze()
-    p.noStroke()
-    p.fill(0, 0, 255)
+    p.stroke(10)
+    p.noFill()
     for (let i = 0; i < spectrum.length; i++) {
-      let x = map(i, 0, spectrum.length, 0, width)
-      let h = -height + map(spectrum[i], 125, 255, height, 0)
+      let x = p.map(i, 0, spectrum.length, 0, width)
+      let h = -height + p.map(spectrum[i], 125, 255, height, 0)
       p.rect(x, height, width / spectrum.length, h)
     }
       let waveform = this.state.fft.waveform()
@@ -73,8 +73,8 @@ class Drawing extends React.Component {
         vertex(x, y)
       }
       endShape()
-
-      text('tap to play', 20, 20)
+      //creates errors
+      //text('tap to play', 20, 20)
     }
   }
   togglePlay() {
@@ -83,7 +83,7 @@ class Drawing extends React.Component {
     if (this.state.sound.isPlaying()) {
       this.state.sound.pause()
     } else {
-      this.state.sound.loop()
+      this.state.sound.play()
     }
   }
 
