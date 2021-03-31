@@ -54,25 +54,9 @@ class Recorder extends React.Component {
       return <div>Loading...</div>
     } else {
       return (
-        <Container maxWidth="sm">
-          <br />
-          <Card
-            style={{
-              backgroundColor: '#cbae82',
-              paddingLeft: '2em',
-              paddingRight: '2em'
-            }}
-          >
-            <h1>Performance</h1>
-          </Card>
-          <br />
-          <div id="recording-prompt">
-            <Card
-              style={{
-                backgroundColor: '#ffe0b2'
-              }}
-            >
-              <h4>RECORD</h4>
+        <Container className="recordPage">
+          <Container className="recordButtonParagraph">
+            <div id="record-buttons">
               <ButtonGroup
                 variant="contained"
                 color="secondary"
@@ -93,24 +77,16 @@ class Recorder extends React.Component {
                   </Button>
                 )}
               </ButtonGroup>
+            </div>
+            <Card className="txtgen">
+              Press record then say:
+              <h4>{`${this.state.paragraph}`}</h4>
+              <Button variant="contained" onClick={this.newParagraph}>
+                New Paragraph
+              </Button>
             </Card>
-            <br />
-            <Card style={{backgroundColor: '#c8e6c7'}}>
-              <div className="txtgen">
-                Press record then say:
-                <h4>{`${this.state.paragraph}`}</h4>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.newParagraph}
-                >
-                  New Paragraph
-                </Button>
-              </div>
-            </Card>
-          </div>
-          <br />
-          <div id="waveform-and-player">
+          </Container>
+          <div className="analyze">
             {recordingBlob && (
               <Link component={RouterLink} to="/Analysis" variant="button">
                 <Button
@@ -127,20 +103,20 @@ class Recorder extends React.Component {
                 </Button>
               </Link>
             )}
-            <br />
+          </div>
+          <br />
+          <div className="audio">
             {recordingURL && <MediaPlayer />}
             <AudioReactRecorder
               text-align="center"
               state={recordState}
               onStop={this.onStop}
-              backgroundColor="rgb(255,224,177)"
-              foregroundColor="rgb(151,180,151)"
-              canvasHeight={recordState === RecordState.START ? '100' : '0'}
+              backgroundColor="rgb(255,255,255)"
+              foregroundColor="rgb(159,48,226)"
+              canvasWidth="900"
+              canvasHeight={recordState === RecordState.START ? '150' : '0'}
             />
-            <br />
-            <br />
           </div>
-          <br />
         </Container>
       )
     }
