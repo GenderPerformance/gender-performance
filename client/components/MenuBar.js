@@ -8,8 +8,12 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import MenuItem from '@material-ui/core/MenuItem'
+import MicIcon from '@material-ui/icons/Mic'
+import HistoryIcon from '@material-ui/icons/History'
+import InfoIcon from '@material-ui/icons/Info'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
   list: {
@@ -40,6 +44,8 @@ export default function TemporaryDrawer() {
     setState({...state, [anchor]: open})
   }
 
+  const icon = [<MicIcon />, <HistoryIcon />, <InfoIcon />, <ExitToAppIcon />]
+  const links = ['recorder', 'userhistory', 'about', '#']
   const list = anchor => (
     <div
       className={clsx(classes.list, {
@@ -51,10 +57,8 @@ export default function TemporaryDrawer() {
     >
       <List>
         {['Record', 'History', 'About', 'Logout'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
+          <ListItem button component="a" href={`/${links[index]}`} key={text}>
+            <ListItemIcon>{icon[index]}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
