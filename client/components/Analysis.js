@@ -37,12 +37,72 @@ function togglePlay() {
   }
 }
 
+//function to create the spectrogram canvas and initial settings.
+function createSpectrogram(length,width,elementId){
+  //set canvas height and width using css style elements.
+  //using canvas elements will result in a large canvas but not a
+  //larger sepctrogram.
+  let canvas = document.getElementById('canvas')
+  canvas.style.width = `${length}px`;
+  canvas.style.height = `${width}px`
+
+  let spectro = Spectrogram(document.getElementById(elementId), {
+      audio: {
+        enable: false
+      },
+      colors: function(steps) {
+        let baseColors = [
+          [0, 0, 0, 1],
+          [0, 255, 255, 1],
+          [0, 255, 0, 1],
+          [255, 255, 0, 1],
+          [255, 0, 0, 1]
+        ]
+        let positions = [0, 0.15, 0.3, 0.5, 0.75]
+
+        let scale = new chroma.scale(baseColors, positions).domain([0, steps])
+
+        let colors = []
+
+        for (let i = 0; i < steps; ++i) {
+          let color = scale(i)
+          colors.push(color.hex())
+        }
+
+        return colors
+      }
+    })
+    return spectro
+  }
+
+//function to load the recorded data and the created spectrogram canvas to
+//output a spectrogram on the spectrogram canvas
+function drawSpectrogram(spectro,soundURL){
+  let audioContext = new AudioContext()
+    let request = new XMLHttpRequest()
+    request.open('GET', soundURL, true)
+    request.responseType = 'arraybuffer'
+
+    request.onload = function() {
+      audioContext.decodeAudioData(request.response, function(buffer) {
+        spectro.connectSource(buffer, audioContext)
+        spectro.start()
+        //setTimeout(spectro.pause(),10000)
+      })
+    }
+    request.send()
+}
+
+
+
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
       wavesurfer: null
     }
+    this.spectroRestart=this.spectroRestart.bind(this)
+    this.spectroStop=this.spectroStop.bind(this)
   }
 
   componentDidMount() {
@@ -55,53 +115,27 @@ class Analysis extends React.Component {
       this.setState({wavesurfer: wavesurfer})
     }
   }
+
+  spectroRestart(spectro,url){
+    spectro.clear()
+    drawSpectrogram(spectro,url)
+  }
+
+  spectroStop(spectro){
+    spectro.pause()
+  }
+
   render() {
+    let spectro
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
-
-      // //spectrogram attempt
-      let spectro = Spectrogram(document.getElementById('canvas'), {
-        audio: {
-          enable: false
-        },
-        colors: function(steps) {
-          let baseColors = [
-            [0, 0, 0, 1],
-            [0, 255, 255, 1],
-            [0, 255, 0, 1],
-            [255, 255, 0, 1],
-            [255, 0, 0, 1]
-          ]
-          let positions = [0, 0.15, 0.3, 0.5, 0.75]
-
-          let scale = new chroma.scale(baseColors, positions).domain([0, steps])
-
-          let colors = []
-
-          for (let i = 0; i < steps; ++i) {
-            let color = scale(i)
-            colors.push(color.hex())
-          }
-
-          return colors
-        }
-      })
-
-      let audioContext = new AudioContext()
-      let request = new XMLHttpRequest()
-      request.open('GET', this.props.recordingURL, true)
-      request.responseType = 'arraybuffer'
-
-      request.onload = function() {
-        audioContext.decodeAudioData(request.response, function(buffer) {
-          spectro.connectSource(buffer, audioContext)
-          spectro.start()
-          //setTimeout(spectro.pause(),10000)
-        })
-      }
-      request.send()
+      //create the spectrogram canvas object object(length,width,elementId)
+      spectro = createSpectrogram(500,350,'canvas')
+      //draw the spectrogram on analysis
+      drawSpectrogram(spectro,this.props.recordingURL)
     }
+    console.log('render spectro',spectro)
     return (
       <Container maxWidth="sm">
         <div>
@@ -133,10 +167,11 @@ class Analysis extends React.Component {
                 </ButtonGroup>
               </div>
             )}
-            <Drawing />
             <div id="waveform" />
           </Card>
         </div>
+        <Drawing />
+        {spectro!==undefined?<div><Button onClick={()=>this.spectroRestart(spectro,this.props.recordingURL)}>Spectro restart</Button><Button onClick={()=>this.spectroStop(spectro)}>Spectro stop</Button></div>:<div></div>}
       </Container>
     )
   }

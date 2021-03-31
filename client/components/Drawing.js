@@ -41,38 +41,38 @@ class Drawing extends React.Component {
     this.sketch = this.sketch.bind(this)
   }
 
-  sketch(p){
-  p.preload=()=>{
-    this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
-  }
-
-  p.setup=()=>{
-    let cnv = createCanvas(880, 400)
-    cnv.mouseClicked(this.togglePlay)
-    this.setState({fft: new p5.FFT()})
-    //this.state.sound.amp(0.2);
-  }
-  p.draw=()=>{
-    p.createCanvas(600, 400, p.WEBGL)
-    p.background('rgba(0,255,0, 0.25)')
-    let spectrum = this.state.fft.analyze()
-    p.stroke(10)
-    p.noFill()
-    for (let i = 0; i < spectrum.length; i++) {
-      let x = p.map(i, 0, spectrum.length, 0, width)
-      let h = -height + p.map(spectrum[i], 125, 255, height, 0)
-      p.rect(x, height, width / spectrum.length, h)
+  sketch(p) {
+    p.preload = () => {
+      this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
     }
-      let waveform = this.state.fft.waveform()
-      noFill()
-      beginShape()
-      stroke(20)
-      for (let i = 0; i < waveform.length; i++) {
-        let x = map(i, 0, waveform.length, 0, width)
-        let y = map(waveform[i], -1, 1, 0, height)
-        vertex(x, y)
+
+    p.setup = () => {
+      let cnv = p.createCanvas(880, 400, p.WEBGL)
+      cnv.mouseClicked(this.togglePlay)
+      this.setState({fft: new p5.FFT()})
+      //this.state.sound.amp(0.2);
+    }
+    p.draw = () => {
+      //p.createCanvas(600, 400, p.WEBGL)
+      p.background('rgba(0,0,0, 0.25)')
+      let spectrum = this.state.fft.analyze()
+      p.stroke(10)
+      p.noFill()
+      for (let i = 0; i < spectrum.length; i++) {
+        let x = p.map(i, 0, spectrum.length, 0, width)
+        let h = -height + p.map(spectrum[i], 100, 255, height, 0)
+        p.rect(x, height, width / spectrum.length, h)
       }
-      endShape()
+      let waveform = this.state.fft.waveform()
+      p.noFill()
+      p.beginShape()
+      p.stroke(20)
+      for (let i = 0; i < waveform.length; i++) {
+        let x = p.map(i, 0, waveform.length, 0, width)
+        let y = p.map(waveform[i], -1, 1, 0, height)
+        p.vertex(x, y)
+      }
+      p.endShape()
       //creates errors
       //text('tap to play', 20, 20)
     }
