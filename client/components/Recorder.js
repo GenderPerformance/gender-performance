@@ -3,7 +3,7 @@ import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import MediaPlayer from './MediaPlayer'
-import {recordClip, analyzeRecording} from '../store'
+import {recordClip, analyzeRecording, clearRecording} from '../store'
 import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
 class Recorder extends React.Component {
@@ -16,20 +16,21 @@ class Recorder extends React.Component {
   }
   componentDidMount() {}
 
-  start = () => {
+  start() {
+    this.props.clearRecording()
     this.setState({
       recordState: RecordState.START
     })
   }
 
-  stop = () => {
+  stop() {
     this.setState({
       recordState: RecordState.STOP
     })
   }
 
   //audioData contains blob and blobUrl
-  onStop = audioData => {
+  onStop(audioData) {
     this.props.recordClip(audioData)
   }
 
@@ -59,18 +60,15 @@ class Recorder extends React.Component {
           >
             <div className="recorder">
               <h4>RECORD</h4>
-              {recordingURL ? (
-                <MediaPlayer audioUrl={recordingURL} />
-              ) : (
-                <AudioReactRecorder
-                  text-align="center"
-                  state={recordState}
-                  onStop={this.onStop}
-                  backgroundColor="rgb(255,224,177)"
-                  foregroundColor="rgb(151,180,151)"
-                  canvasHeight="100"
-                />
-              )}
+              {recordingURL && <MediaPlayer />}
+              <AudioReactRecorder
+                text-align="center"
+                state={recordState}
+                onStop={this.onStop}
+                backgroundColor="rgb(255,224,177)"
+                foregroundColor="rgb(151,180,151)"
+                canvasHeight={recordState === RecordState.START ? '100' : '0'}
+              />
               <br />
               <ButtonGroup
                 variant="contained"
@@ -123,7 +121,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     recordClip: blob => dispatch(recordClip(blob)),
-    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
+    analyzeRecording: (userId, blob) =>
+      dispatch(analyzeRecording(userId, blob)),
+    clearRecording: () => dispatch(clearRecording())
   }
 }
 

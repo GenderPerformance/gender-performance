@@ -1,30 +1,27 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {playRecording, pauseRecording} from '../store'
 const audio = document.createElement('audio')
 import {Container, ButtonGroup, Button, Card} from '@material-ui/core'
 
 class MediaPlayer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isPaused: true
-    }
-  }
   componentDidMount() {
-    audio.src = this.props.audioUrl
+    audio.src = this.props.recordingURL
     audio.load()
   }
 
   togglePause() {
-    if (this.state.isPaused) {
+    if (this.props.isPaused) {
+      this.props.play()
       audio.play()
-      this.setState({isPaused: false})
     } else {
+      this.props.pause()
       audio.pause()
-      this.setState({isPaused: true})
     }
   }
+
   render() {
-    const {isPaused} = this.state
+    const {isPaused} = this.props
     return (
       <Container>
         <div className="player">
@@ -46,4 +43,18 @@ class MediaPlayer extends React.Component {
   }
 }
 
-export default MediaPlayer
+const mapState = state => {
+  return {
+    recordingURL: state.player.recordingURL,
+    isPaused: state.player.isPaused
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    pause: () => dispatch(pauseRecording()),
+    play: () => dispatch(playRecording())
+  }
+}
+
+export default connect(mapState, mapDispatch)(MediaPlayer)

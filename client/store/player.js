@@ -13,7 +13,7 @@ const CLEAR_RECORDING = 'CLEAR_RECORDING'
  */
 const defaultState = {
   recordingURL: null,
-  paused: true
+  isPaused: true
 }
 
 /**
@@ -39,12 +39,12 @@ export default function(state = defaultState, action) {
     case PAUSE_RECORDING:
       return {
         ...state,
-        paused: true
+        isPaused: true
       }
     case PLAY_RECORDING:
       return {
         ...state,
-        paused: false
+        isPaused: false
       }
     case CLEAR_RECORDING:
       return defaultState
