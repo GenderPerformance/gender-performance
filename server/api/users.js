@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Recording} = require('../db/models')
 const fs = require('fs')
 const path = require('path')
 module.exports = router
@@ -15,5 +15,24 @@ router.get('/', async (req, res, next) => {
     res.json(users)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/:userId/recordings', async (req, res, next) => {
+  try {
+    const recordings = await Recording.findAll({
+      where: {
+        userId: req.params.userId
+      },
+      order: [['createdAt', 'DESC']]
+    })
+    console.log(
+      '🚀 ~ file: recordings.js ~ line 92 ~ router.get ~ response',
+      recordings
+    )
+
+    res.send(recordings)
+  } catch (err) {
+    console.error(err)
   }
 })

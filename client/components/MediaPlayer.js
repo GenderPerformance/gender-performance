@@ -5,8 +5,8 @@ import {Button, Card} from '@material-ui/core'
 import {PauseCircleFilled, PlayCircleFilled} from '@material-ui/icons'
 
 class MediaPlayer extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.audio = document.createElement('audio')
   }
 
