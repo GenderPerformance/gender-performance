@@ -134,6 +134,7 @@ class SpectrogramChart extends React.Component {
   }
 }
 }
+
 const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
@@ -143,4 +144,5 @@ const mapState = state => {
     prediction: state.recording.prediction
   }
 }
+
 export default connect(mapState)(SpectrogramChart)
