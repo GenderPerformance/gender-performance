@@ -30,6 +30,8 @@ class Analysis extends React.Component {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
+        waveColor: 'violet',
+        progressColor: 'purple',
         plugins: []
       })
       this.setState({wavesurfer: wavesurfer})
@@ -38,6 +40,10 @@ class Analysis extends React.Component {
 
   handleGraph(input) {
     this.setState({graph: input})
+  }
+
+  handlePlayback(){
+    this.state.wavesurfer.playPause()
   }
 
   render() {

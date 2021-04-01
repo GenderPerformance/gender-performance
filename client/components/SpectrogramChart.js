@@ -96,7 +96,7 @@ class SpectrogramChart extends React.Component {
       this.state.spectro.clear()
     }
     let DOMelement = document.getElementById('canvas1')
-    let spectro = this.createSpectrogram(500, 600, DOMelement)
+    let spectro = this.createSpectrogram(600, 400, DOMelement)
     this.setState({spectro})
   }
 
@@ -122,8 +122,6 @@ class SpectrogramChart extends React.Component {
           variant="contained"
           aria-label="contained primary button group"
         >
-          <Button onClick={()=>
-            this.spectroReset()}>Spectro reset</Button>
           <Button onClick={()=>
             this.spectroPause()}>pause</Button>
           <Button onClick={()=>
