@@ -4,7 +4,6 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbar} from './navbar'
-export {UserHome} from './user-home'
 export {default as Analysis} from './Analysis'
 export {default as Recorder} from './Recorder'
 export {default as UserHistory} from './UserHistory'

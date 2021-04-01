@@ -11,6 +11,9 @@ import MicIcon from '@material-ui/icons/Mic'
 import HistoryIcon from '@material-ui/icons/History'
 import InfoIcon from '@material-ui/icons/Info'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import {connect} from 'react-redux'
+import {logout} from '../store'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles({
   list: {
@@ -21,7 +24,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function TemporaryDrawer() {
+function TemporaryDrawer({handleLogout}) {
   const classes = useStyles()
   const [state, setState] = React.useState({
     top: false,
@@ -42,7 +45,7 @@ export default function TemporaryDrawer() {
   }
 
   const icon = [<MicIcon />, <HistoryIcon />, <InfoIcon />]
-  const links = ['recorder', 'userhistory', 'about']
+  const links = ['home', 'userhistory', 'about']
   const list = anchor => (
     <div
       className={clsx(classes.list, {
@@ -59,6 +62,12 @@ export default function TemporaryDrawer() {
             <ListItemText primary={text} />
           </ListItem>
         ))}
+        <ListItem button onClick={handleLogout}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
       </List>
     </div>
   )
@@ -81,4 +90,18 @@ export default function TemporaryDrawer() {
       }
     </div>
   )
+}
+
+const mapDispatch = dispatch => {
+  return {
+    handleLogout() {
+      dispatch(logout())
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(TemporaryDrawer)
+
+TemporaryDrawer.propTypes = {
+  handleLogout: PropTypes.func.isRequired
 }
