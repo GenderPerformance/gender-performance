@@ -2,7 +2,6 @@ import React from 'react'
 import {
   Container,
   Card,
-  CircularProgress,
   Button,
   ButtonGroup
 } from '@material-ui/core'
@@ -11,6 +10,7 @@ import {connect} from 'react-redux'
 
 class UserHistory extends React.Component {
   componentDidMount() {
+    console.log('user id on mount', this.props.user.id)
     this.props.fetchHistory(this.props.user.id)
   }
 
@@ -38,11 +38,11 @@ class UserHistory extends React.Component {
 
   render() {
     const {history} = this.props
-    console.log(history)
+    console.log(this.props)
     return (
-      <React.Fragment>
+      <Container>
         <h1>History is what you make it, Baby</h1>
-        {!history.length > 0 ? (
+        {!history ? (
           <h2>Loading History...</h2>
         ) : (
           history.map(recording => {
@@ -62,7 +62,7 @@ class UserHistory extends React.Component {
             )
           })
         )}
-      </React.Fragment>
+      </Container>
     )
   }
 }
