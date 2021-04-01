@@ -82,20 +82,4 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
   }
 })
 
-router.get('/user/:userId', async (req, res, next) => {
-  try {
-    const recordings = await Recording.findAll({
-      where: {
-        userId: req.params.userId
-      }
-    })
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 92 ~ router.get ~ response',
-      recordings
-    )
 
-    res.send(recordings)
-  } catch (err) {
-    console.error(err)
-  }
-})

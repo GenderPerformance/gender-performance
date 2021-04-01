@@ -64,7 +64,7 @@ class Analysis extends React.Component {
                 <br />
               </div>
             ) : (
-              <div className="analysis">
+              <div className="prediction-results">
                 Female Probability Confidence
                 <strong>{this.props.prediction.fp}%</strong>
                 <br />
@@ -114,7 +114,7 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    recordingURL: state.recording.recordingURL,
+    recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
     prediction: state.recording.prediction

@@ -56,6 +56,8 @@ function TemporaryDrawer({handleLogout}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+        <ListItem button onClick={toggleDrawer(anchor, false)}><ListItemText primary="Close Menu" /></ListItem>
+        <ListItem></ListItem>
         {['Record', 'History', 'About'].map((text, index) => (
           <ListItem button component="a" href={`/${links[index]}`} key={text}>
             <ListItemIcon>{icon[index]}</ListItemIcon>

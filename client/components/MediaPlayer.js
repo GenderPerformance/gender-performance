@@ -1,24 +1,32 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {playRecording, pauseRecording} from '../store'
-const audio = document.createElement('audio')
 import {Button, Card} from '@material-ui/core'
 import {PauseCircleFilled, PlayCircleFilled} from '@material-ui/icons'
 
 class MediaPlayer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      url: this.props.recordingURL,
+      paused: true
+    }
+    this.audio = document.createElement('audio')
+  }
+
   componentDidMount() {
-    audio.src = this.props.recordingURL
-    audio.load()
-    audio.onended = () => this.props.pause()
+    this.audio.src = this.props.recordingURL
+    this.audio.load()
+    this.audio.onended = () => this.props.pause()
   }
 
   togglePause() {
     if (this.props.isPaused) {
       this.props.play()
-      audio.play()
+      this.audio.play()
     } else {
       this.props.pause()
-      audio.pause()
+      this.audio.pause()
     }
   }
 
