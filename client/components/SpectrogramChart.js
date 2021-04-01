@@ -22,7 +22,9 @@ class SpectrogramChart extends React.Component {
     this.createSpectrogram = this.createSpectrogram.bind(this)
     this.drawSpectrogram = this.drawSpectrogram.bind(this)
   }
-
+  componentDidMount(){
+    this.spectroReset()
+  }
   //function to create the spectrogram canvas and initial settings.
   //returns the created spectrogram object.
   createSpectrogram(width, height, DOMelement) {
