@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   Container,
-  Card,
+  CircularProgress,
   Button,
   ButtonGroup
 } from '@material-ui/core'
@@ -111,25 +111,24 @@ class SpectrogramChart extends React.Component {
     this.state.spectro.resume()
   }
   render() {
-    if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
-      return <div>Loading...</div>
+    // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
+    if (!this.props.recordingURL) {
+      return <div className="circleProgress"><CircularProgress/><br/></div>
     }else{
     return (
-      <Container maxWidth="sm">
+      <Container className="spec" maxWidth="sm">
         <ButtonGroup
-        variant="contained"
-        color="secondary"
-        aria-label="contained primary button group">
-            <div>
-              <Button onClick={()=>
-                this.spectroReset()}>Spectro reset</Button>
-              <Button onClick={()=>
-                this.spectroPause()}>pause</Button>
-              <Button onClick={()=>
-                this.spectroStart(this.props.recordingURL)}>Start</Button>
-              <Button onClick={()=>
-                this.spectroResume()}>Resume</Button>
-              </div>
+          variant="contained"
+          aria-label="contained primary button group"
+        >
+          <Button onClick={()=>
+            this.spectroReset()}>Spectro reset</Button>
+          <Button onClick={()=>
+            this.spectroPause()}>pause</Button>
+          <Button onClick={()=>
+            this.spectroStart(this.props.recordingURL)}>Start</Button>
+          <Button onClick={()=>
+            this.spectroResume()}>Resume</Button>
         </ButtonGroup>
       </Container>
     )
