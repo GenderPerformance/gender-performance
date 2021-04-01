@@ -23,7 +23,7 @@ class Cepstrum extends React.Component {
     //should target the div element below the cepstrum analysis
     //the second and third arguments of xAxis should be the width of
     //sketch.  4th and 5th are the frequency range
-    xAxis('#testaxis', 0, 600, 0, 4000)
+    xAxis('#cepstralAxis', 0, 600, 0, 4000)
   }
 
   sketch(p) {
@@ -85,8 +85,10 @@ class Cepstrum extends React.Component {
     } else {
       return (
         <div>
-          <P5Wrapper sketch={this.sketch} />
-          <div id="testaxis" />
+          <div className="cepstral">
+            <P5Wrapper sketch={this.sketch} />
+          </div>
+          <div id="cepstralAxis" />
           <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
         </div>
       )

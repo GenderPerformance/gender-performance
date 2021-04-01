@@ -100,14 +100,12 @@ p {
 }
 
 .MuiContainer-root.analysisPage {
-  border: 2px black solid;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .MuiContainer-root.predAndGraphs {
-  border: 2px black solid;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -138,4 +136,10 @@ p {
   flex-direction: column;
   align-items: center;
   padding: 1em;
+}
+
+.p5Canvas {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
 }
