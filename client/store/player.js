@@ -1,5 +1,3 @@
-import history from '../history'
-
 /**
  * ACTION TYPES
  */

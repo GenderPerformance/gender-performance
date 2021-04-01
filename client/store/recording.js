@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -46,7 +45,7 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
     )
     const {signedUrl, url} = response.data
 
-    const s3response = await axios.put(signedUrl, clip)
+    await axios.put(signedUrl, clip)
 
     //prepare file for analysis
     const formData = new FormData()
