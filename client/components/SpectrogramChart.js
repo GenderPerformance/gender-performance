@@ -6,7 +6,7 @@ import {
   ButtonGroup
 } from '@material-ui/core'
 import {connect} from 'react-redux'
-import Spectrogram from 'spectrogram'
+import Spectrogram from './utility/spectrogram'
 import chroma from 'chroma-js'
 
 //this component needs <canvas id="canvas1"/> to exist in it's parent component
@@ -26,12 +26,12 @@ class SpectrogramChart extends React.Component {
 
   //function to create the spectrogram canvas and initial settings.
   //returns the created spectrogram object.
-  createSpectrogram(length,width,DOMelement){
+  createSpectrogram(width,height,DOMelement){
   //set canvas height and width using css style elements.
   //using canvas elements will result in a large canvas but not a
   //larger spectrogram.
-  DOMelement.style.width = `${length}px`;
-  DOMelement.style.height = `${width}px`
+  DOMelement.style.width = `${width}px`;
+  DOMelement.style.height = `${height}px`
 
   let spectro = Spectrogram(DOMelement, {
       audio: {
@@ -67,7 +67,6 @@ class SpectrogramChart extends React.Component {
   drawSpectrogram(spectro,soundURL){
     let audioContext = new AudioContext()
       let request = new XMLHttpRequest()
-      console.log('soundurl',soundURL)
       request.open('GET', soundURL, true)
       request.responseType = 'arraybuffer'
       request.onload = function() {
@@ -85,7 +84,6 @@ class SpectrogramChart extends React.Component {
   //could be confusing.
   spectroStart(url){
     this.drawSpectrogram(this.state.spectro,url)
-    console.log('inside spectro start',this.state.spectro)
   }
 
   //need to call this function first before anything will be rendered
@@ -98,7 +96,6 @@ class SpectrogramChart extends React.Component {
     }
     let DOMelement= document.getElementById('canvas1')
     let spectro = this.createSpectrogram(500,350,DOMelement)
-    console.log("inside spectro reset",this.state)
     this.setState({spectro})
   }
 

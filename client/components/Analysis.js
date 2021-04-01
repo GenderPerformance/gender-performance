@@ -8,8 +8,6 @@ import {
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
-import Spectrogram from 'spectrogram'
-import chroma from 'chroma-js'
 import '../../node_modules/p5/lib/addons/p5.sound'
 import '../../node_modules/p5/lib/addons/p5.dom'
 import p5 from 'p5'
