@@ -48,7 +48,7 @@ class Analysis extends React.Component {
                 <br />
               </div>
             ) : (
-              <div className="analysis">
+              <div className="prediction-results">
                 Female Probability Confidence
                 <strong>{this.props.prediction.fp}%</strong>
                 <br />
