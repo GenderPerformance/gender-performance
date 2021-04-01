@@ -42,8 +42,8 @@ class Drawing extends React.Component {
   }
 
   sketch(p) {
-    let width = 400
-    let height = 350
+    let width = 600
+    let height = 400
     let filter, filterFreq, filte
     p.preload = () => {
       this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
@@ -58,13 +58,13 @@ class Drawing extends React.Component {
     console.log("drawing p.draw",width,height)
     let waveform
     p.draw = () => {
-      p.background('rgba(255,255,0, 0.25)')
+      p.background('rgba(105,255,0, 0.8)')
       let spectrum = this.state.fft.analyze(4096)
       p.stroke(10)
       p.noFill()
       for (let i = 0; i < spectrum.length; i++) {
-        let x = p.map(i, 0, spectrum.length, -width/2, width*2)
-        let h = -height + p.map(spectrum[i], 50, 255, height, 0)
+        let x = p.map(i, 0, spectrum.length, -width/2, width)
+        let h = -height + p.map(spectrum[i], 30, 255, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
       waveform = this.state.fft.waveform()
@@ -73,14 +73,13 @@ class Drawing extends React.Component {
       p.stroke(20)
       for (let i = 0; i < waveform.length; i++) {
         let x = p.map(i, 0, waveform.length, -width/2, width)
-        let y = p.map(waveform[i], -1, 1, 80, height/2)
+        let y = p.map(waveform[i]-1.15, -1, 1, 0, height/1.5)
         p.vertex(x, y)
       }
       p.endShape()
       //creates errors
       //text('tap to play', 20, 20)
     }
-
   }
   togglePlay() {
     console.log('===STATE SOUND====', this.state.sound)
