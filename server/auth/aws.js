@@ -14,7 +14,6 @@ aws.config.region = 'us-east-2'
 
 router.get('/s3-sign', async (req, res) => {
   const s3 = new aws.S3()
-  console.log('req query', req.query)
   const fileName = req.query['file-name']
   const fileType = req.query['file-type']
   const s3Params = {
@@ -25,7 +24,6 @@ router.get('/s3-sign', async (req, res) => {
     ACL: 'public-read'
   }
   console.log('signing with s3')
-  console.log(s3Params)
   await s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
       console.log(err)
@@ -35,7 +33,6 @@ router.get('/s3-sign', async (req, res) => {
       signedUrl: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     }
-    console.log(returnData)
     res.write(JSON.stringify(returnData))
     res.end()
   })

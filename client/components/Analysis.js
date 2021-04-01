@@ -10,6 +10,7 @@ import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
+import {recordClip, analyzeRecording} from '../store'
 
 class Analysis extends React.Component {
   constructor() {
@@ -21,7 +22,6 @@ class Analysis extends React.Component {
 
   componentDidMount() {
     if (!this.state.wavesurfer) {
-      console.log('wavesurfing???')
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
         plugins: []
@@ -87,4 +87,12 @@ const mapState = state => {
     prediction: state.recording.prediction
   }
 }
-export default connect(mapState)(Analysis)
+
+const mapDispatch = dispatch => {
+  return {
+    recordClip: blob => dispatch(recordClip(blob)),
+    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Analysis)
