@@ -7,6 +7,10 @@ import {PauseCircleFilled, PlayCircleFilled} from '@material-ui/icons'
 class MediaPlayer extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      url: this.props.recordingURL,
+      paused: true
+    }
     this.audio = document.createElement('audio')
   }
 

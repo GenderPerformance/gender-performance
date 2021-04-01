@@ -2,8 +2,7 @@ import React from 'react'
 import {
   Container,
   Card,
-  Button,
-  ButtonGroup
+  CardContent
 } from '@material-ui/core'
 import {fetchHistory} from '../store'
 import {connect} from 'react-redux'
@@ -30,22 +29,23 @@ class UserHistory extends React.Component {
           history.map(recording => {
             return (
               <Card key={recording.id}>
-                <div>
-                  <h3>Date</h3>
+                <div id="recording-details">
+                  <h4>Date</h4>
                   <p>{this.getRecordingDate(recording.createdAt)}</p>
+
                   <audio controls src={recording.url} />
                 </div>
-                <div className="analysis">
-                  <h3>Prediction Results</h3>
+                <CardContent className="prediction-results">
+                  <h4>Prediction Results</h4>
                   <div>
-                  <span>Feminine</span>
+                  <span>Feminine -- </span>
                   <span><strong>{recording.femaleConfidence}%</strong></span>
                   </div>
                   <div>
-                    <span>Masculine</span>
+                    <span>Masculine -- </span>
                   <span><strong>{recording.maleConfidence}%</strong></span>
-                  </div>
                 </div>
+                </CardContent>
               </Card>
             )
           })
