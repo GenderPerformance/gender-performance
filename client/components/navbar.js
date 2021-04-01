@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
 import {AppBar} from '@material-ui/core'
 import MenuBar from './MenuBar'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({isLoggedIn}) => (
   <div>
     <nav>
       {isLoggedIn ? (
@@ -14,9 +13,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <div className="Menu">
             <div className="title">
               <h1>PERFORMANCE</h1>
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
             </div>
             <div>
               <MenuBar />

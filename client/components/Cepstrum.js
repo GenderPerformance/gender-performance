@@ -71,7 +71,7 @@ class Cepstrum extends React.Component {
 
   render() {
     if (!this.props.recordingBlob) {
-      ;<div>Loading...</div>
+      return <div>Loading...</div>
     } else {
       return (
         <div>
