@@ -43,6 +43,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "audio-react-recorder": "^1.0.4",
     "aws-sdk": "^2.870.0",
     "axios": "^0.19.0",
@@ -68,6 +69,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.3.1",
+    "txtgen": "^2.2.8",
     "wavesurfer.js": "^4.6.0"
   },
   "devDependencies": {
@@ -89,6 +91,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "chai": "^4.2.0",
+    "css-loader": "^5.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",

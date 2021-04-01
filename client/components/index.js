@@ -4,8 +4,9 @@
  * having to figure out which file they belong to!
  */
 export {default as Navbar} from './navbar'
-export {default as UserHome} from './user-home'
+export {UserHome} from './user-home'
 export {default as Analysis} from './Analysis'
 export {default as Recorder} from './Recorder'
 export {default as UserHistory} from './UserHistory'
+export {default as About} from './About'
 export {Login, Signup} from './auth-form'
