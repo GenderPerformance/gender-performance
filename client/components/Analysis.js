@@ -69,8 +69,8 @@ class Analysis extends React.Component {
             <div id="waveform" />
           </Card>
         </div>
-        <canvas id='canvas1'></canvas>
-        <SpectrogramChart/>
+        <canvas id="canvas1" />
+        <SpectrogramChart />
         <Cepstrum />
       </Container>
     )
@@ -81,7 +81,7 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    recordingURL: state.recording.recordingURL,
+    recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
     prediction: state.recording.prediction
@@ -91,7 +91,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     recordClip: blob => dispatch(recordClip(blob)),
-    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
+    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
   }
 }
 
