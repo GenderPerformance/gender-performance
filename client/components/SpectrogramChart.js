@@ -1,5 +1,10 @@
 import React from 'react'
-import {Container, Card, Button, ButtonGroup} from '@material-ui/core'
+import {
+  Container,
+  CircularProgress,
+  Button,
+  ButtonGroup
+} from '@material-ui/core'
 import {connect} from 'react-redux'
 import Spectrogram from './utility/spectrogram'
 import chroma from 'chroma-js'
@@ -105,33 +110,30 @@ class SpectrogramChart extends React.Component {
     this.state.spectro.resume()
   }
   render() {
-    if (!(document.getElementById('canvas1') && this.props.recordingURL)) {
-      return <div>Loading...</div>
-    } else {
-      return (
-        <Container maxWidth="sm">
-          <ButtonGroup
-            variant="contained"
-            color="secondary"
-            aria-label="contained primary button group"
-          >
-            <div>
-              <Button onClick={() => this.spectroReset()}>Spectro reset</Button>
-              <Button onClick={() => this.spectroPause()}>pause</Button>
-              <Button
-                onClick={() => this.spectroStart(this.props.recordingURL)}
-              >
-                Start
-              </Button>
-              <Button onClick={() => this.spectroResume()}>Resume</Button>
-            </div>
-          </ButtonGroup>
-        </Container>
-      )
-    }
+    // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
+    if (!this.props.recordingURL) {
+      return <div className="circleProgress"><CircularProgress/><br/></div>
+    }else{
+    return (
+      <Container className="spec" maxWidth="sm">
+        <ButtonGroup
+          variant="contained"
+          aria-label="contained primary button group"
+        >
+          <Button onClick={()=>
+            this.spectroReset()}>Spectro reset</Button>
+          <Button onClick={()=>
+            this.spectroPause()}>pause</Button>
+          <Button onClick={()=>
+            this.spectroStart(this.props.recordingURL)}>Start</Button>
+          <Button onClick={()=>
+            this.spectroResume()}>Resume</Button>
+        </ButtonGroup>
+      </Container>
+    )
   }
 }
-
+}
 const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen

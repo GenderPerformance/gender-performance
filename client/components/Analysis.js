@@ -18,6 +18,12 @@ class Analysis extends React.Component {
     this.state = {
       wavesurfer: null
     }
+
+    this.state = {
+      graph: "spec"
+    }
+
+    this.handleGraph = this.handleGraph.bind(this);
   }
 
   componentDidMount() {
@@ -30,20 +36,24 @@ class Analysis extends React.Component {
     }
   }
 
+  handleGraph(input) {
+    this.setState({graph: input})
+  }
+
   render() {
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
     }
     return (
-      <Container maxWidth="sm">
-        <div>
-          <br />
-          <br />
-          <Card style={{backgroundColor: '#cbae82'}}>
-            <h3>Analysis</h3>
+      <Container className="analysisPage">
+        <h1>Analysis</h1>
+        <Container className="predAndGraphs">
+          <Card className="prediction">
+            <h3>Prediction</h3>
             {this.props.loading ? (
               <div className="circleProgress">
+                <br/>
                 <CircularProgress />
                 <br />
               </div>
@@ -57,7 +67,6 @@ class Analysis extends React.Component {
                 <br />
                 <ButtonGroup
                   variant="contained"
-                  color="secondary"
                   aria-label="contained primary button group"
                 >
                   <Button onClick={() => this.state.wavesurfer.playPause()}>
@@ -68,10 +77,28 @@ class Analysis extends React.Component {
             )}
             <div id="waveform" />
           </Card>
-        </div>
-        <canvas id='canvas1'></canvas>
-        <SpectrogramChart/>
-        <Cepstrum />
+          <Container className="graphs">
+            {this.state.graph === "ceps" ?
+              <Cepstrum />
+            :
+            <div>
+              <canvas id='canvas1'></canvas>
+              <SpectrogramChart/>
+            </div>
+            }
+            <ButtonGroup
+              variant="contained"
+              aria-label="contained primary button group"
+            >
+              <Button onClick={()=>this.handleGraph('spec')}>
+                Spectrogram
+              </Button>
+              <Button onClick={()=>this.handleGraph('ceps')}>
+                Cepstrum
+              </Button>
+            </ButtonGroup>
+          </Container>
+        </Container>
       </Container>
     )
   }
@@ -91,7 +118,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     recordClip: blob => dispatch(recordClip(blob)),
-    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
+    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
   }
 }
 
