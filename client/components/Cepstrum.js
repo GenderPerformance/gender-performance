@@ -44,7 +44,7 @@ class Cepstrum extends React.Component {
       p.noFill()
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
-        let x = p.map(i, 0, spectrum.length, -width/2, width)
+        let x = p.map(i, 0, spectrum.length, -width / 2, width)
         let h = -height + p.map(spectrum[i], 30, 255, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
@@ -54,8 +54,8 @@ class Cepstrum extends React.Component {
       p.beginShape()
       p.stroke(20)
       for (let i = 0; i < waveform.length; i++) {
-        let x = p.map(i, 0, waveform.length, -width/2, width)
-        let y = p.map(waveform[i]-1.15, -1, 1, 0, height/1.5)
+        let x = p.map(i, 0, waveform.length, -width / 2, width)
+        let y = p.map(waveform[i] - 1.15, -1, 1, 0, height / 1.5)
         p.vertex(x, y)
       }
       p.endShape()
