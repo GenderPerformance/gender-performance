@@ -8,31 +8,8 @@ import {
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
-import '../../node_modules/p5/lib/addons/p5.sound'
-import '../../node_modules/p5/lib/addons/p5.dom'
-import p5 from 'p5'
-import Drawing from './Drawing'
-import {myp5} from './Drawing'
+import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
-
-let sound = myp5.loadSound('./tryp5.mp3')
-function preload() {
-  console.log('SOUND?', sound)
-}
-
-function togglePlay() {
-  console.log('INSTANCE', myp5)
-  myp5.loadSound()
-  console.log('INSTANCEKEYS', Object.keys(myp5))
-  console.log('p5=====', p5)
-  console.log('p5 SOUND', p5.sound)
-  console.log('p5 KEYS', Object.keys(p5))
-  if (sound.isPlaying()) {
-    sound.pause()
-  } else {
-    sound.loop()
-  }
-}
 
 class Analysis extends React.Component {
   constructor() {
@@ -96,7 +73,7 @@ class Analysis extends React.Component {
         </div>
         <canvas id='canvas1'></canvas>
         <SpectrogramChart/>
-        <Drawing />
+        <Cepstrum />
       </Container>
     )
   }
