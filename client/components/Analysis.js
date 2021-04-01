@@ -31,12 +31,10 @@ class Analysis extends React.Component {
   }
 
   render() {
-    let spectro
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
     }
-    console.log('render spectro',spectro)
     return (
       <Container maxWidth="sm">
         <div>
