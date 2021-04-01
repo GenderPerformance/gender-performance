@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
+import Cepstrum from './Cepstrum'
+import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
 
 class Analysis extends React.Component {
@@ -27,6 +29,7 @@ class Analysis extends React.Component {
       this.setState({wavesurfer: wavesurfer})
     }
   }
+
   render() {
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
@@ -66,6 +69,9 @@ class Analysis extends React.Component {
             <div id="waveform" />
           </Card>
         </div>
+        <canvas id='canvas1'></canvas>
+        <SpectrogramChart/>
+        <Cepstrum />
       </Container>
     )
   }
