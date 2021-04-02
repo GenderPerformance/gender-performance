@@ -11,7 +11,7 @@ import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Roboto'
+    fontFamily: 'RobotoRegular'
   },
   palette:
     {common: { black: 'rgba(0, 0, 0, 1)', white: 'rgba(255, 255, 255, 1)' },
@@ -36,7 +36,7 @@ const theme = createMuiTheme({
     },
     text: {
       primary: 'rgba(0, 0, 0, 0.87)',
-      secondary: 'rgba(0, 0, 0, 0.54)',
+      secondary: 'rgba(255,255,255,1)',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)'
     }
