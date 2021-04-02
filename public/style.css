@@ -1,3 +1,8 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url(Roboto-Black.ttf);
+}
+
 a {
   text-decoration: none;
 }
