@@ -2,67 +2,55 @@ import React from 'react'
 import {
   Container,
   Card,
-  CircularProgress,
-  Button,
-  ButtonGroup
+  CardContent
 } from '@material-ui/core'
 import {fetchHistory} from '../store'
 import {connect} from 'react-redux'
 
 class UserHistory extends React.Component {
   componentDidMount() {
+    console.log('user id on mount', this.props.user.id)
     this.props.fetchHistory(this.props.user.id)
   }
 
-  /* playRecording(url) {
-
-  } */
-
-  getRecordingDate(dateString) {
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ]
-    const month_index = parseInt(arr[1], 10) - 1
+  getRecordingDate = (dateString) => {
+    const parsed = new Date(Date.parse(dateString));
+    return parsed.toLocaleString()
   }
 
   render() {
     const {history} = this.props
-    console.log(history)
     return (
-      <React.Fragment>
-        <h1>History is what you make it, Baby</h1>
-        {!history.length > 0 ? (
+      <Container>
+        <h1>Recording History</h1>
+        {!history ? (
           <h2>Loading History...</h2>
         ) : (
           history.map(recording => {
             return (
               <Card key={recording.id}>
-                {console.log('date type', recording.createdAt)}
-                <audio controls src={recording.url} />
-                <div className="analysis">
-                  Female Probability Confidence
-                  <strong>{recording.femaleConfidence}%</strong>
-                  <br />
-                  Male Probability Confidence
-                  <strong>{recording.maleConfidence}%</strong>
-                  <br />
+                <div id="recording-details">
+                  <h4>Date</h4>
+                  <p>{this.getRecordingDate(recording.createdAt)}</p>
+
+                  <audio controls src={recording.url} />
                 </div>
+                <CardContent className="prediction-results">
+                  <h4>Prediction Results</h4>
+                  <div>
+                  <span>Feminine -- </span>
+                  <span><strong>{recording.femaleConfidence}%</strong></span>
+                  </div>
+                  <div>
+                    <span>Masculine -- </span>
+                  <span><strong>{recording.maleConfidence}%</strong></span>
+                </div>
+                </CardContent>
               </Card>
             )
           })
         )}
-      </React.Fragment>
+      </Container>
     )
   }
 }

@@ -22,7 +22,9 @@ class SpectrogramChart extends React.Component {
     this.createSpectrogram = this.createSpectrogram.bind(this)
     this.drawSpectrogram = this.drawSpectrogram.bind(this)
   }
-
+  componentDidMount(){
+    this.spectroReset()
+  }
   //function to create the spectrogram canvas and initial settings.
   //returns the created spectrogram object.
   createSpectrogram(width, height, DOMelement) {
@@ -94,7 +96,7 @@ class SpectrogramChart extends React.Component {
       this.state.spectro.clear()
     }
     let DOMelement = document.getElementById('canvas1')
-    let spectro = this.createSpectrogram(500, 600, DOMelement)
+    let spectro = this.createSpectrogram(600, 400, DOMelement)
     this.setState({spectro})
   }
 
@@ -121,8 +123,6 @@ class SpectrogramChart extends React.Component {
           aria-label="contained primary button group"
         >
           <Button onClick={()=>
-            this.spectroReset()}>Spectro reset</Button>
-          <Button onClick={()=>
             this.spectroPause()}>pause</Button>
           <Button onClick={()=>
             this.spectroStart(this.props.recordingURL)}>Start</Button>
@@ -134,6 +134,7 @@ class SpectrogramChart extends React.Component {
   }
 }
 }
+
 const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
@@ -143,4 +144,5 @@ const mapState = state => {
     prediction: state.recording.prediction
   }
 }
+
 export default connect(mapState)(SpectrogramChart)

@@ -60,8 +60,7 @@ export const logout = () => async dispatch => {
 
 export const fetchHistory = userId => async dispatch => {
   try {
-    console.log('fetching history?')
-    const response = await axios.get(`/api/recordings/user/${userId}`)
+    const response = await axios.get(`/api/users/${userId}/recordings`)
     console.log('🚀 ~ file: recording.js ~ line 73 ~ response', response)
     const userHistory = response.data
     dispatch(_fetchHistory(userHistory))

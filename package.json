@@ -44,7 +44,6 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/system": "^4.11.3",
     "audio-react-recorder": "^1.0.4",
     "aws-sdk": "^2.870.0",
     "axios": "^0.21.1",
