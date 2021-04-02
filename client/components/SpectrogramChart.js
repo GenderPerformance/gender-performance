@@ -110,8 +110,11 @@ class SpectrogramChart extends React.Component {
   //resume the spectro waveform if it is paused
   spectroResume() {
     this.state.spectro.resume()
+    //this.state.spectro.
   }
+
   render() {
+    // old code. keep in case we need add the additional conditional check
     // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
     if (!this.props.recordingURL) {
       return <div className="circleProgress"><CircularProgress/><br/></div>
@@ -139,9 +142,11 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
+    isPaused: state.player.isPaused,
     recordingURL: state.recording.recordingURL,
     loading: state.recording.loading,
-    prediction: state.recording.prediction
+    prediction: state.recording.prediction,
+
   }
 }
 

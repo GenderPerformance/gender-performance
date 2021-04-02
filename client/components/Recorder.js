@@ -2,7 +2,7 @@ import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import MediaPlayer from './MediaPlayer'
-import {recordClip, analyzeRecording, clearRecording} from '../store'
+import {recordClip, analyzeRecording, clearRecording, setAnalysis} from '../store'
 import {Link as RouterLink} from 'react-router-dom'
 import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
 import MenuBar from './MenuBar'
@@ -25,6 +25,8 @@ class Recorder extends React.Component {
   componentDidMount() {
     //clear any recording from previous analysis
     this.props.clearRecording()
+    //clear analysis state
+    this.props.setAnalysis(null)
   }
   start() {
     this.props.clearRecording()
@@ -135,8 +137,9 @@ const mapDispatch = dispatch => {
   return {
     recordClip: blob => dispatch(recordClip(blob)),
     analyzeRecording: (userId, blob) =>
-      dispatch(analyzeRecording(userId, blob)),
-    clearRecording: () => dispatch(clearRecording())
+    dispatch(analyzeRecording(userId, blob)),
+    clearRecording: () => dispatch(clearRecording()),
+    setAnalysis:(chart)=>dispatch(setAnalysis(chart))
   }
 }
 

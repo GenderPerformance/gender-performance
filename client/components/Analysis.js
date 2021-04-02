@@ -14,7 +14,6 @@ import Resonance from './Resonance'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording, setAnalysis} from '../store'
 
-
 class Analysis extends React.Component {
   constructor() {
     super()
@@ -40,7 +39,8 @@ class Analysis extends React.Component {
       this.setState({wavesurfer: wavesurfer})
     }
   }
-    start() {
+
+  start() {
     this.props.clearRecording()
     this.setState({
       recordState: RecordState.START
@@ -52,11 +52,13 @@ class Analysis extends React.Component {
       recordState: RecordState.STOP
     })
   }
+
   onStop(audioData) {
     this.props.recordClip(audioData)
   }
+
   handleGraph(input) {
-    this.setState({graph: input})
+    this.props.setAnalysis(input)
   }
 
   handlePlayback() {
@@ -64,7 +66,7 @@ class Analysis extends React.Component {
   }
 
   render() {
-    console.log('analysus props',this.props)
+    console.log('analysis props',this.props)
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
@@ -116,12 +118,12 @@ class Analysis extends React.Component {
             <div id="waveform" />
           </Card>
           <Container className="graphs">
-            {this.state.graph === 'ceps' ? (
+            {this.props.analysis === 'reso' ? (
               <Resonance />
             ) : (
               <div>
-                <canvas id="canvas1" />
                 <SpectrogramChart />
+                <canvas id="canvas1" />
               </div>
             )}
             <ButtonGroup
@@ -131,7 +133,7 @@ class Analysis extends React.Component {
               <Button onClick={() => this.handleGraph('spec')}>
                 Spectrogram
               </Button>
-              <Button onClick={() => this.handleGraph('ceps')}>Resonance</Button>
+              <Button onClick={() => this.handleGraph('reso')}>Resonance</Button>
             </ButtonGroup>
           </Container>
         </Container>

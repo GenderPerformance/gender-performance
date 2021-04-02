@@ -6,6 +6,7 @@ import 'p5/lib/addons/p5.sound'
 import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
+
 export const myp5 = new p5()
 class Resonance extends React.Component {
   constructor(props) {
