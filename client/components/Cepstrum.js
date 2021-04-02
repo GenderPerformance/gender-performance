@@ -7,7 +7,6 @@ import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
 export const myp5 = new p5()
-
 class Cepstrum extends React.Component {
   constructor(props) {
     super(props)
@@ -30,14 +29,14 @@ class Cepstrum extends React.Component {
     let width = 600
     let height = 400
 
-    p.preload = () => {
-      this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
+    p.preload = async () => {
+      await this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
     }
 
-    p.setup = () => {
+    p.setup = async () => {
       let cnv = p.createCanvas(width, height, p.WEBGL)
       cnv.mouseClicked(this.togglePlay)
-      this.setState({fft: new p5.FFT()})
+      await this.setState({fft: new p5.FFT()})
       //this.state.sound.amp(0.2);
     }
 
@@ -54,7 +53,7 @@ class Cepstrum extends React.Component {
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
         let x = p.map(i, 0, spectrum.length, -width / 2, width)
-        let h = -height + p.map(spectrum[i], 50, 255, height, 0)
+        let h = -height + p.map(spectrum[i], 50, 300, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
       //generate the waveform data-follows the same pattern as the fft.
@@ -70,6 +69,7 @@ class Cepstrum extends React.Component {
       p.endShape()
     }
   }
+
   togglePlay() {
     if (this.state.sound.isPlaying()) {
       this.state.sound.pause()
@@ -77,9 +77,16 @@ class Cepstrum extends React.Component {
       this.state.sound.play()
     }
   }
-  useEffect(){
-    console.log('useEffect happened in Cepstrum')
+
+  componentDidUpdate(prevProps){
+    if(prevProps.isPaused !==this.props.isPaused && this.props.isPaused===true){
+      this.state.sound.pause()
+    }
+    else if(prevProps.isPaused !==this.props.isPaused && this.props.isPaused===false){
+      this.state.sound.play()
+    }
   }
+
   render() {
     console.log(this.props)
     if (!this.props.recordingBlob) {
