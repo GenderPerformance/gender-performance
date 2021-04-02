@@ -45,7 +45,6 @@ class Cepstrum extends React.Component {
       //draw the background
       p.background('rgba(105,255,0, 0.8)')
       //generate the fft data using samplesize 4096.
-      console.log("draw this.state",this.state)
       let spectrum = this.state.fft.analyze(4096)
 
       //stroke and noFill are for drawing color and making sure
@@ -55,7 +54,7 @@ class Cepstrum extends React.Component {
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
         let x = p.map(i, 0, spectrum.length, -width / 2, width)
-        let h = -height + p.map(spectrum[i], 0, 255, height, 0)
+        let h = -height + p.map(spectrum[i], 50, 255, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
       //generate the waveform data-follows the same pattern as the fft.
