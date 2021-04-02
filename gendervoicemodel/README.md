@@ -4,6 +4,8 @@ This repository is about building a deep learning model using TensorFlow 2 to re
 
 ## Requirements
 
+1
+
 * TensorFlow 2.x.x
 * Scikit-learn
 * Numpy

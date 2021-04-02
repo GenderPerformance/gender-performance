@@ -6,72 +6,92 @@ import {
   Button,
   ButtonGroup
 } from '@material-ui/core'
+import MediaPlayer from './MediaPlayer'
+import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
+import GraphTabs from './GraphTabs'
+import WaveForm from './WaveForm'
+
 
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
-      wavesurfer: null
+      wavesurfer: null,
+      recordState: null,
     }
+    this.start = this.start.bind(this)
+    this.stop = this.stop.bind(this)
+    this.onStop = this.onStop.bind(this)
+
   }
 
-  componentDidMount() {
-    if (!this.state.wavesurfer) {
-      const wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        plugins: []
-      })
-      this.setState({wavesurfer: wavesurfer})
-    }
+    start() {
+    this.props.clearRecording()
+    this.setState({
+      recordState: RecordState.START
+    })
+  }
+
+  stop() {
+    this.setState({
+      recordState: RecordState.STOP
+    })
+  }
+
+  onStop(audioData) {
+    this.props.recordClip(audioData)
   }
 
   render() {
-    if (this.props.prediction) {
-      const wavesurf = this.state.wavesurfer
-      wavesurf.load(this.props.recordingURL)
-    }
+
     return (
-      <Container maxWidth="sm">
-        <div>
-          <br />
-          <br />
-          <Card style={{backgroundColor: '#cbae82'}}>
-            <h3>Analysis</h3>
+      <Container className="analysisPage">
+        <h1>Analysis</h1>
+        <Container className="predAndGraphs">
+          <Card className="prediction">
+            <h3>Prediction Results</h3>
+            <p>Results represent percent confidence from our</p>
+            <p>machine learning model</p>
             {this.props.loading ? (
               <div className="circleProgress">
+                <br />
                 <CircularProgress />
                 <br />
               </div>
             ) : (
-              <div className="analysis">
+              <div className="prediction-results">
                 Female Probability Confidence
                 <strong>{this.props.prediction.fp}%</strong>
                 <br />
                 Male Probability Confidence
                 <strong>{this.props.prediction.mp}%</strong>
                 <br />
-                <ButtonGroup
-                  variant="contained"
-                  color="secondary"
-                  aria-label="contained primary button group"
-                >
-                  <Button onClick={() => this.state.wavesurfer.playPause()}>
-                    Play/Pause
-                  </Button>
-                </ButtonGroup>
               </div>
             )}
-            <div id="waveform" />
+            <div className="audio">
+            {this.props.recordingURL && <MediaPlayer />}
+            <AudioReactRecorder
+              text-align="center"
+              state={this.state.recordState}
+              onStop={this.onStop}
+              backgroundColor="rgb(255,255,255)"
+              foregroundColor="rgb(159,48,226)"
+              canvasWidth="10"
+              canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
+            />
+          </div>
           </Card>
-        </div>
-        <canvas id='canvas1'></canvas>
-        <SpectrogramChart/>
-        <Cepstrum />
+          <Container className="graphs">
+
+            <GraphTabs/>
+
+          </Container>
+        </Container>
       </Container>
     )
   }
@@ -81,7 +101,7 @@ const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    recordingURL: state.recording.recordingURL,
+    recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
     prediction: state.recording.prediction
@@ -91,7 +111,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     recordClip: blob => dispatch(recordClip(blob)),
-    analyzeClip: (userId, blob) => dispatch(analyzeClip(userId, blob))
+    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
   }
 }
 

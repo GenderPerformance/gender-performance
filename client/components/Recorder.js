@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 import MediaPlayer from './MediaPlayer'
 import {recordClip, analyzeRecording, clearRecording} from '../store'
 import {Link as RouterLink} from 'react-router-dom'
-import {Container, ButtonGroup, Button, Card, Link} from '@material-ui/core'
-import MenuBar from './MenuBar'
+import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link} from '@material-ui/core'
+
 const txtgen = require('txtgen')
 const paragraph = txtgen.paragraph()
 
@@ -79,11 +79,17 @@ class Recorder extends React.Component {
               </ButtonGroup>
             </div>
             <Card className="txtgen">
-              Press record then say:
-              <h4>{`${this.state.paragraph}`}</h4>
-              <Button variant="contained" onClick={this.newParagraph}>
-                New Paragraph
-              </Button>
+              <CardContent>
+              <Typography color="textSecondary">
+                Press record then say:
+              </Typography>
+              <Typography color="textSecondary">
+                {`${this.state.paragraph}`}
+              </Typography>
+                <Button variant="contained" onClick={this.newParagraph}>
+                  New Paragraph
+                </Button>
+              </CardContent>
             </Card>
           </Container>
           <div className="analyze">

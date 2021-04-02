@@ -5,7 +5,7 @@ import P5Wrapper from 'react-p5-wrapper'
 import 'p5/lib/addons/p5.sound'
 import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
-
+import {xAxis} from './utility/axisLabels.js'
 export const myp5 = new p5()
 
 class Cepstrum extends React.Component {
@@ -18,10 +18,18 @@ class Cepstrum extends React.Component {
     this.sketch = this.sketch.bind(this)
   }
 
+  componentDidMount() {
+    //xAxis creates an x axis for the cepstrum analysis
+    //should target the div element below the cepstrum analysis
+    //the second and third arguments of xAxis should be the width of
+    //sketch.  4th and 5th are the frequency range
+    xAxis('#cepstralAxis', 0, 600, 0, 4000)
+  }
+
   sketch(p) {
     let width = 600
     let height = 400
-    let filter, filterFreq, filte
+
     p.preload = () => {
       this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
     }
@@ -38,6 +46,7 @@ class Cepstrum extends React.Component {
       p.background('rgba(105,255,0, 0.8)')
       //generate the fft data using samplesize 4096.
       let spectrum = this.state.fft.analyze(4096)
+
       //stroke and noFill are for drawing color and making sure
       //nothing is left behind on the DOM
       p.stroke(10)
@@ -45,7 +54,7 @@ class Cepstrum extends React.Component {
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
         let x = p.map(i, 0, spectrum.length, -width / 2, width)
-        let h = -height + p.map(spectrum[i], 30, 255, height, 0)
+        let h = -height + p.map(spectrum[i], 0, 255, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
       //generate the waveform data-follows the same pattern as the fft.
@@ -70,13 +79,17 @@ class Cepstrum extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     if (!this.props.recordingBlob) {
       return <div>Loading...</div>
     } else {
       return (
         <div>
-          <P5Wrapper sketch={this.sketch} />
-          <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
+          <div className="cepstral">
+            <P5Wrapper sketch={this.sketch} />
+          </div>
+          <div id="cepstralAxis" />
+          <Button variant="contained" onClick={() => this.togglePlay()}>Play</Button>
         </div>
       )
     }
