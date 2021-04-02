@@ -74,7 +74,6 @@ export default function(state = defaultState, action) {
     case ANALYZE_RECORDING:
       return {
         ...state,
-        recordingURL: action.recordingData.s3Url,
         prediction: action.recordingData.prediction
       }
     case IS_LOADING:

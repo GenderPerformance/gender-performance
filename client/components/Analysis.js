@@ -38,6 +38,7 @@ class Analysis extends React.Component {
       })
       this.setState({wavesurfer: wavesurfer})
     }
+    this.props.setAnalysis('spec')
   }
 
   start() {
@@ -59,6 +60,7 @@ class Analysis extends React.Component {
 
   handleGraph(input) {
     this.props.setAnalysis(input)
+    console.log('post handlegraph',this.props)
   }
 
   handlePlayback() {
@@ -66,7 +68,6 @@ class Analysis extends React.Component {
   }
 
   render() {
-    console.log('analysis props',this.props)
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
@@ -104,21 +105,23 @@ class Analysis extends React.Component {
               </div>
             )}
             <div className="audio">
-            {this.props.recordingURL && <MediaPlayer />}
-            <AudioReactRecorder
-              text-align="center"
-              state={this.state.recordState}
-              onStop={this.onStop}
-              backgroundColor="rgb(255,255,255)"
-              foregroundColor="rgb(159,48,226)"
-              canvasWidth="900"
-              canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
-            />
-          </div>
+              {this.props.recordingURL && <MediaPlayer />}
+              <AudioReactRecorder
+                text-align="center"
+                state={this.state.recordState}
+                onStop={this.onStop}
+                backgroundColor="rgb(255,255,255)"
+                foregroundColor="rgb(159,48,226)"
+                canvasWidth="900"
+                canvasHeight={
+                  this.state.recordState === RecordState.START ? '150' : '0'
+                }
+              />
+            </div>
             <div id="waveform" />
           </Card>
           <Container className="graphs">
-            {this.props.analysis === 'reso' ? (
+            {this.props.analysisType === 'reso' ? (
               <Resonance />
             ) : (
               <div>
@@ -133,7 +136,9 @@ class Analysis extends React.Component {
               <Button onClick={() => this.handleGraph('spec')}>
                 Spectrogram
               </Button>
-              <Button onClick={() => this.handleGraph('reso')}>Resonance</Button>
+              <Button onClick={() => this.handleGraph('reso')}>
+                Resonance
+              </Button>
             </ButtonGroup>
           </Container>
         </Container>
@@ -150,7 +155,7 @@ const mapState = state => {
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
     prediction: state.recording.prediction,
-    analysis: state.analysis.chart
+    analysisType: state.analysis.chart
   }
 }
 

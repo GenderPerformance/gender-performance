@@ -8,6 +8,7 @@ import {
 import {connect} from 'react-redux'
 import Spectrogram from './utility/spectrogram'
 import chroma from 'chroma-js'
+import {setAnalysis,getAnalysis} from '../store'
 
 //this component needs <canvas id="canvas1"/> to exist in it's parent component
 //in order to work properly
@@ -22,7 +23,9 @@ class SpectrogramChart extends React.Component {
     this.createSpectrogram = this.createSpectrogram.bind(this)
     this.drawSpectrogram = this.drawSpectrogram.bind(this)
   }
-  componentDidMount(){
+  componentDidMount() {
+    console.log('spectro',this.props)
+    this.props.setAnalysis('spec')
     this.spectroReset()
   }
   //function to create the spectrogram canvas and initial settings.
@@ -113,29 +116,60 @@ class SpectrogramChart extends React.Component {
     //this.state.spectro.
   }
 
+  componentDidUpdate(prevProps){
+    //always refresh analysis type
+    if(this.props.getAnalysisType){
+      this.props.setAnalysis('spec')
+    }
+    console.log('spec update')
+    if(this.props.analysisType==='spec'){
+    //some logic to determine what to do with the spectrogram based on prev
+    //and curr state of is paused and is ended
+    //as the user hits pause and start repeatedly different states are generated
+    //and needs to be accounted for
+      if(prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ||
+        !prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ){
+        this.spectroPause()
+      }else if(!prevProps.isEnded&&this.props.isEnded&&prevProps.isPaused&&this.props.isPaused){
+        this.spectroResume()
+      }
+
+      if(prevProps.isEnded!==this.props.isEnded||prevProps.isPaused!==this.props.isPaused){
+        if(prevProps.isEnded && !this.props.isPaused){//96% correct
+          //play from beginning
+          this.spectroStart(this.props.recordingURL)
+        }
+        else if(!prevProps.isEnded && !this.props.isEnded && !this.props.isPaused){
+          this.spectroResume()
+        }
+      }
+    }
+  }
+
   render() {
     // old code. keep in case we need add the additional conditional check
     // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
     if (!this.props.recordingURL) {
-      return <div className="circleProgress"><CircularProgress/><br/></div>
-    }else{
-    return (
-      <Container className="spec" maxWidth="sm">
-        <ButtonGroup
-          variant="contained"
-          aria-label="contained primary button group"
-        >
-          <Button onClick={()=>
-            this.spectroPause()}>pause</Button>
-          <Button onClick={()=>
-            this.spectroStart(this.props.recordingURL)}>Start</Button>
-          <Button onClick={()=>
-            this.spectroResume()}>Resume</Button>
-        </ButtonGroup>
-      </Container>
-    )
+      return (
+        <div className="circleProgress">
+          <CircularProgress />
+          <br />
+        </div>
+      )
+    } else {
+      return (
+        <Container className="spec" maxWidth="sm">
+          <ButtonGroup
+            variant="contained"
+            aria-label="contained primary button group"
+          >
+            <Button onClick={() => this.spectroPause()}>pause</Button>
+            <Button onClick={() => this.spectroResume()}>Resume</Button>
+          </ButtonGroup>
+        </Container>
+      )
+    }
   }
-}
 }
 
 const mapState = state => {
@@ -143,11 +177,17 @@ const mapState = state => {
     //mapping in user and recording state for a loading screen
     user: state.user,
     isPaused: state.player.isPaused,
-    recordingURL: state.recording.recordingURL,
+    recordingURL: state.player.recordingURL,
     loading: state.recording.loading,
     prediction: state.recording.prediction,
-
+    isEnded: state.player.isEnded,
+    analysisType: state.analysis.chart
   }
 }
 
-export default connect(mapState)(SpectrogramChart)
+const mapDispatch = dispatch => {
+  return {
+    setAnalysis: chartName => dispatch(setAnalysis(chartName))
+  }
+}
+export default connect(mapState,mapDispatch)(SpectrogramChart)

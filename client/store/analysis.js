@@ -1,13 +1,16 @@
 //action types
-const SET_ANALYSIS = 'SET_ANALYSIS'
+const SET_ANALYSIS_TYPE = 'SET_ANALYSIS_TYPE'
+
 //initial state
-const defaultAnalysis = {chart:null}
+const defaultAnalysis = {chart:'spec'}
+
 //action CREATORS
-export const setAnalysis = (chart)=>({type:SET_ANALYSIS,chart:chart})
+export const setAnalysis = (chart)=>({type:SET_ANALYSIS_TYPE,chart:chart})
+
 //reducer
 export default function (state=defaultAnalysis,action){
   switch(action.type){
-    case SET_ANALYSIS:
+    case SET_ANALYSIS_TYPE:
       return {...state,chart:action.chart}
     default:
       return state

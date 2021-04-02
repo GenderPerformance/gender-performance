@@ -6,6 +6,7 @@ import 'p5/lib/addons/p5.sound'
 import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
+import {setAnalysis,getAnalysis} from '../store'
 
 export const myp5 = new p5()
 class Resonance extends React.Component {
@@ -24,6 +25,7 @@ class Resonance extends React.Component {
     //the second and third arguments of xAxis should be the width of
     //sketch.  4th and 5th are the frequency range
     xAxis('#cepstralAxis', 0, 600, 0, 4000)
+    this.props.setAnalysis('reso')
   }
 
   sketch(p) {
@@ -79,18 +81,29 @@ class Resonance extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps){
-    console.log('props from resonance',this.props)
-    if(prevProps.isPaused !==this.props.isPaused && this.props.isPaused===true){
-      this.state.sound.pause()
+  componentDidUpdate(prevProps) {
+    //always refresh analysis type
+    if(this.props.getAnalysisType){
+      this.props.setAnalysis('reso')
     }
-    else if(prevProps.isPaused !==this.props.isPaused && this.props.isPaused===false){
-      this.state.sound.play()
+
+    console.log('reso update')
+    if(this.props.analysisType==='reso'){
+      if (
+        prevProps.isPaused !== this.props.isPaused &&
+        this.props.isPaused === true
+      ) {
+        this.state.sound.pause()
+      } else if (
+        prevProps.isPaused !== this.props.isPaused &&
+        this.props.isPaused === false
+      ) {
+        this.state.sound.play()
+      }
     }
   }
 
   render() {
-    console.log(this.props)
     if (!this.props.recordingBlob) {
       return <div>Loading...</div>
     } else {
@@ -110,10 +123,16 @@ class Resonance extends React.Component {
 const mapState = state => {
   return {
     isPaused: state.player.isPaused,
-    recordingURL: state.recording.recordingURL,
+    recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
-    analysis: state.analysis.chart
+    analysisType: state.analysis.chart
   }
 }
 
-export default connect(mapState)(Resonance)
+const mapDispatch = dispatch => {
+  return {
+    setAnalysis: chartName => dispatch(setAnalysis(chartName))
+  }
+}
+
+export default connect(mapState,mapDispatch)(Resonance)
