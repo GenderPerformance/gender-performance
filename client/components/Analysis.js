@@ -13,6 +13,7 @@ import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
+import Wave from './Wave'
 
 class Analysis extends React.Component {
   constructor() {
@@ -32,7 +33,7 @@ class Analysis extends React.Component {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'violet',
+        waveColor: 'purple',
         progressColor: 'purple',
         plugins: []
       })
@@ -58,18 +59,8 @@ class Analysis extends React.Component {
     this.setState({graph: input})
   }
 
-  handlePlayback() {
-    this.state.wavesurfer.playPause()
-  }
 
   render() {
-
-
-
-    if (this.props.prediction) {
-      const wavesurf = this.state.wavesurfer
-      wavesurf.load(this.props.recordingURL)
-    }
     return (
       <Container className="analysisPage">
         <h1>Analysis</h1>
@@ -92,14 +83,6 @@ class Analysis extends React.Component {
                 Male Probability Confidence
                 <strong>{this.props.prediction.mp}%</strong>
                 <br />
-                <ButtonGroup
-                  variant="contained"
-                  aria-label="contained primary button group"
-                >
-                  <Button onClick={() => this.state.wavesurfer.playPause()}>
-                    Play/Pause
-                  </Button>
-                </ButtonGroup>
               </div>
             )}
             <div className="audio">
@@ -125,14 +108,17 @@ class Analysis extends React.Component {
                 <SpectrogramChart />
               </div>
             )}
+            {this.state.graph === 'wave' ? (<Wave/>) :(  <div>
+                <canvas id="canvas1" />
+                <SpectrogramChart />
+              </div>) }
             <ButtonGroup
               variant="contained"
               aria-label="contained primary button group"
             >
-              <Button onClick={() => this.handleGraph('spec')}>
-                Spectrogram
-              </Button>
+              <Button onClick={() => this.handleGraph('spec')}>Spectrogram</Button>
               <Button onClick={() => this.handleGraph('ceps')}>Cepstrum</Button>
+              <Button onClick={()=> this.handleGraph('wave')}>Waveform</Button>
             </ButtonGroup>
           </Container>
         </Container>

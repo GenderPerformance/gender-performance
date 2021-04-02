@@ -27,7 +27,7 @@ class MediaPlayer extends React.Component {
     } else {
       this.props.pause()
       this.audio.pause()
-    }
+    }``
   }
 
   render() {
