@@ -30,7 +30,7 @@ class Analysis extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.state.wavesurfer) {
+    if (!this.state.wavesurfer && document.getElementById("waveform")) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
         waveColor: 'purple',
@@ -98,21 +98,19 @@ class Analysis extends React.Component {
               canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
             />
           </div>
-            <div id="waveform" />
           </Card>
           <Container className="graphs">
             {this.state.graph === 'ceps' ? (
               <Cepstrum />
-            ) : (
+            ) : this.state.graph === "spec" ? (
               <div>
                 <canvas id="canvas1" />
                 <SpectrogramChart />
               </div>
-            )}
-            {this.state.graph === 'wave' ? (<WaveForm/>) :(  <div>
-                <canvas id="canvas1" />
-                <SpectrogramChart />
-              </div>) }
+            ) : (
+            <div id="waveform">
+            <WaveForm/>
+            </div>)}
             <ButtonGroup
               variant="contained"
               aria-label="contained primary button group"
