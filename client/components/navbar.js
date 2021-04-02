@@ -5,10 +5,9 @@ import {Link} from 'react-router-dom'
 import {AppBar} from '@material-ui/core'
 import MenuBar from './MenuBar'
 
-const Navbar = ({isLoggedIn}) => (
+const Navbar = () => (
   <div>
     <nav>
-      {isLoggedIn ? (
         <AppBar position="static">
           <div className="Menu">
             <div className="title">
@@ -19,16 +18,6 @@ const Navbar = ({isLoggedIn}) => (
             </div>
           </div>
         </AppBar>
-      ) : (
-        <AppBar position="static">
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/about">About</Link>
-          </div>
-        </AppBar>
-      )}
     </nav>
   </div>
 )
