@@ -13,20 +13,22 @@ import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
+import GraphTabs from './GraphTabs'
 import WaveForm from './WaveForm'
+
 
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
       wavesurfer: null,
-      recordState: null,
-      graph: 'spec'
+      recordState: null, 
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
     this.handleGraph = this.handleGraph.bind(this)
+
   }
 
   componentDidMount() {
@@ -52,14 +54,11 @@ class Analysis extends React.Component {
       recordState: RecordState.STOP
     })
   }
+  
   onStop(audioData) {
     this.props.recordClip(audioData)
   }
-  handleGraph(input) {
-    this.setState({graph: input})
-  }
-
-
+  
   render() {
 
     return (
@@ -100,25 +99,9 @@ class Analysis extends React.Component {
           </div>
           </Card>
           <Container className="graphs">
-            {this.state.graph === 'ceps' ? (
-              <Cepstrum />
-            ) : this.state.graph === "spec" ? (
-              <div>
-                <canvas id="canvas1" />
-                <SpectrogramChart />
-              </div>
-            ) : (
-            <div id="waveform">
-            <WaveForm/>
-            </div>)}
-            <ButtonGroup
-              variant="contained"
-              aria-label="contained primary button group"
-            >
-              <Button onClick={() => this.handleGraph('spec')}>Spectrogram</Button>
-              <Button onClick={() => this.handleGraph('ceps')}>Cepstrum</Button>
-              <Button onClick={()=> this.handleGraph('wave')}>Waveform</Button>
-            </ButtonGroup>
+           
+            <GraphTabs/>
+
           </Container>
         </Container>
       </Container>
