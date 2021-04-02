@@ -14,6 +14,11 @@ const About = props => {
           generate a gender perception based on a recording.
         </p>
         <p>
+          The machine learning model was trained with regular speaking voices and
+          thus to designed to be used for regular speaking voices. It is a feed
+          forward network with 5 hidden layers using relu nodes.
+        </p>
+        <p>
           Labeling gender is inherently reductive and doesn't take into the
           broad spectrum of genders that exist in the world. In this, the
           application demonstrates some of the limitations of machine learning

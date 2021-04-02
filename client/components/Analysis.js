@@ -63,9 +63,6 @@ class Analysis extends React.Component {
   }
 
   render() {
-
-
-
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)

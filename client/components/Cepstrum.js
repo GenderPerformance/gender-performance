@@ -77,9 +77,11 @@ class Cepstrum extends React.Component {
       this.state.sound.play()
     }
   }
-
+  useEffect(){
+    console.log('useEffect happened in Cepstrum')
+  }
   render() {
-    console.log(this.state)
+    console.log(this.props)
     if (!this.props.recordingBlob) {
       return <div>Loading...</div>
     } else {
@@ -98,6 +100,7 @@ class Cepstrum extends React.Component {
 
 const mapState = state => {
   return {
+    isPaused: state.player.isPaused,
     recordingURL: state.recording.recordingURL,
     recordingBlob: state.recording.recordingBlob
   }
