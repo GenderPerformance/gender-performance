@@ -10,9 +10,10 @@ import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
-import Cepstrum from './Cepstrum'
+import Resonance from './Resonance'
 import SpectrogramChart from './SpectrogramChart'
-import {recordClip, analyzeRecording} from '../store'
+import {recordClip, analyzeRecording, setAnalysis} from '../store'
+
 
 class Analysis extends React.Component {
   constructor() {
@@ -63,6 +64,7 @@ class Analysis extends React.Component {
   }
 
   render() {
+    console.log('analysus props',this.props)
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
@@ -115,7 +117,7 @@ class Analysis extends React.Component {
           </Card>
           <Container className="graphs">
             {this.state.graph === 'ceps' ? (
-              <Cepstrum />
+              <Resonance />
             ) : (
               <div>
                 <canvas id="canvas1" />
@@ -129,7 +131,7 @@ class Analysis extends React.Component {
               <Button onClick={() => this.handleGraph('spec')}>
                 Spectrogram
               </Button>
-              <Button onClick={() => this.handleGraph('ceps')}>Cepstrum</Button>
+              <Button onClick={() => this.handleGraph('ceps')}>Resonance</Button>
             </ButtonGroup>
           </Container>
         </Container>
@@ -145,12 +147,14 @@ const mapState = state => {
     recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
-    prediction: state.recording.prediction
+    prediction: state.recording.prediction,
+    analysis: state.analysis.chart
   }
 }
 
 const mapDispatch = dispatch => {
   return {
+    setAnalysis: chartName => dispatch(setAnalysis(chartName)),
     recordClip: blob => dispatch(recordClip(blob)),
     analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
   }

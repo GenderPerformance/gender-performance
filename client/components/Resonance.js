@@ -7,7 +7,7 @@ import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
 export const myp5 = new p5()
-class Cepstrum extends React.Component {
+class Resonance extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,8 +18,8 @@ class Cepstrum extends React.Component {
   }
 
   componentDidMount() {
-    //xAxis creates an x axis for the cepstrum analysis
-    //should target the div element below the cepstrum analysis
+    //xAxis creates an x axis for the resonance analysis
+    //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of
     //sketch.  4th and 5th are the frequency range
     xAxis('#cepstralAxis', 0, 600, 0, 4000)
@@ -53,7 +53,7 @@ class Cepstrum extends React.Component {
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
         let x = p.map(i, 0, spectrum.length, -width / 2, width)
-        let h = -height + p.map(spectrum[i], 50, 300, height, 0)
+        let h = -height + p.map(spectrum[i], 8, 300, height, 0)
         p.rect(x, height, width / spectrum.length, h)
       }
       //generate the waveform data-follows the same pattern as the fft.
@@ -79,6 +79,7 @@ class Cepstrum extends React.Component {
   }
 
   componentDidUpdate(prevProps){
+    console.log('props from resonance',this.props)
     if(prevProps.isPaused !==this.props.isPaused && this.props.isPaused===true){
       this.state.sound.pause()
     }
@@ -109,8 +110,9 @@ const mapState = state => {
   return {
     isPaused: state.player.isPaused,
     recordingURL: state.recording.recordingURL,
-    recordingBlob: state.recording.recordingBlob
+    recordingBlob: state.recording.recordingBlob,
+    analysis: state.analysis.chart
   }
 }
 
-export default connect(mapState)(Cepstrum)
+export default connect(mapState)(Resonance)
