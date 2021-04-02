@@ -13,7 +13,7 @@ import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
-import Wave from './Wave'
+import WaveForm from './WaveForm'
 
 class Analysis extends React.Component {
   constructor() {
@@ -61,6 +61,7 @@ class Analysis extends React.Component {
 
 
   render() {
+
     return (
       <Container className="analysisPage">
         <h1>Analysis</h1>
@@ -108,7 +109,7 @@ class Analysis extends React.Component {
                 <SpectrogramChart />
               </div>
             )}
-            {this.state.graph === 'wave' ? (<Wave/>) :(  <div>
+            {this.state.graph === 'wave' ? (<WaveForm/>) :(  <div>
                 <canvas id="canvas1" />
                 <SpectrogramChart />
               </div>) }

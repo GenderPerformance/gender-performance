@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import MediaPlayer from './MediaPlayer';
 
-class Wave extends React.Component {
+class WaveForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -22,7 +22,7 @@ class Wave extends React.Component {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'green',
+        waveColor: 'purple',
         progressColor: 'purple',
         plugins: [],
       });
@@ -39,14 +39,13 @@ class Wave extends React.Component {
     }
     return (
       <Container>
-        {this.props.recordingURL && <MediaPlayer />}
+          <Button onClick={() => this.state.wavesurfer.playPause()}>
+            Play/Pause
+          </Button>
         <ButtonGroup
           variant='contained'
           aria-label='contained primary button group'
         >
-          <Button onClick={() => this.state.wavesurfer.playPause()}>
-            Play/Pause
-          </Button>
         </ButtonGroup>
       </Container>
     );
@@ -64,4 +63,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(Wave);
+export default connect(mapState)(WaveForm);
