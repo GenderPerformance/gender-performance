@@ -22,26 +22,14 @@ class Analysis extends React.Component {
     super()
     this.state = {
       wavesurfer: null,
-      recordState: null, 
+      recordState: null,
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
-    this.handleGraph = this.handleGraph.bind(this)
 
   }
 
-  componentDidMount() {
-    if (!this.state.wavesurfer && document.getElementById("waveform")) {
-      const wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        waveColor: 'purple',
-        progressColor: 'purple',
-        plugins: []
-      })
-      this.setState({wavesurfer: wavesurfer})
-    }
-  }
     start() {
     this.props.clearRecording()
     this.setState({
@@ -54,11 +42,11 @@ class Analysis extends React.Component {
       recordState: RecordState.STOP
     })
   }
-  
+
   onStop(audioData) {
     this.props.recordClip(audioData)
   }
-  
+
   render() {
 
     return (
@@ -93,13 +81,13 @@ class Analysis extends React.Component {
               onStop={this.onStop}
               backgroundColor="rgb(255,255,255)"
               foregroundColor="rgb(159,48,226)"
-              canvasWidth="900"
+              canvasWidth="10"
               canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
             />
           </div>
           </Card>
           <Container className="graphs">
-           
+
             <GraphTabs/>
 
           </Container>

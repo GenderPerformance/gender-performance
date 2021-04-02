@@ -89,7 +89,7 @@ class Cepstrum extends React.Component {
             <P5Wrapper sketch={this.sketch} />
           </div>
           <div id="cepstralAxis" />
-          <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
+          <Button variant="contained" onClick={() => this.togglePlay()}>Play</Button>
         </div>
       )
     }

@@ -47,6 +47,7 @@ class WaveForm extends React.Component {
           aria-label='contained primary button group'
         >
         </ButtonGroup>
+        <div id="waveform"/>
       </Container>
     );
   }
