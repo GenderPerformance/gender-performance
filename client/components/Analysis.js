@@ -6,6 +6,8 @@ import {
   Button,
   ButtonGroup
 } from '@material-ui/core'
+import MediaPlayer from './MediaPlayer'
+import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
@@ -16,14 +18,14 @@ class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
-      wavesurfer: null
+      wavesurfer: null,
+      recordState: null,
+      graph: 'spec'
     }
-
-    this.state = {
-      graph: "spec"
-    }
-
-    this.handleGraph = this.handleGraph.bind(this);
+    this.start = this.start.bind(this)
+    this.stop = this.stop.bind(this)
+    this.onStop = this.onStop.bind(this)
+    this.handleGraph = this.handleGraph.bind(this)
   }
 
   componentDidMount() {
@@ -37,16 +39,33 @@ class Analysis extends React.Component {
       this.setState({wavesurfer: wavesurfer})
     }
   }
+    start() {
+    this.props.clearRecording()
+    this.setState({
+      recordState: RecordState.START
+    })
+  }
 
+  stop() {
+    this.setState({
+      recordState: RecordState.STOP
+    })
+  }
+  onStop(audioData) {
+    this.props.recordClip(audioData)
+  }
   handleGraph(input) {
     this.setState({graph: input})
   }
 
-  handlePlayback(){
+  handlePlayback() {
     this.state.wavesurfer.playPause()
   }
 
   render() {
+
+
+
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer
       wavesurf.load(this.props.recordingURL)
@@ -61,7 +80,7 @@ class Analysis extends React.Component {
             <p>machine learning model</p>
             {this.props.loading ? (
               <div className="circleProgress">
-                <br/>
+                <br />
                 <CircularProgress />
                 <br />
               </div>
@@ -83,27 +102,37 @@ class Analysis extends React.Component {
                 </ButtonGroup>
               </div>
             )}
+            <div className="audio">
+            {this.props.recordingURL && <MediaPlayer />}
+            <AudioReactRecorder
+              text-align="center"
+              state={this.state.recordState}
+              onStop={this.onStop}
+              backgroundColor="rgb(255,255,255)"
+              foregroundColor="rgb(159,48,226)"
+              canvasWidth="900"
+              canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
+            />
+          </div>
             <div id="waveform" />
           </Card>
           <Container className="graphs">
-            {this.state.graph === "ceps" ?
+            {this.state.graph === 'ceps' ? (
               <Cepstrum />
-            :
-            <div>
-              <canvas id='canvas1'></canvas>
-              <SpectrogramChart/>
-            </div>
-            }
+            ) : (
+              <div>
+                <canvas id="canvas1" />
+                <SpectrogramChart />
+              </div>
+            )}
             <ButtonGroup
               variant="contained"
               aria-label="contained primary button group"
             >
-              <Button onClick={()=>this.handleGraph('spec')}>
+              <Button onClick={() => this.handleGraph('spec')}>
                 Spectrogram
               </Button>
-              <Button onClick={()=>this.handleGraph('ceps')}>
-                Cepstrum
-              </Button>
+              <Button onClick={() => this.handleGraph('ceps')}>Cepstrum</Button>
             </ButtonGroup>
           </Container>
         </Container>
