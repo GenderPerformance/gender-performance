@@ -11,19 +11,17 @@ import WaveSurfer from 'wavesurfer.js'
 import Cepstrum from './Cepstrum'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording} from '../store'
+import GraphTabs from './GraphTabs'
 
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
-      wavesurfer: null
+      wavesurfer: null,
+      // graph: 'spec'
     }
 
-    this.state = {
-      graph: "spec"
-    }
-
-    this.handleGraph = this.handleGraph.bind(this);
+    // this.handleGraph = this.handleGraph.bind(this);
   }
 
   componentDidMount() {
@@ -36,9 +34,9 @@ class Analysis extends React.Component {
     }
   }
 
-  handleGraph(input) {
-    this.setState({graph: input})
-  }
+  // handleGraph(input) {
+  //   this.setState({graph: input})
+  // }
 
   render() {
     if (this.props.prediction) {
@@ -78,7 +76,7 @@ class Analysis extends React.Component {
             <div id="waveform" />
           </Card>
           <Container className="graphs">
-            {this.state.graph === "ceps" ?
+            {/* {this.state.graph === "ceps" ?
               <Cepstrum />
             :
             <div>
@@ -96,7 +94,8 @@ class Analysis extends React.Component {
               <Button onClick={()=>this.handleGraph('ceps')}>
                 Cepstrum
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
+            <GraphTabs/>
           </Container>
         </Container>
       </Container>

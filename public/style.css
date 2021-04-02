@@ -114,7 +114,6 @@ p {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-items: center;
   flex-wrap: wrap;
   margin-top: 8px;
 }
@@ -131,9 +130,11 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: flex-start;
   justify-items: center;
   padding: 1em;
-  width:fit-content;
+  height:inherit;
+  width: 65%;
 }
 
 .MuiContainer-root.spec {
