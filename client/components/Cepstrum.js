@@ -45,6 +45,7 @@ class Cepstrum extends React.Component {
       //draw the background
       p.background('rgba(105,255,0, 0.8)')
       //generate the fft data using samplesize 4096.
+      console.log("draw this.state",this.state)
       let spectrum = this.state.fft.analyze(4096)
 
       //stroke and noFill are for drawing color and making sure

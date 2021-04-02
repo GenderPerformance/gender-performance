@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+import {Link} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   }
 })
 
-function TemporaryDrawer({handleLogout}) {
+function TemporaryDrawer({handleLogout, isLoggedIn}) {
   const classes = useStyles()
   const [state, setState] = React.useState({
     top: false,
@@ -40,12 +41,15 @@ function TemporaryDrawer({handleLogout}) {
     ) {
       return
     }
-
     setState({...state, [anchor]: open})
   }
 
   const icon = [<MicIcon />, <HistoryIcon />, <InfoIcon />]
-  const links = ['home', 'userhistory', 'about']
+
+  const links = isLoggedIn
+    ? ['/home', '/userhistory', '/about']
+    : ['/login', '/signup', '/about']
+
   const list = anchor => (
     <div
       className={clsx(classes.list, {
@@ -55,22 +59,40 @@ function TemporaryDrawer({handleLogout}) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <ListItem button onClick={toggleDrawer(anchor, false)}><ListItemText primary="Close Menu" /></ListItem>
-        <ListItem></ListItem>
-        {['Record', 'History', 'About'].map((text, index) => (
-          <ListItem button component="a" href={`/${links[index]}`} key={text}>
-            <ListItemIcon>{icon[index]}</ListItemIcon>
-            <ListItemText primary={text} />
+      <Button id="closeMenu" onClick={toggleDrawer(anchor, false)}>
+        Close Menu
+      </Button>
+
+      <br />
+
+      {isLoggedIn ? (
+        <List>
+          {['Record', 'History', 'About'].map((text, index) => (
+            <Link to={links[index]} key={text}>
+            <ListItem button component="a" >
+              <ListItemIcon>{icon[index]}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+            </Link>
+          ))}
+          <ListItem button onClick={handleLogout}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
           </ListItem>
-        ))}
-        <ListItem button onClick={handleLogout}>
-          <ListItemIcon>
-            <ExitToAppIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
-      </List>
+        </List>
+      ) : (
+        <List>
+          {['Login', 'Signup', 'About'].map((text, index) => (
+            <Link to={links[index]} key={text}>
+            <ListItem button component="a">
+              <ListItemText primary={text} />
+            </ListItem>
+            </Link>
+          ))}
+        </List>
+      )}
     </div>
   )
 
@@ -94,6 +116,12 @@ function TemporaryDrawer({handleLogout}) {
   )
 }
 
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
     handleLogout() {
@@ -102,8 +130,9 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(TemporaryDrawer)
+export default connect(mapState, mapDispatch)(TemporaryDrawer)
 
 TemporaryDrawer.propTypes = {
-  handleLogout: PropTypes.func.isRequired
+  handleLogout: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
 }
