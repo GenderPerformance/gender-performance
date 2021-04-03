@@ -6,7 +6,9 @@ import {Card} from '@material-ui/core'
 const About = props => {
   return (
     <React.Fragment>
+      <div id="about">
       <Card>
+
         <p>
           Welcome to our little project - Voice Performance. Designed as a proof
           of concept for an application to help individuals understand how their
@@ -33,7 +35,8 @@ const About = props => {
           model was built by XXXXX. Audio analysis is performed using the MDN
           Web Audio API and X and Y libraries.
         </p>
-      </Card>
+
+      </Card></div>
     </React.Fragment>
   )
 }

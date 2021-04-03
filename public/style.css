@@ -150,3 +150,11 @@ p {
   align-items: center;
   margin-left: 8px;
 }
+
+#auth {
+  margin-top:100px;
+}
+
+#about{
+  margin-top:80px;
+}
