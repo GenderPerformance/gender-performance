@@ -13,6 +13,9 @@ import WaveSurfer from 'wavesurfer.js'
 import Resonance from './Resonance'
 import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording, setAnalysis} from '../store'
+import GraphTabs from './GraphTabs'
+import WaveForm from './WaveForm'
+
 
 class Analysis extends React.Component {
   constructor() {
@@ -20,14 +23,11 @@ class Analysis extends React.Component {
     this.state = {
       wavesurfer: null,
       recordState: null,
-      graph: 'spec'
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
-    this.handleGraph = this.handleGraph.bind(this)
   }
-
   componentDidMount() {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
@@ -78,8 +78,8 @@ class Analysis extends React.Component {
         <Container className="predAndGraphs">
           <Card className="prediction">
             <h3>Prediction Results</h3>
-            <h1>Results represent percent confidence from our</h1>
-            <h1>machine learning model</h1>
+            <p>Results represent percent confidence from our</p>
+            <p>machine learning model</p>
             {this.props.loading ? (
               <div className="circleProgress">
                 <br />
@@ -94,14 +94,6 @@ class Analysis extends React.Component {
                 Male Probability Confidence
                 <strong>{this.props.prediction.mp}%</strong>
                 <br />
-                <ButtonGroup
-                  variant="contained"
-                  aria-label="contained primary button group"
-                >
-                  <Button onClick={() => this.state.wavesurfer.playPause()}>
-                    Play/Pause
-                  </Button>
-                </ButtonGroup>
               </div>
             )}
             <div className="audio">
@@ -112,7 +104,7 @@ class Analysis extends React.Component {
                 onStop={this.onStop}
                 backgroundColor="rgb(255,255,255)"
                 foregroundColor="rgb(159,48,226)"
-                canvasWidth="900"
+                canvasWidth="10"
                 canvasHeight={
                   this.state.recordState === RecordState.START ? '150' : '0'
                 }
@@ -121,25 +113,7 @@ class Analysis extends React.Component {
             <div id="waveform" />
           </Card>
           <Container className="graphs">
-            {this.props.analysisType === 'reso' ? (
-              <Resonance />
-            ) : (
-              <div>
-                <SpectrogramChart />
-                <canvas id="canvas1" />
-              </div>
-            )}
-            <ButtonGroup
-              variant="contained"
-              aria-label="contained primary button group"
-            >
-              <Button onClick={() => this.handleGraph('spec')}>
-                Spectrogram
-              </Button>
-              <Button onClick={() => this.handleGraph('reso')}>
-                Resonance
-              </Button>
-            </ButtonGroup>
+            <GraphTabs/>
           </Container>
         </Container>
       </Container>
