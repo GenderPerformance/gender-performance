@@ -1,12 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Button} from '@material-ui/core'
 import P5Wrapper from 'react-p5-wrapper'
 import 'p5/lib/addons/p5.sound'
 import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
-import {setAnalysis,getAnalysis} from '../store'
+import {setAnalysis} from '../store'
 
 export const myp5 = new p5()
 class Resonance extends React.Component {
@@ -28,6 +27,7 @@ class Resonance extends React.Component {
     this.props.setAnalysis('reso')
   }
 
+  //the method that creates resonance analysis chart
   sketch(p) {
     let width = 600
     let height = 400
@@ -81,13 +81,27 @@ class Resonance extends React.Component {
     }
   }
 
+  //since volume is set before passing the waveform to be rendered for this
+  //component/module, the volume for this component needs to be set at max in order to
+  //see correct waveform. This, we have to silence the media player
+  //and playback from this component when the play button is hit on the media player
+
+  //When we leave this component, the player needs to be paused and reset.
+  componentWillUnmount(){
+    //stop and reset this player if we move away from this component
+    this.state.sound.pause()
+    this.state.sound.currentTime=0
+  }
   componentDidUpdate(prevProps) {
-    //always refresh analysis type
-    if(this.props.getAnalysisType){
+    //if on this component and not reso, set analysisType to reso
+    if(this.props.analysisType!=='reso'&&this.props.getAnalysisType){
       this.props.setAnalysis('reso')
     }
 
     console.log('reso update')
+    //since volume is set before passing the waveform to be rendered
+    //we have to silence the media player and play volume from this component
+    //logic to play and pause this player based on play button states
     if(this.props.analysisType==='reso'){
       if (
         prevProps.isPaused !== this.props.isPaused &&
@@ -113,7 +127,6 @@ class Resonance extends React.Component {
             <P5Wrapper sketch={this.sketch} />
           </div>
           <div id="cepstralAxis" />
-          <Button onClick={() => this.togglePlay()}>P5-IFY</Button>
         </div>
       )
     }

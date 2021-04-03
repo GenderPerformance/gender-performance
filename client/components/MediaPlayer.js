@@ -69,12 +69,16 @@ class MediaPlayer extends React.Component {
   componentDidUpdate(prevProps){
     //check to see if it exists since it will not on some screens
     if(this.props.analysisType){
-      console.log('mediaplayer didMount props',this.props)
       //if someone switches analysis mid play, reset the player
       if(prevProps.analysisType!==this.props.analysisType){
         console.log('audio should reset now')
+        this.audio.pause()
+        this.props.pause();
+        this.audio.currentTime=0
+        this.checkEnded()
       }
     }
+
   }
 
   render() {

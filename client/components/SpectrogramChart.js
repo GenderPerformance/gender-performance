@@ -117,6 +117,9 @@ class SpectrogramChart extends React.Component {
   }
 
   componentDidUpdate(prevProps){
+    if(this.props.analysisType!=='spec'&&this.props.getAnalysisType){
+      this.props.setAnalysis('spec')
+    }
     //always refresh analysis type
     if(this.props.getAnalysisType){
       this.props.setAnalysis('spec')
@@ -125,8 +128,11 @@ class SpectrogramChart extends React.Component {
     if(this.props.analysisType==='spec'){
     //some logic to determine what to do with the spectrogram based on prev
     //and curr state of is paused and is ended
-    //as the user hits pause and start repeatedly different states are generated
-    //and needs to be accounted for
+    //this logic attempts to childproof the spectrogram if the
+    //user hits pause and play repeatedly then tries to switch analysis types and back.
+    //since the play button only has is playing and is ended but this component has
+    //start, resume, pause, we need extra logic to account for the difference
+    //probably an easier way to do this by adding extra states in redux
       if(prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ||
         !prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ){
         this.spectroPause()
