@@ -78,8 +78,8 @@ class Analysis extends React.Component {
         <Container className="predAndGraphs">
           <Card className="prediction">
             <h3>Prediction Results</h3>
-            <p>Results represent percent confidence from our</p>
-            <p>machine learning model</p>
+            <h1>Results represent percent confidence from our</h1>
+            <h1>machine learning model</h1>
             {this.props.loading ? (
               <div className="circleProgress">
                 <br />
