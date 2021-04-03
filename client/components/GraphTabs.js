@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SpectrogramChart from './SpectrogramChart'
-import Cepstrum from './Cepstrum'
+import Resonance from './Resonance'
 import WaveForm from './WaveForm'
 
 function TabPanel(props) {
@@ -72,7 +72,7 @@ export default function SimpleTabs() {
         <SpectrogramChart/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Cepstrum/>
+        <Resonance/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <WaveForm/>

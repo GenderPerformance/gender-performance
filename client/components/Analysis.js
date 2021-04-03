@@ -10,9 +10,9 @@ import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import WaveSurfer from 'wavesurfer.js'
-import Cepstrum from './Cepstrum'
+import Resonance from './Resonance'
 import SpectrogramChart from './SpectrogramChart'
-import {recordClip, analyzeRecording} from '../store'
+import {recordClip, analyzeRecording, setAnalysis} from '../store'
 import GraphTabs from './GraphTabs'
 import WaveForm from './WaveForm'
 
@@ -27,10 +27,21 @@ class Analysis extends React.Component {
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
-
+  }
+  componentDidMount() {
+    if (!this.state.wavesurfer) {
+      const wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: 'violet',
+        progressColor: 'purple',
+        plugins: []
+      })
+      this.setState({wavesurfer: wavesurfer})
+    }
+    this.props.setAnalysis('spec')
   }
 
-    start() {
+  start() {
     this.props.clearRecording()
     this.setState({
       recordState: RecordState.START
@@ -47,8 +58,20 @@ class Analysis extends React.Component {
     this.props.recordClip(audioData)
   }
 
-  render() {
+  handleGraph(input) {
+    this.props.setAnalysis(input)
+    console.log('post handlegraph',this.props)
+  }
 
+  handlePlayback() {
+    this.state.wavesurfer.playPause()
+  }
+
+  render() {
+    if (this.props.prediction) {
+      const wavesurf = this.state.wavesurfer
+      wavesurf.load(this.props.recordingURL)
+    }
     return (
       <Container className="analysisPage">
         <h1>Analysis</h1>
@@ -74,22 +97,23 @@ class Analysis extends React.Component {
               </div>
             )}
             <div className="audio">
-            {this.props.recordingURL && <MediaPlayer />}
-            <AudioReactRecorder
-              text-align="center"
-              state={this.state.recordState}
-              onStop={this.onStop}
-              backgroundColor="rgb(255,255,255)"
-              foregroundColor="rgb(159,48,226)"
-              canvasWidth="10"
-              canvasHeight={this.state.recordState === RecordState.START ? '150' : '0'}
-            />
-          </div>
+              {this.props.recordingURL && <MediaPlayer />}
+              <AudioReactRecorder
+                text-align="center"
+                state={this.state.recordState}
+                onStop={this.onStop}
+                backgroundColor="rgb(255,255,255)"
+                foregroundColor="rgb(159,48,226)"
+                canvasWidth="10"
+                canvasHeight={
+                  this.state.recordState === RecordState.START ? '150' : '0'
+                }
+              />
+            </div>
+            <div id="waveform" />
           </Card>
           <Container className="graphs">
-
             <GraphTabs/>
-
           </Container>
         </Container>
       </Container>
@@ -104,12 +128,14 @@ const mapState = state => {
     recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
-    prediction: state.recording.prediction
+    prediction: state.recording.prediction,
+    analysisType: state.analysis.chart
   }
 }
 
 const mapDispatch = dispatch => {
   return {
+    setAnalysis: chartName => dispatch(setAnalysis(chartName)),
     recordClip: blob => dispatch(recordClip(blob)),
     analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
   }

@@ -8,6 +8,7 @@ import {
 import {connect} from 'react-redux'
 import Spectrogram from './utility/spectrogram'
 import chroma from 'chroma-js'
+import {setAnalysis} from '../store'
 
 //this component needs <canvas id="canvas1"/> to exist in it's parent component
 //in order to work properly
@@ -22,7 +23,9 @@ class SpectrogramChart extends React.Component {
     this.createSpectrogram = this.createSpectrogram.bind(this)
     this.drawSpectrogram = this.drawSpectrogram.bind(this)
   }
-  componentDidMount(){
+  componentDidMount() {
+    console.log('spectro',this.props)
+    this.props.setAnalysis('spec')
     this.spectroReset()
   }
   //function to create the spectrogram canvas and initial settings.
@@ -110,39 +113,87 @@ class SpectrogramChart extends React.Component {
   //resume the spectro waveform if it is paused
   spectroResume() {
     this.state.spectro.resume()
+    //this.state.spectro.
   }
+
+  componentDidUpdate(prevProps){
+    if(this.props.analysisType!=='spec'&&this.props.getAnalysisType){
+      this.props.setAnalysis('spec')
+    }
+    //always refresh analysis type
+    if(this.props.getAnalysisType){
+      this.props.setAnalysis('spec')
+    }
+    console.log('spec update')
+    if(this.props.analysisType==='spec'){
+    //some logic to determine what to do with the spectrogram based on prev
+    //and curr state of is paused and is ended
+    //this logic attempts to childproof the spectrogram if the
+    //user hits pause and play repeatedly then tries to switch analysis types and back.
+    //since the play button only has is playing and is ended but this component has
+    //start, resume, pause, we need extra logic to account for the difference
+    //probably an easier way to do this by adding extra states in redux
+      if(prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ||
+        !prevProps.isEnded&&!this.props.isEnded&&!prevProps.isPaused&&this.props.isPaused ){
+        this.spectroPause()
+      }else if(!prevProps.isEnded&&this.props.isEnded&&prevProps.isPaused&&this.props.isPaused){
+        this.spectroResume()
+      }
+
+      if(prevProps.isEnded!==this.props.isEnded||prevProps.isPaused!==this.props.isPaused){
+        if(prevProps.isEnded && !this.props.isPaused){//96% correct
+          //play from beginning
+          this.spectroStart(this.props.recordingURL)
+        }
+        else if(!prevProps.isEnded && !this.props.isEnded && !this.props.isPaused){
+          this.spectroResume()
+        }
+      }
+    }
+  }
+
   render() {
+    // old code. keep in case we need add the additional conditional check
     // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
     if (!this.props.recordingURL) {
-      return <div className="circleProgress"><CircularProgress/><br/></div>
-    }else{
-    return (
-      <Container className="spec" maxWidth="sm">
-        <ButtonGroup
-          variant="contained"
-          aria-label="contained primary button group"
-        >
-          <Button onClick={()=>
-            this.spectroPause()}>pause</Button>
-          <Button onClick={()=>
-            this.spectroStart(this.props.recordingURL)}>Start</Button>
-          <Button onClick={()=>
-            this.spectroResume()}>Resume</Button>
-        </ButtonGroup>
-      </Container>
-    )
+      return (
+        <div className="circleProgress">
+          <CircularProgress />
+          <br />
+        </div>
+      )
+    } else {
+      return (
+        <Container className="spec" maxWidth="sm">
+          <ButtonGroup
+            variant="contained"
+            aria-label="contained primary button group"
+          >
+            <Button onClick={() => this.spectroPause()}>pause</Button>
+            <Button onClick={() => this.spectroResume()}>Resume</Button>
+          </ButtonGroup>
+        </Container>
+      )
+    }
   }
-}
 }
 
 const mapState = state => {
   return {
     //mapping in user and recording state for a loading screen
     user: state.user,
-    recordingURL: state.recording.recordingURL,
+    isPaused: state.player.isPaused,
+    recordingURL: state.player.recordingURL,
     loading: state.recording.loading,
-    prediction: state.recording.prediction
+    prediction: state.recording.prediction,
+    isEnded: state.player.isEnded,
+    analysisType: state.analysis.chart
   }
 }
 
-export default connect(mapState)(SpectrogramChart)
+const mapDispatch = dispatch => {
+  return {
+    setAnalysis: chartName => dispatch(setAnalysis(chartName))
+  }
+}
+export default connect(mapState,mapDispatch)(SpectrogramChart)

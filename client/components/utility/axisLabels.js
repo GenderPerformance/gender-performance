@@ -6,7 +6,7 @@ export function xAxis(elem, xMin, xMax, valMin, valMax) {
     .select(elem)
     .append('svg')
     .attr('width', xMax + 30)
-    .attr('height', 100)
+    .attr('height', 60)
 
   // Create the scale
   var x = d3
