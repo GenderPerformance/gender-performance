@@ -98,7 +98,6 @@ class Resonance extends React.Component {
       this.props.setAnalysis('reso')
     }
 
-    console.log('reso update')
     //since volume is set before passing the waveform to be rendered
     //we have to silence the media player and play volume from this component
     //logic to play and pause this player based on play button states

@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import WaveSurfer from 'wavesurfer.js';
 import {
   Container,
-  Card,
-  CircularProgress,
   Button,
   ButtonGroup,
 } from '@material-ui/core';
-import MediaPlayer from './MediaPlayer';
+//import MediaPlayer from './MediaPlayer';
 
 class WaveForm extends React.Component {
   constructor() {
@@ -30,6 +28,11 @@ class WaveForm extends React.Component {
     }
   }
 
+  handlePlayback() {
+    console.log(this.state.wavesurfer)
+    this.state.wavesurfer.playPause()
+  }
+
   render() {
     if (this.props.prediction) {
       const wavesurf = this.state.wavesurfer;
@@ -42,11 +45,6 @@ class WaveForm extends React.Component {
           <Button onClick={() => this.state.wavesurfer.playPause()}>
             Play/Pause
           </Button>
-        <ButtonGroup
-          variant='contained'
-          aria-label='contained primary button group'
-        >
-        </ButtonGroup>
         <div id="waveform"/>
       </Container>
     );

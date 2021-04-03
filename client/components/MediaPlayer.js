@@ -35,7 +35,6 @@ class MediaPlayer extends React.Component {
     }
   }
   togglePause() {
-    console.log('mediaplayer this.props',this.props)
     //set the volume to zero if on the resonance chart
     //because waveform is generated from post volume settings
     if (this.props.analysisType === 'reso') {

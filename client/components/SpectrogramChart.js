@@ -24,7 +24,6 @@ class SpectrogramChart extends React.Component {
     this.drawSpectrogram = this.drawSpectrogram.bind(this)
   }
   componentDidMount() {
-    console.log('spectro',this.props)
     this.props.setAnalysis('spec')
     this.spectroReset()
   }
@@ -124,7 +123,6 @@ class SpectrogramChart extends React.Component {
     if(this.props.getAnalysisType){
       this.props.setAnalysis('spec')
     }
-    console.log('spec update')
     if(this.props.analysisType==='spec'){
     //some logic to determine what to do with the spectrogram based on prev
     //and curr state of is paused and is ended
@@ -165,13 +163,6 @@ class SpectrogramChart extends React.Component {
     } else {
       return (
         <Container className="spec" maxWidth="sm">
-          <ButtonGroup
-            variant="contained"
-            aria-label="contained primary button group"
-          >
-            <Button onClick={() => this.spectroPause()}>pause</Button>
-            <Button onClick={() => this.spectroResume()}>Resume</Button>
-          </ButtonGroup>
         </Container>
       )
     }

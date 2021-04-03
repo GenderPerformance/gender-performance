@@ -3,25 +3,23 @@ import {
   Container,
   Card,
   CircularProgress,
-  Button,
-  ButtonGroup
 } from '@material-ui/core'
 import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
-import WaveSurfer from 'wavesurfer.js'
-import Resonance from './Resonance'
-import SpectrogramChart from './SpectrogramChart'
+//import WaveSurfer from 'wavesurfer.js'
+// import Resonance from './Resonance'
+// import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording, setAnalysis} from '../store'
 import GraphTabs from './GraphTabs'
-import WaveForm from './WaveForm'
+// import WaveForm from './WaveForm'
 
 
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
-      wavesurfer: null,
+      // wavesurfer: null,
       recordState: null,
     }
     this.start = this.start.bind(this)
@@ -29,15 +27,15 @@ class Analysis extends React.Component {
     this.onStop = this.onStop.bind(this)
   }
   componentDidMount() {
-    if (!this.state.wavesurfer) {
-      const wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        waveColor: 'violet',
-        progressColor: 'purple',
-        plugins: []
-      })
-      this.setState({wavesurfer: wavesurfer})
-    }
+    // if (!this.state.wavesurfer) {
+    //   const wavesurfer = WaveSurfer.create({
+    //     container: '#waveform',
+    //     waveColor: 'violet',
+    //     progressColor: 'purple',
+    //     plugins: []
+    //   })
+    //   this.setState({wavesurfer: wavesurfer})
+    // }
     this.props.setAnalysis('spec')
   }
 
@@ -63,15 +61,11 @@ class Analysis extends React.Component {
     console.log('post handlegraph',this.props)
   }
 
-  handlePlayback() {
-    this.state.wavesurfer.playPause()
-  }
+  // handlePlayback() {
+  //   this.state.wavesurfer.playPause()
+  // }
 
   render() {
-    if (this.props.prediction) {
-      const wavesurf = this.state.wavesurfer
-      wavesurf.load(this.props.recordingURL)
-    }
     return (
       <Container className="analysisPage">
         <h1>Analysis</h1>
@@ -110,7 +104,6 @@ class Analysis extends React.Component {
                 }
               />
             </div>
-            <div id="waveform" />
           </Card>
           <Container className="graphs">
             <GraphTabs/>
