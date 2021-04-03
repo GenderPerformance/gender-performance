@@ -8,7 +8,7 @@ import {
 import {connect} from 'react-redux'
 import Spectrogram from './utility/spectrogram'
 import chroma from 'chroma-js'
-import {setAnalysis,getAnalysis} from '../store'
+import {setAnalysis} from '../store'
 
 //this component needs <canvas id="canvas1"/> to exist in it's parent component
 //in order to work properly
