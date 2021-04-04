@@ -52,7 +52,11 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
     formData.append('s3Url', url)
     formData.append('soundBlob', blob, fileName)
     //analyze
-    const result = await axios.post('/api/recordings/analyze', formData)
+    try{
+      const result = await axios.post('/api/recordings/analyze', formData)
+    }catch(error){
+       dispatch(_analyzeRecording({prediction:{mp:"<error:not enough resources>",fp:"<please try again later>"}}))
+    }
     //log prediction
     const prediction = result.data
     const audioData = {
@@ -62,7 +66,7 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
     dispatch(_analyzeRecording(audioData))
     dispatch(_isLoading(false))
   } catch (error) {
-    console.error(error,error.status)
+    console.error(error)
     if(error.status==='503 Service Unavailable'){
       dispatch(_analyzeRecording({s3URL:url,prediction:{mp:"<error:not enough resources>",fp:"<please try again later>"}}))
     }
