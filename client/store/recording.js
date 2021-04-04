@@ -69,10 +69,6 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
     }
   } catch (error) {
     console.error(error)
-    if(error.status==='503 Service Unavailable'){
-      dispatch(_analyzeRecording({s3URL:url,prediction:{mp:"<error:not enough resources>",fp:"<please try again later>"}}))
-    }
-
   }
 }
 
