@@ -8,10 +8,9 @@ import {auth} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
   return (
-    <div id='auth'>
-      <form onSubmit={handleSubmit} name={name}>
+    <div id='authMain'>
+      <form onSubmit={handleSubmit} name={name} id='authform'>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -29,7 +28,24 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      {displayName==='login'?
+      <a href="/auth/google">
+        <div className="google-btn">
+          <div className="google-icon-wrapper">
+            <img className="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+          </div>
+          <p className="btn-text"><b>Sign in with Google</b></p>
+        </div>
+        </a>
+      :
+      <a href="/auth/google">
+      <div className="google-btn">
+        <div className="google-icon-wrapper">
+          <img className="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+        </div>
+        <p className="btn-text"><b>Sign up with Google</b></p>
+      </div>
+      </a>}
     </div>
   )
 }
