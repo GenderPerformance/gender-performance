@@ -28,7 +28,7 @@ const AuthForm = props => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      {displayName==='login'?
+      {displayName==='Login'?
       <a href="/auth/google">
         <div className="google-btn">
           <div className="google-icon-wrapper">
