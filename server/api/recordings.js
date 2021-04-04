@@ -78,7 +78,7 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
       }
     )
   } catch (err) {
-    res.send({mp:"<error:not enough resources>",fp:"<please try again later>"})
+    next(err)
   }
 })
 
