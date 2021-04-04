@@ -9,10 +9,10 @@ import {
   setAnalysis
 } from '../store'
 import {Link as RouterLink} from 'react-router-dom'
-import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link} from '@material-ui/core'
+import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link, Fade} from '@material-ui/core'
 
 const txtgen = require('txtgen')
-const paragraph = txtgen.paragraph()
+const paragraph = txtgen.sentence()
 
 class Recorder extends React.Component {
   constructor(props) {
@@ -52,7 +52,12 @@ class Recorder extends React.Component {
   }
 
   newParagraph() {
-    this.setState({paragraph: txtgen.paragraph()})
+    let sentences = ''
+    //randomly generate 1-4 sentences
+    for(let i=0; i< Math.floor(Math.random()*4)+1;i++){
+      sentences+=txtgen.sentence()+' '
+    }
+    this.setState({paragraph: sentences})
   }
 
   render() {
@@ -71,7 +76,7 @@ class Recorder extends React.Component {
               >
                 {recordState === RecordState.START ? (
                   <Button type="button" id="stop" onClick={this.stop}>
-                    Stop
+                    Done
                   </Button>
                 ) : (
                   <Button
@@ -90,7 +95,7 @@ class Recorder extends React.Component {
               <Typography color="textSecondary">
                 Press record then say:
               </Typography>
-              <Typography color="textSecondary">
+              <Typography color="textSecondary" id="prompt">
                 {`${this.state.paragraph}`}
               </Typography>
                 <Button variant="contained" onClick={this.newParagraph}>

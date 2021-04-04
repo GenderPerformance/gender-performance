@@ -64,7 +64,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 80px;
   width: 100%;
 }
 
@@ -165,6 +165,25 @@ p {
 
 #history{
   margin-top:100px;
+}
+
+#prompt{
+  margin-left:10px;
+}
+
+#record{
+  background-color:rgb(167, 19, 19);
+  color:white;
+
+}
+
+#stop{
+  background-color:rgb(245, 245, 75)
+}
+
+#analysis{
+  background-color:rgb(52, 129, 52);
+  color:white
 }
 
 .google-btn {
