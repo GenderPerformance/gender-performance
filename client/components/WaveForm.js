@@ -78,7 +78,7 @@ class WaveForm extends React.Component {
     }
     return (
       <Container {...this.props}>
-        <Fade in timeout={300}>
+        <Fade in timeout={350}>
           <div id="waveform"/>
         </Fade>
       </Container>

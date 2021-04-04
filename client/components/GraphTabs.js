@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -69,13 +69,13 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Fade in timeout={300} >
+        <Fade in timeout={350} >
           <canvas id='canvas1'></canvas>
         </Fade>
         <SpectrogramChart/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Fade in timeout={300}>
+        <Fade in timeout={350}>
           <Resonance/>
         </Fade>
       </TabPanel>

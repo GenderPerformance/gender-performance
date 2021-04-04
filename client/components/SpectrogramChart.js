@@ -2,8 +2,6 @@ import React from 'react'
 import {
   Container,
   CircularProgress,
-  Button,
-  ButtonGroup
 } from '@material-ui/core'
 import {connect} from 'react-redux'
 import Spectrogram from './utility/spectrogram'

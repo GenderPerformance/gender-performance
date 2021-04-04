@@ -62,9 +62,7 @@ function TemporaryDrawer({handleLogout, isLoggedIn}) {
       <Button id="closeMenu" onClick={toggleDrawer(anchor, false)}>
         Close Menu
       </Button>
-
       <br />
-
       {isLoggedIn ? (
         <List>
           {['Record', 'History', 'About'].map((text, index) => (

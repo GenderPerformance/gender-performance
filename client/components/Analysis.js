@@ -7,19 +7,15 @@ import {
 import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
-//import WaveSurfer from 'wavesurfer.js'
-// import Resonance from './Resonance'
-// import SpectrogramChart from './SpectrogramChart'
 import {recordClip, analyzeRecording, setAnalysis} from '../store'
 import GraphTabs from './GraphTabs'
-// import WaveForm from './WaveForm'
-
+import { Redirect } from "react-router-dom"
+import Recorder from './Recorder'
 
 class Analysis extends React.Component {
   constructor() {
     super()
     this.state = {
-      // wavesurfer: null,
       recordState: null,
     }
     this.start = this.start.bind(this)
@@ -27,15 +23,6 @@ class Analysis extends React.Component {
     this.onStop = this.onStop.bind(this)
   }
   componentDidMount() {
-    // if (!this.state.wavesurfer) {
-    //   const wavesurfer = WaveSurfer.create({
-    //     container: '#waveform',
-    //     waveColor: 'violet',
-    //     progressColor: 'purple',
-    //     plugins: []
-    //   })
-    //   this.setState({wavesurfer: wavesurfer})
-    // }
     this.props.setAnalysis('spec')
   }
 
@@ -61,15 +48,15 @@ class Analysis extends React.Component {
     console.log('post handlegraph',this.props)
   }
 
-  // handlePlayback() {
-  //   this.state.wavesurfer.playPause()
-  // }
-
   render() {
+    //redirect the user if hard refreshing or going straight to the analysis page
+    if(this.props.recordingBlob===null){
+      return <Redirect path='/home'/>
+    }
     return (
-      <Container className="analysisPage">
+      <Container className="analysisPage" {...this.props}>
         <h1>Analysis</h1>
-        <Container className="predAndGraphs">
+        <Container className="predAndGraphs" >
           <Card className="prediction">
             <h3>Prediction Results</h3>
             <p>Results represent percent confidence from our</p>
@@ -106,7 +93,7 @@ class Analysis extends React.Component {
             </div>
           </Card>
           <Container className="graphs">
-            <GraphTabs/>
+              <GraphTabs/>
           </Container>
         </Container>
       </Container>
