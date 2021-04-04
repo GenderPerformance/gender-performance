@@ -64,7 +64,7 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
       dispatch(_isLoading(false))
     }catch(error){
       //create error message if route times out
-      dispatch(_analyzeRecording({prediction:{mp:"<error:not enough resources>",fp:"<please try again later>"}}))
+      dispatch(_analyzeRecording({prediction:{fp:"<error:not enough resources>",mp:"<please try again later>"}}))
       dispatch(_isLoading(false))
     }
   } catch (error) {
