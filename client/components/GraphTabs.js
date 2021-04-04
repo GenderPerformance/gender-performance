@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import { Fade } from '@material-ui/core'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -68,14 +69,18 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <canvas id='canvas1'></canvas>
+        <Fade in timeout={300} >
+          <canvas id='canvas1'></canvas>
+        </Fade>
         <SpectrogramChart/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Resonance/>
+        <Fade in timeout={300}>
+          <Resonance/>
+        </Fade>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <WaveForm/>
+          <WaveForm/>
       </TabPanel>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WaveSurfer from 'wavesurfer.js';
+import { Fade } from '@material-ui/core'
 import {
   Container,
   Button,
@@ -9,8 +10,8 @@ import {setAnalysis} from '../store'
 
 
 class WaveForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       wavesurfer: null,
     };
@@ -76,8 +77,10 @@ class WaveForm extends React.Component {
       }
     }
     return (
-      <Container>
-        <div id="waveform"/>
+      <Container {...this.props}>
+        <Fade in timeout={300}>
+          <div id="waveform"/>
+        </Fade>
       </Container>
     );
   }

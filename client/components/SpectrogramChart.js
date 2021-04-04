@@ -13,8 +13,8 @@ import {setAnalysis} from '../store'
 //this component needs <canvas id="canvas1"/> to exist in it's parent component
 //in order to work properly
 class SpectrogramChart extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {}
     this.spectroReset = this.spectroReset.bind(this)
     this.spectroPause = this.spectroPause.bind(this)
@@ -162,7 +162,7 @@ class SpectrogramChart extends React.Component {
       )
     } else {
       return (
-        <Container className="spec" maxWidth="sm">
+        <Container className="spec" maxWidth="sm" >
         </Container>
       )
     }
