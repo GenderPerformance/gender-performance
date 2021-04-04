@@ -7,6 +7,8 @@ const path = require('path')
 const router = require('express').Router()
 module.exports = router
 
+//This is the api for directly calling the ML model. it is for testing purposes.
+
 router.get('/', async (req, res, next) => {
   try {
     //calls the function get Prediction waits for data to return before res.json
