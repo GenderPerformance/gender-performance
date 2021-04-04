@@ -29,7 +29,6 @@ class WaveForm extends React.Component {
         plugins: [],
       });
       wavesurfer.setVolume(0.0)
-      console.log('wavesurf did mount',this.props)
       this.setState({ wavesurfer: wavesurfer });
     }
   }
@@ -50,13 +49,11 @@ class WaveForm extends React.Component {
     if(this.props.analysisType!=='wave'&&this.props.getAnalysisType){
       this.props.setAnalysis('wave')
     }
-    console.log('wavesurfer did update',prevProps.isPaused,this.props.isPaused)
     if(this.props.analysisType==='wave'){
       if (
         prevProps.isPaused !== this.props.isPaused &&
         this.props.isPaused === true
       ) {
-        console.log('wavesurfer pause')
         this.state.wavesurfer.pause()
       } else if (
         prevProps.isPaused !== this.props.isPaused &&

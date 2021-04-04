@@ -56,7 +56,6 @@ class Recorder extends React.Component {
   }
 
   render() {
-    console.log('recorder',this.props)
     const {recordState} = this.state
     const {recordingURL, recordingBlob, userId} = this.props
     if (!this.props.userId) {

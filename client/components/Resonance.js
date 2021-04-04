@@ -120,7 +120,6 @@ class Resonance extends React.Component {
     if (!this.props.recordingBlob) {
       return <div>Loading...</div>
     } else {
-      console.log('resonance',this.props)
       return (
         <div {...this.props}>
           <div className="cepstral">
