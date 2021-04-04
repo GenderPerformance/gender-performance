@@ -70,7 +70,6 @@ class MediaPlayer extends React.Component {
     if(this.props.analysisType){
       //if someone switches analysis mid play, reset the player
       if(prevProps.analysisType!==this.props.analysisType){
-        console.log('audio should reset now')
         this.audio.pause()
         this.props.pause();
         this.audio.currentTime=0

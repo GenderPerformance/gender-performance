@@ -45,7 +45,6 @@ class Analysis extends React.Component {
 
   handleGraph(input) {
     this.props.setAnalysis(input)
-    console.log('post handlegraph',this.props)
   }
 
   render() {
