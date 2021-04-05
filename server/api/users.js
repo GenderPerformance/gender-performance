@@ -26,10 +26,6 @@ router.get('/:userId/recordings', async (req, res, next) => {
       },
       order: [['createdAt', 'DESC']]
     })
-    console.log(
-      '🚀 ~ file: recordings.js ~ line 92 ~ router.get ~ response',
-      recordings
-    )
 
     res.send(recordings)
   } catch (err) {

@@ -48,7 +48,7 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     const uploadLocation = path.join(__dirname, '../../tmp', `${fileName}`)
     //saves the file to tmp directory
     //this file will only exist on heroku while this route is running.
-    console.log(Date.now() - currTimeStamp, 'starting writefileSync')
+    //console.log(Date.now() - currTimeStamp, 'starting writefileSync')
     fs.writeFileSync(
       uploadLocation,
       Buffer.from(new Uint8Array(req.file.buffer)),
@@ -56,7 +56,7 @@ router.post('/analyze', upload.single('soundBlob'), async (req, res, next) => {
     )
     //run the ML Model and save the result.
     const result = await getPrediction(fileName)
-    console.log(Date.now() - currTimeStamp, 'finished ML model')
+    //console.log(Date.now() - currTimeStamp, 'finished ML model')
     res.send(result)
 
     //Saves the results to the DB

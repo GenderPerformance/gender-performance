@@ -142,6 +142,7 @@ body{
   max-width: fit-content;
   background-color:#f0ead6;
   color:#3B2945;
+  text-align: center;
 }
 
 .MuiContainer-root.graphs {
@@ -224,10 +225,15 @@ body{
   background-color:#6286A3
 }
 
-#aboutText,#indivHistory{
+#aboutText{
   background-color:#f0ead6;
 }
 
+#indivHistory{
+  background-color:#f0ead6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 #waveform{
   width:550px;
   height:400px;

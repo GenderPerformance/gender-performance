@@ -1,24 +1,17 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {Card} from '@material-ui/core'
+import {Card, Typography} from '@material-ui/core'
 
-const About = props => {
+const About = () => {
   return (
     <React.Fragment>
       <div id="about">
       <Card id="aboutText">
-        <div>
+        <Typography>
           <p>
-            Welcome to our little project - VisiVox. Designed as a proof
+            Welcome to our project - VisiVox. Designed as a proof
             of concept for an application to help individuals understand how their
             voice may be perceived, we use machine learning and audio analysis to
             generate a gender perception based on a recording.
-          </p>
-          <p>
-            The machine learning model was trained with regular speaking voices and
-            thus to designed to be used for regular speaking voices. It is a feed
-            forward network with 5 hidden layers using relu nodes.
           </p>
           <p>
             Labeling gender is inherently reductive and doesn't take into the
@@ -31,11 +24,13 @@ const About = props => {
           </p>
           <p>
             This project was built using React/Redux on the frontend and Node.js
-            and Python on the backend. The original Tensorflow machine learning
-            model was built by XXXXX. Audio analysis is performed using the MDN
-            Web Audio API and X and Y libraries.
+            and Python on the backend. The Tensorflow machine learning
+            model was based on work found <a href="https://github.com/x4nth055/gender-recognition-by-voice">here</a>. The machine learning model was trained with regular speaking voices and thus to designed to be used for regular speaking voices. It is a feed forward network with 5 hidden layers using relu nodes. Audio analysis is performed using the MDN Web Audio API and the P5 library.
           </p>
-        </div>
+          <p>
+            Released under the MIT License.
+          </p>
+        </Typography>
       </Card>
     </div>
     </React.Fragment>

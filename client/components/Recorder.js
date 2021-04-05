@@ -97,6 +97,7 @@ class Recorder extends React.Component {
               <Typography color="textSecondary" id="prompt">
                 {`${this.state.paragraph}`}
               </Typography>
+              <br />
                 <Button variant="contained" onClick={this.newParagraph} id='newParagraph'>
                   New Paragraph
                 </Button>
