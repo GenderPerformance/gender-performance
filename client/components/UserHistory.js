@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 
 class UserHistory extends React.Component {
   componentDidMount() {
-    console.log('user id on mount', this.props.user.id)
     this.props.fetchHistory(this.props.user.id)
   }
 
@@ -21,6 +20,7 @@ class UserHistory extends React.Component {
         <Typography variant="h4" id="history">
           Recording History
         </Typography>
+        <br />
         {!history ? (
           <Typography variant="h5">Loading History...</Typography>
         ) : (
@@ -30,12 +30,10 @@ class UserHistory extends React.Component {
                 <Card>
                   <div id="indivHistory">
                     <div id="recording-details">
-                      <Typography variant="h5">Date</Typography>
-                      <p>
-                        <Typography>
-                          {this.getRecordingDate(recording.createdAt)}
-                        </Typography>
-                      </p>
+                      <Typography variant="h6">Date</Typography>
+                      <Typography>
+                        {this.getRecordingDate(recording.createdAt)}
+                      </Typography>
                       <audio controls src={recording.url} />
                     </div>
                     <CardContent className="prediction-results">
