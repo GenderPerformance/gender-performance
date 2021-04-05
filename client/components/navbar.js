@@ -11,6 +11,8 @@ const Navbar = () => (
             <Link to="/home"><div className="title">
               <img src={`/waves/wave4.png`} id="titleicon"/>
               <h1 id="navtitle">  VisiVox</h1>
+            <div className="title">
+              <h1>VisiVox</h1>
             </div>
             </Link>
             <div>

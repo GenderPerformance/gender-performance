@@ -4,7 +4,8 @@
 npm install
 npm run python-install
 
-create a postgres database called performanio1
+create a postgres database called visivox
+npm run seed
 
 ## Secrets
 create a secrets.js file in your root directory and add these environment
