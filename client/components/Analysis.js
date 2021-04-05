@@ -121,7 +121,6 @@ class Analysis extends React.Component {
               </div>
             )}
             <div className="audio">
-              {this.props.recordingURL && <MediaPlayer />}
               <AudioReactRecorder
                 text-align="center"
                 state={this.state.recordState}
@@ -136,7 +135,8 @@ class Analysis extends React.Component {
             </div>
           </Card>
           <Container className="graphs">
-              <GraphTabs/>
+            {this.props.recordingURL && <MediaPlayer />}
+            <GraphTabs/>
           </Container>
         </Container>
       </Container>
