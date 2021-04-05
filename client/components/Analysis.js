@@ -114,7 +114,7 @@ class Analysis extends React.Component {
         <Container className="predAndGraphs" >
           <Card className="prediction">
             <h3>Prediction Results</h3>
-            <div id='centeredText'>Results represent percent confidence interval (CI)</div>
+            <div id='centeredText'>Results represent percent confidence</div>
             <div id='centeredText'>from our machine learning model</div>
             <br></br>
             {this.props.loading ? (
@@ -126,12 +126,12 @@ class Analysis extends React.Component {
             ) : (
               <div className="prediction-results">
                 <div className="CI">
-                  Female CI
+                  Female
                   <strong>{" "+this.props.prediction.fp}%</strong>
                 </div>
                 <br />
                 <div className="CI">
-                  Male CI
+                  Male
                   <strong>{" "+this.props.prediction.mp}%</strong>
                 </div>
                 <br/>
