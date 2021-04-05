@@ -18,7 +18,8 @@ export function xAxis(elem, xMin, xMax, valMin, valMax) {
   svg
     .append('g')
     .attr('transform', 'translate(10,20)') // This controls the vertical position of the Axis
-    .call(d3.axisBottom(x))
+    .call(d3.axisBottom(x)
+    .ticks(40))
 
   svg
     .append('text')
@@ -26,4 +27,10 @@ export function xAxis(elem, xMin, xMax, valMin, valMax) {
     .attr('x', 300)
     .attr('y', 50)
     .text('Frequency (Hz)')
+
+  const ticks = d3.selectAll(".tick text")
+
+  ticks.each(function(_,i){
+    if(i%5!==0)d3.select(this).remove()
+  })
 }
