@@ -9,7 +9,7 @@ import {
   setAnalysis
 } from '../store'
 import {Link as RouterLink} from 'react-router-dom'
-import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link, Fade} from '@material-ui/core'
+import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link} from '@material-ui/core'
 
 const txtgen = require('txtgen')
 const paragraph = txtgen.sentence()

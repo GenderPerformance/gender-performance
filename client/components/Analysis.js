@@ -94,7 +94,7 @@ class Analysis extends React.Component {
     //flips the state of mediaPlayerFade to force a re-render of the
     //fade effect of mediaplayer each time we switch analyses
     if(this.props.mediaPlayerFade===false){
-      await Timeout.set(150)
+      await Timeout.set(120)
       this.props.mediaPlayerFadeTrue()
     } else if(prevProps.analysisType!== this.props.analysisType){
       if(prevProps.mediaPlayerFade===true){

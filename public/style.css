@@ -223,6 +223,10 @@ body{
   background-color:#6286A3
 }
 
+#aboutText,#indivHistory{
+  background-color:#f0ead6;
+}
+
 .player{
   background-color: #6286a3;
   text-align:center;

@@ -11,7 +11,7 @@ import {
   UserHistory
 } from './components'
 import {me} from './store'
-
+import {Fade} from '@material-ui/core'
 /**
  * COMPONENT
  */

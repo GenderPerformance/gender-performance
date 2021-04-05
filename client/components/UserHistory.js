@@ -6,7 +6,6 @@ import {
 } from '@material-ui/core'
 import {fetchHistory} from '../store'
 import {connect} from 'react-redux'
-import { Collapse } from '@material-ui/core'
 
 class UserHistory extends React.Component {
   componentDidMount() {
@@ -29,25 +28,30 @@ class UserHistory extends React.Component {
         ) : (
           history.map(recording => {
             return (
-                <Card key={recording.id} {...this.props}>
-                  <div id="recording-details">
-                    <h4>Date</h4>
-                    <p>{this.getRecordingDate(recording.createdAt)}</p>
-
-                    <audio controls src={recording.url} />
-                  </div>
-                  <CardContent className="prediction-results">
-                    <h4>Prediction Results</h4>
-                    <div>
-                    <span>Feminine -- </span>
-                    <span><strong>{recording.femaleConfidence}%</strong></span>
+              <div>
+                <Card key={recording.id}>
+                  <div id="indivHistory">
+                    <div id="recording-details">
+                      <h4>Date</h4>
+                      <p>{this.getRecordingDate(recording.createdAt)}</p>
+                      <audio controls src={recording.url} />
                     </div>
-                    <div>
-                      <span>Masculine -- </span>
-                    <span><strong>{recording.maleConfidence}%</strong></span>
+                    <CardContent className="prediction-results">
+                      <h4>Prediction Results</h4>
+                      <div>
+                      <span>Feminine -- </span>
+                      <span><strong>{recording.femaleConfidence}%</strong></span>
+                      </div>
+                      <div>
+                        <span>Masculine -- </span>
+                      <span><strong>{recording.maleConfidence}%</strong></span>
+                      </div>
+                    </CardContent>
+                    <br/>
                   </div>
-                  </CardContent>
                 </Card>
+              <br/>
+              </div>
             )
           })
         )}
