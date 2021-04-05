@@ -82,6 +82,10 @@ body{
   flex-wrap:wrap;
 }
 
+.cepstral{
+
+}
+
 .Menu {
   display: flex;
   flex-direction: row;
@@ -195,6 +199,7 @@ body{
   background-color: #6286a3;
   color:#f0ead6;
 }
+
 #stop{
   background-color: #b593c5;;
   color:#f0ead6;
@@ -205,10 +210,6 @@ body{
   color:#f0ead6
 }
 
-#waveform{
-  width:50vw;
-  height:50vh;
-}
 
 #phrase{
   color: #3b2945;
@@ -225,6 +226,11 @@ body{
 
 #aboutText,#indivHistory{
   background-color:#f0ead6;
+}
+
+#waveform{
+  width:550px;
+  height:400px;
 }
 
 .player{

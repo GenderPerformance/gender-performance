@@ -109,7 +109,7 @@ class Analysis extends React.Component {
     }
     return (
       <Container className="analysisPage" {...this.props}>
-        <h1>Analysis</h1>
+        <h1></h1>
         <Container className="predAndGraphs" >
           <Card className="prediction">
             <h3>Prediction Results</h3>
