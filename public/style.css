@@ -51,6 +51,10 @@ p {
   padding: 10px;
 }
 
+body{
+  background-color:#f0ead6
+}
+
 /* Record Page Components */
 .MuiPaper-root.txtgen {
   display: flex;
@@ -85,11 +89,16 @@ p {
   align-items: center;
 }
 
+#menu{
+  color: #3b2945;
+}
+
 .title {
   padding-left: 2em;
   display: flex;
   flex-direction: row;
   align-items: center;
+  color: #3b2945;
 }
 
 /* Analysis Page Components */
@@ -127,6 +136,8 @@ p {
   padding: 1em;
   min-width: 35%;
   max-width: fit-content;
+  background-color:#f0ead6;
+  color:#3B2945;
 }
 
 .MuiContainer-root.graphs {
@@ -173,26 +184,57 @@ p {
 
 #prompt{
   margin-left:10px;
+  color:#3B2945
 }
 
 #record{
-  background-color:rgb(167, 19, 19);
-  color:white;
-
+  background-color: #9f30e2;
+  color:#f0ead6;
 }
-
+#newParagraph{
+  background-color: #6286a3;
+  color:#f0ead6;
+}
 #stop{
-  background-color:rgb(245, 245, 75)
+  background-color: #b593c5;;
+  color:#f0ead6;
 }
 
 #analysis{
-  background-color:rgb(52, 129, 52);
-  color:white
+  background-color:#60BAAF;
+  color:#f0ead6
 }
 
 #waveform{
   width:50vw;
   height:50vh;
+}
+
+#phrase{
+  color: #3b2945;
+  background-color:#f0ead6;
+}
+
+#centeredText{
+  text-align:center;
+}
+
+#AnalysesBox{
+  background-color:#6286A3
+}
+
+.player{
+  background-color: #6286a3;
+  text-align:center;
+}
+
+.playbutton{
+  margin-left:10px;
+}
+
+.CI{
+  display: flex;
+  justify-content:space-around;
 }
 
 .google-btn {

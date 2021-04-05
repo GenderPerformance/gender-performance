@@ -45,13 +45,13 @@ class Resonance extends React.Component {
 
     p.draw = () => {
       //draw the background
-      p.background('rgba(105,255,0, 0.8)')
+      p.background('rgba(96, 186, 175, 0.5)')
       //generate the fft data using samplesize 4096.
       let spectrum = this.state.fft.analyze(4096)
 
       //stroke and noFill are for drawing color and making sure
       //nothing is left behind on the DOM
-      p.stroke(10)
+      p.stroke(159, 48, 226)
       p.noFill()
       //the actual drawing of the fft happens in this for loop
       for (let i = 0; i < spectrum.length; i++) {
@@ -63,7 +63,7 @@ class Resonance extends React.Component {
       let waveform = this.state.fft.waveform()
       p.noFill()
       p.beginShape()
-      p.stroke(20)
+      p.stroke(59, 41, 69)
       for (let i = 0; i < waveform.length; i++) {
         let x = p.map(i, 0, waveform.length, -width / 2, width)
         let y = p.map(waveform[i] - 1.15, -1, 1, 0, height / 1.5)

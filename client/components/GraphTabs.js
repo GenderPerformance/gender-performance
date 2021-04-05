@@ -60,7 +60,7 @@ export default function SimpleTabs(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id='AnalysesBox'>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered="true" variant="fullWidth">
           <Tab label="Spectrogram" {...a11yProps(0)} />

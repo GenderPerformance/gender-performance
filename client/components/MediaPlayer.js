@@ -89,7 +89,7 @@ class MediaPlayer extends React.Component {
             onClick={() => {
               this.togglePause()
             }}
-            startIcon={isPaused ? <PlayCircleFilled /> : <PauseCircleFilled />}
+            startIcon={isPaused ? <img className="playbutton" src="play_circle.png" /> : <img className="playbutton" src="pause_circle.png" />}
           />
         </div>
       </Card>

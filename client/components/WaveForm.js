@@ -23,8 +23,13 @@ class WaveForm extends React.Component {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'blue',
-        progressColor: 'green',
+        waveColor: '#9F30E2',
+        progressColor: '#3B2945',
+        barWidth: 0.6,
+        barHeight:1,
+        height:300,
+        responsive:true,
+        scrollParent:false,
         plugins: [],
       });
       wavesurfer.setVolume(0.0)

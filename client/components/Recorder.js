@@ -89,15 +89,15 @@ class Recorder extends React.Component {
                 )}
               </ButtonGroup>
             </div>
-            <Card className="txtgen">
+            <Card className="txtgen" id="phrase">
               <CardContent>
-              <Typography color="textSecondary">
+              <Typography color="textSecondary" id='phrase'>
                 Press record then say:
               </Typography>
               <Typography color="textSecondary" id="prompt">
                 {`${this.state.paragraph}`}
               </Typography>
-                <Button variant="contained" onClick={this.newParagraph}>
+                <Button variant="contained" onClick={this.newParagraph} id='newParagraph'>
                   New Paragraph
                 </Button>
               </CardContent>
@@ -127,9 +127,9 @@ class Recorder extends React.Component {
               text-align="center"
               state={recordState}
               onStop={this.onStop}
-              backgroundColor="rgb(255,255,255)"
+              backgroundColor="rgb(240, 234, 214)"
               foregroundColor="rgb(159,48,226)"
-              canvasWidth="900"
+              canvasWidth="450"
               canvasHeight={recordState === RecordState.START ? '150' : '0'}
             />
           </div>

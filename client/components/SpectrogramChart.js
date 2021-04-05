@@ -46,11 +46,11 @@ class SpectrogramChart extends React.Component {
       },
       colors: function(steps) {
         let baseColors = [
-          [0, 0, 0, 1],
-          [0, 255, 255, 1],
-          [0, 255, 0, 1],
-          [255, 255, 0, 1],
-          [255, 0, 0, 1]
+          [59, 41, 69, 1],
+          [0, 255, 255, 1],//blue
+          [0, 255, 0, 1],//green
+          [255, 255, 0, 1],//yellow
+          [255, 0, 0, 1]//red
         ]
         let positions = [0, 0.15, 0.3, 0.5, 0.75]
 
