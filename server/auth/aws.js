@@ -23,7 +23,6 @@ router.get('/s3-sign', async (req, res) => {
     ContentType: fileType,
     ACL: 'public-read'
   }
-  console.log('signing with s3')
   await s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
       console.log(err)
