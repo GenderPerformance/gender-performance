@@ -13,6 +13,13 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'RobotoRegular'
   },
+  overrides: {
+    MuiTabs: {
+      root: {
+        color: '#3B2945'
+      }
+    }
+  },
   palette:
     {common: { black: 'rgba(0, 0, 0, 1)', white: 'rgba(255, 255, 255, 1)' },
     background: { paper: 'rgba(159, 48, 226, 1)', default: 'rgba(255, 255, 240, 1)' },

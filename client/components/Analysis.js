@@ -123,8 +123,8 @@ class Analysis extends React.Component {
                 <CircularProgress />
                 <br />
               </div>
-            ) : (
-              <div className="prediction-results">
+            ) : (typeof this.props.prediction.fp === 'number')
+            ? (<div className="prediction-results">
                 <div className="CI">
                   Female
                   <strong>{" "+this.props.prediction.fp}%</strong>
@@ -136,20 +136,8 @@ class Analysis extends React.Component {
                 </div>
                 <br/>
               </div>
-            )}
-            <div className="audio">
-              <AudioReactRecorder
-                text-align="center"
-                state={this.state.recordState}
-                onStop={this.onStop}
-                backgroundColor="rgb(255,255,255)"
-                foregroundColor="rgb(159,48,226)"
-                canvasWidth="10"
-                canvasHeight={
-                  this.state.recordState === RecordState.START ? '150' : '0'
-                }
-              />
-            </div>
+            ) : (<h3 style={{textAlign:"center", color:"#3B2945", fontStyle:"italic"}}>{this.props.prediction.fp}<br/>
+                {this.props.prediction.mp}{console.log('TYPE OF:',typeof this.props.prediction.fp)}</h3>)}
           </Card>
           <Container className="graphs">
             {this.props.recordingURL &&
