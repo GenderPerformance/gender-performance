@@ -5,7 +5,7 @@ import 'p5/lib/addons/p5.sound'
 import 'p5/lib/addons/p5.dom'
 import p5 from 'p5'
 import {xAxis} from './utility/axisLabels.js'
-import {setAnalysis} from '../store'
+import {setAnalysis, mediaPlayerFadeFalse, mediaPlayerFadeTrue} from '../store'
 
 export const myp5 = new p5()
 class Resonance extends React.Component {
@@ -19,6 +19,11 @@ class Resonance extends React.Component {
   }
 
   componentDidMount() {
+    //flip the fade toggle so the mediaplayer can fade in.
+    //this component takes longer to load and will error out
+    //if the play button is hit during load.
+    this.props.mediaPlayerFadeFalse()
+    this.props.mediaPlayerFadeTrue()
     //xAxis creates an x axis for the resonance analysis
     //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of
@@ -26,6 +31,7 @@ class Resonance extends React.Component {
     xAxis('#cepstralAxis', 0, this.props.chartWidth, 0, 4000)
     this.props.setAnalysis('reso')
     window.addEventListener('resize', this.updateDimensions);
+
   }
 
   //the method that creates resonance analysis chart
@@ -144,13 +150,16 @@ const mapState = state => {
     recordingBlob: state.recording.recordingBlob,
     analysisType: state.analysis.chart,
     chartHeight: state.chartSize.h,
-    chartWidth: state.chartSize.w
+    chartWidth: state.chartSize.w,
+    mediaPlayerFade: state.switches.mediaPlayerFade
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    setAnalysis: chartName => dispatch(setAnalysis(chartName))
+    setAnalysis: chartName => dispatch(setAnalysis(chartName)),
+    mediaPlayerFadeTrue:()=>dispatch(mediaPlayerFadeTrue()),
+    mediaPlayerFadeFalse:()=>dispatch(mediaPlayerFadeFalse())
   }
 }
 

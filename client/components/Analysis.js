@@ -8,9 +8,11 @@ import {
 import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
-import {recordClip, analyzeRecording, setAnalysis, setDimensions} from '../store'
+import {recordClip, analyzeRecording, setAnalysis, setDimensions, mediaPlayerFadeFalse, mediaPlayerFadeTrue} from '../store'
 import GraphTabs from './GraphTabs'
 import { Redirect } from "react-router-dom"
+import Timeout from 'await-timeout'
+
 
 function calcHeightWidth(){
   //calculates the smallest width height dimensions
@@ -42,13 +44,11 @@ class Analysis extends React.Component {
     super()
     this.state = {
       recordState: null,
-      fade:true
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
-    this.fading = this.fading.bind(this)
   }
 
   componentDidMount() {
@@ -90,9 +90,17 @@ class Analysis extends React.Component {
     this.props.setDimensions(windowDim.h,windowDim.w)
   }
 
-  fading(){
-    if(this.state.fade) {this.setState({fade:false})}
-    else {this.setState({fade:true})}
+  async componentDidUpdate(prevProps){
+    //flips the state of mediaPlayerFade to force a re-render of the
+    //fade effect of mediaplayer each time we switch analyses
+    if(this.props.mediaPlayerFade===false){
+      await Timeout.set(150)
+      this.props.mediaPlayerFadeTrue()
+    } else if(prevProps.analysisType!== this.props.analysisType){
+      if(prevProps.mediaPlayerFade===true){
+        this.props.mediaPlayerFadeFalse()
+      }
+    }
   }
 
   render() {
@@ -145,13 +153,12 @@ class Analysis extends React.Component {
           </Card>
           <Container className="graphs">
             {this.props.recordingURL &&
-            <Fade in={this.state.fade} timeout={{
+            <Fade in={this.props.mediaPlayerFade} timeout={{
               enter: 2000,
               exit: 100,
             }}>
               <MediaPlayer />
             </Fade>}
-            <button onClick={this.fading}>Fade</button>
             <GraphTabs/>
           </Container>
         </Container>
@@ -171,6 +178,7 @@ const mapState = state => {
     analysisType: state.analysis.chart,
     chartHeight: state.chartSize.h,
     chartWidth: state.chartSize.w,
+    mediaPlayerFade: state.switches.mediaPlayerFade
   }
 }
 
@@ -179,7 +187,9 @@ const mapDispatch = dispatch => {
     setAnalysis: chartName => dispatch(setAnalysis(chartName)),
     recordClip: blob => dispatch(recordClip(blob)),
     analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob)),
-    setDimensions: (h,w) => dispatch(setDimensions(h,w))
+    setDimensions: (h,w) => dispatch(setDimensions(h,w)),
+    mediaPlayerFadeTrue:()=>dispatch(mediaPlayerFadeTrue()),
+    mediaPlayerFadeFalse:()=>dispatch(mediaPlayerFadeFalse())
   }
 }
 
