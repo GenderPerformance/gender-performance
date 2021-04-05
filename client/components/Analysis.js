@@ -113,7 +113,7 @@ class Analysis extends React.Component {
         <h1>Analysis</h1>
         <Container className="predAndGraphs" >
           <Card className="prediction">
-            <h3>Prediction Results</h3>
+            <h3 id="predresults">Prediction Results</h3>
             <div id='centeredText'>Results represent percent confidence</div>
             <div id='centeredText'>from our machine learning model</div>
             <br></br>
