@@ -25,7 +25,7 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: heroku
-        app: performanio1
+        app: visivox
         on:
           branch: color-theory
         api_key:
