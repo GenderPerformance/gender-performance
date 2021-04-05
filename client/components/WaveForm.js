@@ -19,6 +19,7 @@ class WaveForm extends React.Component {
   }
 
   componentDidMount() {
+    console.log('waveform did mount',this.props)
     this.props.setAnalysis('wave')
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
@@ -27,14 +28,20 @@ class WaveForm extends React.Component {
         progressColor: '#3B2945',
         barWidth: 0.6,
         barHeight:1,
-        height:300,
+        width:this.props.chartWidth?this.props.chartWidth:600,
+        height:this.props.chartHeight?this.props.chartHeight:400,
         responsive:true,
         scrollParent:false,
+        fillParent:true,
         plugins: [],
       });
       wavesurfer.setVolume(0.0)
       this.setState({ wavesurfer: wavesurfer });
     }
+    //resize dimensions
+    let canvas = document.getElementById('waveform')
+    canvas.style.height = `${this.props.chartHeight}px`
+    canvas.style.width = `${this.props.chartWidth}px`
   }
 
   componentWillUnmount(){
@@ -50,6 +57,16 @@ class WaveForm extends React.Component {
   //set props if component is already mounted and we somehow left and came back
   //play if we hit play on mediaplayer and pause if we hit pause
   componentDidUpdate(prevProps){
+    if(prevProps.chartHeight!==this.props.chartHeight&&this.state.wavesurfer){
+      //resize dimensions
+      let canvas = document.getElementById('waveform')
+      canvas.style.height = `${this.props.chartHeight}px`
+      canvas.style.width = `${this.props.chartWidth}px`
+
+
+      console.log('set waveform height and width')
+    }
+
     if(this.props.analysisType!=='wave'&&this.props.getAnalysisType){
       this.props.setAnalysis('wave')
     }
@@ -77,7 +94,7 @@ class WaveForm extends React.Component {
     }
     return (
       <Container {...this.props}>
-        <Fade in timeout={350}>
+        <Fade in timeout={400}>
           <div id="waveform"/>
         </Fade>
       </Container>

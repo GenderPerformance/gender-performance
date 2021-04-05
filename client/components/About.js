@@ -10,7 +10,7 @@ const About = props => {
       <Card id="aboutText">
         <div>
           <p>
-            Welcome to our little project - Voice Performance. Designed as a proof
+            Welcome to our little project - VisiVox. Designed as a proof
             of concept for an application to help individuals understand how their
             voice may be perceived, we use machine learning and audio analysis to
             generate a gender perception based on a recording.

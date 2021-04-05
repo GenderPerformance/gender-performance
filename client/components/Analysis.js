@@ -13,7 +13,6 @@ import GraphTabs from './GraphTabs'
 import { Redirect } from "react-router-dom"
 import Timeout from 'await-timeout'
 
-
 function calcHeightWidth(){
   //calculates the smallest width height dimensions
   //for the current window
@@ -110,7 +109,7 @@ class Analysis extends React.Component {
     }
     return (
       <Container className="analysisPage" {...this.props}>
-        <h1>Analysis</h1>
+        <h1></h1>
         <Container className="predAndGraphs" >
           <Card className="prediction">
             <h3>Prediction Results</h3>
