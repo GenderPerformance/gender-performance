@@ -75,6 +75,7 @@ p {
   margin-bottom: 8px;
   margin-top: 100px;
   justify-content: space-evenly;
+  flex-wrap:wrap;
 }
 
 .Menu {
@@ -117,6 +118,7 @@ p {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 8px;
+  justify-content:center;
 }
 
 .MuiPaper-root.prediction {
@@ -134,6 +136,8 @@ p {
   align-self: flex-start;
   justify-items: center;
   padding: 1em;
+  margin-left:60px;
+  margin-right:60px;
   height:inherit;
   width: 50%;
 }
@@ -184,6 +188,11 @@ p {
 #analysis{
   background-color:rgb(52, 129, 52);
   color:white
+}
+
+#waveform{
+  width:50vw;
+  height:50vh;
 }
 
 .google-btn {

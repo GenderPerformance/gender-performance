@@ -7,10 +7,35 @@ import {
 import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
-import {recordClip, analyzeRecording, setAnalysis} from '../store'
+import {recordClip, analyzeRecording, setAnalysis, setDimensions} from '../store'
 import GraphTabs from './GraphTabs'
 import { Redirect } from "react-router-dom"
-import Recorder from './Recorder'
+import Resonance from './Resonance'
+
+function calcHeightWidth(){
+  //calculates the smallest width height dimensions
+  //for the current window
+  let h
+  let w
+  let hIn=window.innerHeight
+  let hOut=window.outerHeight
+  let wIn=window.innerWidth
+  let wOut=window.outerWidth
+  let ratio = 0.666666666
+
+  if(hIn<hOut) h=hIn
+  else h=hOut
+
+  if(wIn<wOut) w=wIn
+  else w=wOut
+
+  //figures out the limiting dimension and calculates the other
+  //dimenions off of it
+  if(w*ratio<h) h=Math.round(w*ratio)
+  else w=Math.round(h/ratio)
+
+  return {h,w}
+}
 
 class Analysis extends React.Component {
   constructor() {
@@ -21,9 +46,19 @@ class Analysis extends React.Component {
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
+    this.updateDimensions = this.updateDimensions.bind(this)
   }
+
   componentDidMount() {
     this.props.setAnalysis('spec')
+    let windowDim=calcHeightWidth()
+    this.props.setDimensions(windowDim.h,windowDim.w)
+    console.log('analysis component did mount',this.props)
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   start() {
@@ -47,10 +82,19 @@ class Analysis extends React.Component {
     this.props.setAnalysis(input)
   }
 
+  updateDimensions() {
+    //thunk to update dimensions and add to redux state
+    //take the smaller between inner and outer dimension
+    let windowDim=calcHeightWidth()
+    this.props.setDimensions(windowDim.h,windowDim.w)
+    console.log('analysis update dimensions',windowDim)
+  }
+
   render() {
+    console.log('ananylsis render',this.props)
     //redirect the user if hard refreshing or going straight to the analysis page
     if(this.props.recordingBlob===null){
-      return <Redirect path='/home'/>
+      return <Redirect to= '/home' path='/home'/>
     }
     return (
       <Container className="analysisPage" {...this.props}>
@@ -108,7 +152,9 @@ const mapState = state => {
     recordingBlob: state.recording.recordingBlob,
     loading: state.recording.loading,
     prediction: state.recording.prediction,
-    analysisType: state.analysis.chart
+    analysisType: state.analysis.chart,
+    screenHeight: state.screensize.h,
+    screenWidth: state.screensize.w,
   }
 }
 
@@ -116,7 +162,8 @@ const mapDispatch = dispatch => {
   return {
     setAnalysis: chartName => dispatch(setAnalysis(chartName)),
     recordClip: blob => dispatch(recordClip(blob)),
-    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob))
+    analyzeRecording: (userId, blob) => dispatch(analyzeRecording(userId, blob)),
+    setDimensions: (h,w) => dispatch(setDimensions(h,w))
   }
 }
 

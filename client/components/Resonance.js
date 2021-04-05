@@ -13,7 +13,7 @@ class Resonance extends React.Component {
     super(props)
     this.state = {
       sound: null,
-      fft: null
+      fft: null,
     }
     this.sketch = this.sketch.bind(this)
   }
@@ -23,15 +23,15 @@ class Resonance extends React.Component {
     //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of
     //sketch.  4th and 5th are the frequency range
-    xAxis('#cepstralAxis', 0, 600, 0, 4000)
+    xAxis('#cepstralAxis', 0, this.props.screenWidth, 0, 4000)
     this.props.setAnalysis('reso')
+    window.addEventListener('resize', this.updateDimensions);
   }
 
   //the method that creates resonance analysis chart
   sketch(p) {
-    let width = 600
-    let height = 400
-
+    let width = this.props.screenWidth
+    let height = this.props.screenHeight
     p.preload = async () => {
       await this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
     }
@@ -85,14 +85,20 @@ class Resonance extends React.Component {
   //component/module, the volume for this component needs to be set at max in order to
   //see correct waveform. This, we have to silence the media player
   //and playback from this component when the play button is hit on the media player
-
   //When we leave this component, the player needs to be paused and reset.
   componentWillUnmount(){
     //stop and reset this player if we move away from this component
     this.state.sound.pause()
     this.state.sound.currentTime=0
+    window.removeEventListener('resize', this.updateDimensions);
   }
+
   componentDidUpdate(prevProps) {
+    console.log('reso component did update',this.props)
+    if(prevProps.screenHeight!==this.props.screenHeight){
+      return this.forceUpdate()
+    }
+
     //if on this component and not reso, set analysisType to reso
     if(this.props.analysisType!=='reso'&&this.props.getAnalysisType){
       this.props.setAnalysis('reso')
@@ -117,7 +123,7 @@ class Resonance extends React.Component {
   }
 
   render() {
-    if (!this.props.recordingBlob) {
+    if (!this.props.recordingBlob&&!this.props.screenHeight) {
       return <div>Loading...</div>
     } else {
       return (
@@ -137,7 +143,9 @@ const mapState = state => {
     isPaused: state.player.isPaused,
     recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
-    analysisType: state.analysis.chart
+    analysisType: state.analysis.chart,
+    screenHeight: state.screensize.h,
+    screenWidth: state.screensize.w
   }
 }
 

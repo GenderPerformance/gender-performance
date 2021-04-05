@@ -6,8 +6,9 @@ import recording from './recording'
 import user from './user'
 import player from './player'
 import analysis from './analysis'
+import screensize from './screensize'
 
-const reducer = combineReducers({user, recording, player, analysis})
+const reducer = combineReducers({user, recording, player, analysis, screensize})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -18,3 +19,4 @@ export * from './user'
 export * from './recording'
 export * from './player'
 export * from './analysis'
+export * from './screensize'

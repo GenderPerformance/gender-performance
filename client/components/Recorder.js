@@ -17,7 +17,6 @@ const paragraph = txtgen.sentence()
 class Recorder extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       recordState: null,
       paragraph: paragraph
@@ -79,14 +78,14 @@ class Recorder extends React.Component {
                     Done
                   </Button>
                 ) : (
-                  <Button
-                    size="small"
-                    type="button"
-                    id="record"
-                    onClick={this.start}
-                  >
-                    Record
-                  </Button>
+                    <Button
+                      size="small"
+                      type="button"
+                      id="record"
+                      onClick={this.start}
+                    >
+                      Record
+                    </Button>
                 )}
               </ButtonGroup>
             </div>

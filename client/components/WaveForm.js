@@ -16,7 +16,6 @@ class WaveForm extends React.Component {
       wavesurfer: null,
     };
     this.handlePlayback=this.handlePlayback.bind(this)
-
   }
 
   componentDidMount() {
@@ -24,8 +23,8 @@ class WaveForm extends React.Component {
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        waveColor: 'purple',
-        progressColor: 'purple',
+        waveColor: 'blue',
+        progressColor: 'green',
         plugins: [],
       });
       wavesurfer.setVolume(0.0)
@@ -61,8 +60,6 @@ class WaveForm extends React.Component {
       ) {
         this.state.wavesurfer.play()
       }
-
-
     }
   }
 
@@ -93,6 +90,8 @@ const mapState = (state) => {
     prediction: state.recording.prediction,
     analysisType: state.analysis.chart,
     isPaused: state.player.isPaused,
+    screenHeight: state.screensize.h,
+    screenWidth: state.screensize.w
   };
 };
 

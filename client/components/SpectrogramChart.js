@@ -24,7 +24,13 @@ class SpectrogramChart extends React.Component {
   componentDidMount() {
     this.props.setAnalysis('spec')
     this.spectroReset()
+    window.addEventListener('resize', this.updateDimensions);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
   //function to create the spectrogram canvas and initial settings.
   //returns the created spectrogram object.
   createSpectrogram(width, height, DOMelement) {
@@ -79,25 +85,27 @@ class SpectrogramChart extends React.Component {
     request.send()
   }
 
+  //need to call this function first before anything will be rendered
+  //on the canvas. this establishes where the waveform will be drawn and
+  //rerenders onto the canvas each time. It will also clear the canvas
+  //if called even if there is a spectrogram moving across it.
+  async spectroReset() {
+    if (this.state.spectro) {
+      console.log('spectroreset',this.state)
+      await this.state.spectro.clear()
+      this.setState({spectro:null})
+    }
+    let DOMelement = document.getElementById('canvas1')
+    let spectro = this.createSpectrogram(this.props.screenWidth, this.props.screenHeight, DOMelement)
+    this.setState({spectro})
+  }
+
   //start the spectro waveform after a reset and the waveform is loaded
   //each time start is hit, it will rerender the spectro waveform. It
   //is possible to have multiple of the same waveform on the canvas which
   //could be confusing.
   spectroStart(url) {
     this.drawSpectrogram(this.state.spectro, url)
-  }
-
-  //need to call this function first before anything will be rendered
-  //on the canvas. this establishes where the waveform will be drawn and
-  //rerenders onto the canvas each time. It will also clear the canvas
-  //if called even if there is a spectrogram moving across it.
-  spectroReset() {
-    if (this.state.spectro) {
-      this.state.spectro.clear()
-    }
-    let DOMelement = document.getElementById('canvas1')
-    let spectro = this.createSpectrogram(600, 400, DOMelement)
-    this.setState({spectro})
   }
 
   //this pauses the spectrogram but it is buggy.
@@ -114,6 +122,10 @@ class SpectrogramChart extends React.Component {
   }
 
   componentDidUpdate(prevProps){
+    if(prevProps.screenHeight!==this.props.screenHeight){
+      this.spectroReset()
+    }
+
     if(this.props.analysisType!=='spec'&&this.props.getAnalysisType){
       this.props.setAnalysis('spec')
     }
@@ -176,7 +188,9 @@ const mapState = state => {
     loading: state.recording.loading,
     prediction: state.recording.prediction,
     isEnded: state.player.isEnded,
-    analysisType: state.analysis.chart
+    analysisType: state.analysis.chart,
+    screenHeight: state.screensize.h,
+    screenWidth: state.screensize.w
   }
 }
 
