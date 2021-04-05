@@ -23,15 +23,15 @@ class Resonance extends React.Component {
     //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of
     //sketch.  4th and 5th are the frequency range
-    xAxis('#cepstralAxis', 0, this.props.screenWidth, 0, 4000)
+    xAxis('#cepstralAxis', 0, this.props.chartWidth, 0, 4000)
     this.props.setAnalysis('reso')
     window.addEventListener('resize', this.updateDimensions);
   }
 
   //the method that creates resonance analysis chart
   sketch(p) {
-    let width = this.props.screenWidth
-    let height = this.props.screenHeight
+    let width = this.props.chartWidth
+    let height = this.props.chartHeight
     p.preload = async () => {
       await this.setState({sound: myp5.loadSound(this.props.recordingBlob)})
     }
@@ -94,8 +94,7 @@ class Resonance extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('reso component did update',this.props)
-    if(prevProps.screenHeight!==this.props.screenHeight){
+    if(prevProps.chartHeight!==this.props.chartHeight){
       return this.forceUpdate()
     }
 
@@ -123,7 +122,7 @@ class Resonance extends React.Component {
   }
 
   render() {
-    if (!this.props.recordingBlob&&!this.props.screenHeight) {
+    if (!this.props.recordingBlob&&!this.props.chartHeight) {
       return <div>Loading...</div>
     } else {
       return (
@@ -144,8 +143,8 @@ const mapState = state => {
     recordingURL: state.player.recordingURL,
     recordingBlob: state.recording.recordingBlob,
     analysisType: state.analysis.chart,
-    screenHeight: state.screensize.h,
-    screenWidth: state.screensize.w
+    chartHeight: state.chartSize.h,
+    chartWidth: state.chartSize.w
   }
 }
 

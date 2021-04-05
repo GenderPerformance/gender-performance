@@ -95,8 +95,8 @@ const mapState = (state) => {
     prediction: state.recording.prediction,
     analysisType: state.analysis.chart,
     isPaused: state.player.isPaused,
-    screenHeight: state.screensize.h,
-    screenWidth: state.screensize.w
+    chartHeight: state.chartSize.h,
+    chartWidth: state.chartSize.w
   };
 };
 

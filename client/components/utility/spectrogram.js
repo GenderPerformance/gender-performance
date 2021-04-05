@@ -270,6 +270,7 @@
       source.scriptNode.onaudioprocess = null
     }
 
+
     canvasContext = canvasContext || source.canvasContext
     var canvas = canvasContext.canvas
     canvasContext.clearRect(0, 0, canvas.width, canvas.height)

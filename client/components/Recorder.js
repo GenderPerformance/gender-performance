@@ -53,7 +53,7 @@ class Recorder extends React.Component {
   newParagraph() {
     let sentences = ''
     //randomly generate 1-4 sentences
-    for(let i=0; i< Math.floor(Math.random()*4)+1;i++){
+    for(let i=0; i< Math.floor(Math.random()*3)+1;i++){
       sentences+=txtgen.sentence()+' '
     }
     this.setState({paragraph: sentences})

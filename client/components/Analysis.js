@@ -3,6 +3,7 @@ import {
   Container,
   Card,
   CircularProgress,
+  Fade,
 } from '@material-ui/core'
 import MediaPlayer from './MediaPlayer'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
@@ -10,7 +11,6 @@ import {connect} from 'react-redux'
 import {recordClip, analyzeRecording, setAnalysis, setDimensions} from '../store'
 import GraphTabs from './GraphTabs'
 import { Redirect } from "react-router-dom"
-import Resonance from './Resonance'
 
 function calcHeightWidth(){
   //calculates the smallest width height dimensions
@@ -42,18 +42,20 @@ class Analysis extends React.Component {
     super()
     this.state = {
       recordState: null,
+      fade:true
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
+    this.fading = this.fading.bind(this)
   }
 
   componentDidMount() {
+    //update chart dimensions for current window size
     this.props.setAnalysis('spec')
     let windowDim=calcHeightWidth()
     this.props.setDimensions(windowDim.h,windowDim.w)
-    console.log('analysis component did mount',this.props)
     window.addEventListener('resize', this.updateDimensions);
   }
 
@@ -83,15 +85,17 @@ class Analysis extends React.Component {
   }
 
   updateDimensions() {
-    //thunk to update dimensions and add to redux state
-    //take the smaller between inner and outer dimension
+    //update props dimensions for charts based on current window size
     let windowDim=calcHeightWidth()
     this.props.setDimensions(windowDim.h,windowDim.w)
-    console.log('analysis update dimensions',windowDim)
+  }
+
+  fading(){
+    if(this.state.fade) {this.setState({fade:false})}
+    else {this.setState({fade:true})}
   }
 
   render() {
-    console.log('ananylsis render',this.props)
     //redirect the user if hard refreshing or going straight to the analysis page
     if(this.props.recordingBlob===null){
       return <Redirect to= '/home' path='/home'/>
@@ -102,8 +106,8 @@ class Analysis extends React.Component {
         <Container className="predAndGraphs" >
           <Card className="prediction">
             <h3>Prediction Results</h3>
-            <div id='centeredText'>Results represent percent confidence from</div>
-            <div id='centeredText'>our machine learning model</div>
+            <div id='centeredText'>Results represent percent confidence interval (CI)</div>
+            <div id='centeredText'>from our machine learning model</div>
             <br></br>
             {this.props.loading ? (
               <div className="circleProgress">
@@ -140,7 +144,14 @@ class Analysis extends React.Component {
             </div>
           </Card>
           <Container className="graphs">
-            {this.props.recordingURL && <MediaPlayer />}
+            {this.props.recordingURL &&
+            <Fade in={this.state.fade} timeout={{
+              enter: 2000,
+              exit: 100,
+            }}>
+              <MediaPlayer />
+            </Fade>}
+            <button onClick={this.fading}>Fade</button>
             <GraphTabs/>
           </Container>
         </Container>
@@ -158,8 +169,8 @@ const mapState = state => {
     loading: state.recording.loading,
     prediction: state.recording.prediction,
     analysisType: state.analysis.chart,
-    screenHeight: state.screensize.h,
-    screenWidth: state.screensize.w,
+    chartHeight: state.chartSize.h,
+    chartWidth: state.chartSize.w,
   }
 }
 

@@ -76,14 +76,14 @@ class MediaPlayer extends React.Component {
         this.checkEnded()
       }
     }
-
   }
 
   render() {
+    console.log('media player render')
     const {isPaused} = this.props
     return (
-      <Card>
-        <div className="player">
+      <Card {...this.props}>
+        <div className="player" >
           <Button
             aria-label="play-pause"
             onClick={() => {

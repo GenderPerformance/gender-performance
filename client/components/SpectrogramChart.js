@@ -46,7 +46,7 @@ class SpectrogramChart extends React.Component {
       },
       colors: function(steps) {
         let baseColors = [
-          [59, 41, 69, 1],
+          [59, 41, 69, 1],//background
           [0, 255, 255, 1],//blue
           [0, 255, 0, 1],//green
           [255, 255, 0, 1],//yellow
@@ -90,13 +90,15 @@ class SpectrogramChart extends React.Component {
   //rerenders onto the canvas each time. It will also clear the canvas
   //if called even if there is a spectrogram moving across it.
   async spectroReset() {
-    if (this.state.spectro) {
-      console.log('spectroreset',this.state)
-      await this.state.spectro.clear()
-      this.setState({spectro:null})
-    }
+    //looks like spectro connect source in module automatically clears
+    //test this more extensively before completely getting rid of the the code
+    // if (this.state.spectro!==null) {
+    //   console.log('spectroreset',this.state)
+    //   await this.state.spectro.clear()
+    //   this.setState({spectro:null})
+    // }
     let DOMelement = document.getElementById('canvas1')
-    let spectro = this.createSpectrogram(this.props.screenWidth, this.props.screenHeight, DOMelement)
+    let spectro = this.createSpectrogram(this.props.chartWidth, this.props.chartHeight, DOMelement)
     this.setState({spectro})
   }
 
@@ -122,7 +124,7 @@ class SpectrogramChart extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.screenHeight!==this.props.screenHeight){
+    if(prevProps.chartHeight!==this.props.chartHeight){
       this.spectroReset()
     }
 
@@ -161,8 +163,6 @@ class SpectrogramChart extends React.Component {
   }
 
   render() {
-    // old code. keep in case we need add the additional conditional check
-    // if (!(document.getElementById('canvas1')&&this.props.recordingURL)) {
     if (!this.props.recordingURL) {
       return (
         <div className="circleProgress">
@@ -189,8 +189,8 @@ const mapState = state => {
     prediction: state.recording.prediction,
     isEnded: state.player.isEnded,
     analysisType: state.analysis.chart,
-    screenHeight: state.screensize.h,
-    screenWidth: state.screensize.w
+    chartHeight: state.chartSize.h,
+    chartWidth: state.chartSize.w
   }
 }
 
