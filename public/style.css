@@ -101,19 +101,8 @@ body{
   padding-left: 2em;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   color: #3b2945;
-}
-
-#navtitle{
-  display: flex;
-  justify-content:first baseline;
-}
-
-#titleicon{
-  float:top;
-  height:60px;
 }
 
 /* Analysis Page Components */

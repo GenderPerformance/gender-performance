@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
-import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -101,7 +100,7 @@ function TemporaryDrawer({handleLogout, isLoggedIn}) {
     <div >
       {
         <React.Fragment>
-          <Button id='menu' onClick={toggleDrawer(anchor, true)}> <MenuIcon/> </Button>
+          <Button id='menu' onClick={toggleDrawer(anchor, true)}>Menu</Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

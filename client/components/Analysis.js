@@ -84,7 +84,7 @@ class Analysis extends React.Component {
   }
 
   updateDimensions() {
-    //update props dimensions for charts based on current window sizedfgdf
+    //update props dimensions for charts based on current window size
     let windowDim=calcHeightWidth()
     this.props.setDimensions(windowDim.h,windowDim.w)
   }
@@ -112,7 +112,7 @@ class Analysis extends React.Component {
         <h1></h1>
         <Container className="predAndGraphs" >
           <Card className="prediction">
-            <h3 id="predresults">Prediction Results</h3>
+            <h3>Prediction Results</h3>
             <div id='centeredText'>Results represent percent confidence</div>
             <div id='centeredText'>from our machine learning model</div>
             <br></br>
