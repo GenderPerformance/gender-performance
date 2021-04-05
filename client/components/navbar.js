@@ -8,7 +8,8 @@ const Navbar = () => (
         <AppBar position="fixed">
           <div className="Menu">
             <div className="title">
-              <h1>PERFORMANCE</h1>
+              <img src={`/waves/wave4.png`} id="titleicon"/>
+              <h1 id="navtitle">  VisiVox</h1>
             </div>
             <div>
               <MenuBar />

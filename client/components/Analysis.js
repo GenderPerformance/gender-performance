@@ -85,7 +85,7 @@ class Analysis extends React.Component {
   }
 
   updateDimensions() {
-    //update props dimensions for charts based on current window size
+    //update props dimensions for charts based on current window sizedfgdf
     let windowDim=calcHeightWidth()
     this.props.setDimensions(windowDim.h,windowDim.w)
   }
