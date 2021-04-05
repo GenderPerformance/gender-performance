@@ -2,17 +2,21 @@ import React from 'react'
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import {connect} from 'react-redux'
 import MediaPlayer from './MediaPlayer'
-import {recordClip, analyzeRecording, clearRecording} from '../store'
+import {
+  recordClip,
+  analyzeRecording,
+  clearRecording,
+  setAnalysis
+} from '../store'
 import {Link as RouterLink} from 'react-router-dom'
 import {Container, ButtonGroup, Button, Card, CardContent, Typography, Link} from '@material-ui/core'
 
 const txtgen = require('txtgen')
-const paragraph = txtgen.paragraph()
+const paragraph = txtgen.sentence()
 
 class Recorder extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       recordState: null,
       paragraph: paragraph
@@ -25,6 +29,8 @@ class Recorder extends React.Component {
   componentDidMount() {
     //clear any recording from previous analysis
     this.props.clearRecording()
+    //clear analysis state
+    this.props.setAnalysis(null)
   }
   start() {
     this.props.clearRecording()
@@ -45,7 +51,12 @@ class Recorder extends React.Component {
   }
 
   newParagraph() {
-    this.setState({paragraph: txtgen.paragraph()})
+    let sentences = ''
+    //randomly generate 1-4 sentences
+    for(let i=0; i< Math.floor(Math.random()*3)+1;i++){
+      sentences+=txtgen.sentence()+' '
+    }
+    this.setState({paragraph: sentences})
   }
 
   render() {
@@ -64,29 +75,29 @@ class Recorder extends React.Component {
               >
                 {recordState === RecordState.START ? (
                   <Button type="button" id="stop" onClick={this.stop}>
-                    Stop
+                    Done
                   </Button>
                 ) : (
-                  <Button
-                    size="small"
-                    type="button"
-                    id="record"
-                    onClick={this.start}
-                  >
-                    Record
-                  </Button>
+                    <Button
+                      size="small"
+                      type="button"
+                      id="record"
+                      onClick={this.start}
+                    >
+                      Record
+                    </Button>
                 )}
               </ButtonGroup>
             </div>
-            <Card className="txtgen">
+            <Card className="txtgen" id="phrase">
               <CardContent>
-              <Typography color="textSecondary">
+              <Typography color="textSecondary" id='phrase'>
                 Press record then say:
               </Typography>
-              <Typography color="textSecondary">
+              <Typography color="textSecondary" id="prompt">
                 {`${this.state.paragraph}`}
               </Typography>
-                <Button variant="contained" onClick={this.newParagraph}>
+                <Button variant="contained" onClick={this.newParagraph} id='newParagraph'>
                   New Paragraph
                 </Button>
               </CardContent>
@@ -116,9 +127,9 @@ class Recorder extends React.Component {
               text-align="center"
               state={recordState}
               onStop={this.onStop}
-              backgroundColor="rgb(255,255,255)"
+              backgroundColor="rgb(240, 234, 214)"
               foregroundColor="rgb(159,48,226)"
-              canvasWidth="900"
+              canvasWidth="450"
               canvasHeight={recordState === RecordState.START ? '150' : '0'}
             />
           </div>
@@ -142,7 +153,8 @@ const mapDispatch = dispatch => {
     recordClip: blob => dispatch(recordClip(blob)),
     analyzeRecording: (userId, blob) =>
       dispatch(analyzeRecording(userId, blob)),
-    clearRecording: () => dispatch(clearRecording())
+    clearRecording: () => dispatch(clearRecording()),
+    setAnalysis: chart => dispatch(setAnalysis(chart))
   }
 }
 

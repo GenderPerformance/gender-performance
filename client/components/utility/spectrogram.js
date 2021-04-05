@@ -1,6 +1,7 @@
 ;(function(root) {
   'use strict'
-
+//The spectrogram component from spectrogram-npm module. had to make changes to
+//the spectrogram-npm source code hence why it's a component now
   function _isFunction(v) {
     return typeof v === 'function'
   }
@@ -268,6 +269,7 @@
     if (toString.call(source.scriptNode) === '[object ScriptProcessorNode]') {
       source.scriptNode.onaudioprocess = null
     }
+
 
     canvasContext = canvasContext || source.canvasContext
     var canvas = canvasContext.canvas

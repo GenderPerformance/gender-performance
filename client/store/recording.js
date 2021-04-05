@@ -52,15 +52,21 @@ export const analyzeRecording = (userId, blob) => async dispatch => {
     formData.append('s3Url', url)
     formData.append('soundBlob', blob, fileName)
     //analyze
-    const result = await axios.post('/api/recordings/analyze', formData)
-    //log prediction
-    const prediction = result.data
-    const audioData = {
-      s3Url: url,
-      prediction
+    try{
+      const result = await axios.post('/api/recordings/analyze', formData)
+       //log prediction
+      const prediction = result.data
+      const audioData = {
+        s3Url: url,
+        prediction
+      }
+      dispatch(_analyzeRecording(audioData))
+      dispatch(_isLoading(false))
+    }catch(error){
+      //create error message if route times out
+      dispatch(_analyzeRecording({prediction:{fp:"<error:not enough resources>",mp:"<please try again later>"}}))
+      dispatch(_isLoading(false))
     }
-    dispatch(_analyzeRecording(audioData))
-    dispatch(_isLoading(false))
   } catch (error) {
     console.error(error)
   }
@@ -74,7 +80,6 @@ export default function(state = defaultState, action) {
     case ANALYZE_RECORDING:
       return {
         ...state,
-        recordingURL: action.recordingData.s3Url,
         prediction: action.recordingData.prediction
       }
     case IS_LOADING:

@@ -22,31 +22,36 @@ class UserHistory extends React.Component {
     const {history} = this.props
     return (
       <Container>
-        <h1>Recording History</h1>
+        <h1 id='history'>Recording History</h1>
         {!history ? (
           <h2>Loading History...</h2>
         ) : (
           history.map(recording => {
             return (
-              <Card key={recording.id}>
-                <div id="recording-details">
-                  <h4>Date</h4>
-                  <p>{this.getRecordingDate(recording.createdAt)}</p>
-
-                  <audio controls src={recording.url} />
-                </div>
-                <CardContent className="prediction-results">
-                  <h4>Prediction Results</h4>
-                  <div>
-                  <span>Feminine -- </span>
-                  <span><strong>{recording.femaleConfidence}%</strong></span>
+              <div>
+                <Card key={recording.id}>
+                  <div id="indivHistory">
+                    <div id="recording-details">
+                      <h4>Date</h4>
+                      <p>{this.getRecordingDate(recording.createdAt)}</p>
+                      <audio controls src={recording.url} />
+                    </div>
+                    <CardContent className="prediction-results">
+                      <h4>Prediction Results</h4>
+                      <div>
+                      <span>Feminine -- </span>
+                      <span><strong>{recording.femaleConfidence}%</strong></span>
+                      </div>
+                      <div>
+                        <span>Masculine -- </span>
+                      <span><strong>{recording.maleConfidence}%</strong></span>
+                      </div>
+                    </CardContent>
+                    <br/>
                   </div>
-                  <div>
-                    <span>Masculine -- </span>
-                  <span><strong>{recording.maleConfidence}%</strong></span>
-                </div>
-                </CardContent>
-              </Card>
+                </Card>
+              <br/>
+              </div>
             )
           })
         )}

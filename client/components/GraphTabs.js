@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import { Fade } from '@material-ui/core'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SpectrogramChart from './SpectrogramChart'
-import Cepstrum from './Cepstrum'
+import Resonance from './Resonance'
 import WaveForm from './WaveForm'
 
 function TabPanel(props) {
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -59,7 +60,7 @@ export default function SimpleTabs() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id='AnalysesBox'>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered="true" variant="fullWidth">
           <Tab label="Spectrogram" {...a11yProps(0)} />
@@ -68,14 +69,18 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <canvas id='canvas1'></canvas>
+        <Fade in timeout={350} >
+          <canvas id='canvas1'></canvas>
+        </Fade>
         <SpectrogramChart/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Cepstrum/>
+        <Fade in timeout={350}>
+          <Resonance/>
+        </Fade>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <WaveForm/>
+          <WaveForm/>
       </TabPanel>
     </div>
   );

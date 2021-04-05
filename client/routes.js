@@ -11,7 +11,7 @@ import {
   UserHistory
 } from './components'
 import {me} from './store'
-
+import {Fade} from '@material-ui/core'
 /**
  * COMPONENT
  */
@@ -33,6 +33,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/analysis/" component={Analysis} />
+            <Route exact path="/" component={Recorder} />
             <Route path="/home" component={Recorder} />
             <Route path="/userhistory" component={UserHistory} />
           </Switch>

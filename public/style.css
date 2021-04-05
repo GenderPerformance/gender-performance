@@ -51,6 +51,10 @@ p {
   padding: 10px;
 }
 
+body{
+  background-color:#f0ead6
+}
+
 /* Record Page Components */
 .MuiPaper-root.txtgen {
   display: flex;
@@ -64,7 +68,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 40px;
   width: 100%;
 }
 
@@ -73,7 +77,9 @@ p {
   flex-direction: row;
   align-items: center;
   margin-bottom: 8px;
+  margin-top: 60px;
   justify-content: space-evenly;
+  flex-wrap:wrap;
 }
 
 .Menu {
@@ -83,11 +89,16 @@ p {
   align-items: center;
 }
 
+#menu{
+  color: #3b2945;
+}
+
 .title {
   padding-left: 2em;
   display: flex;
   flex-direction: row;
   align-items: center;
+  color: #3b2945;
 }
 
 /* Analysis Page Components */
@@ -116,6 +127,7 @@ p {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 8px;
+  justify-content:center;
 }
 
 .MuiPaper-root.prediction {
@@ -124,6 +136,8 @@ p {
   padding: 1em;
   min-width: 35%;
   max-width: fit-content;
+  background-color:#f0ead6;
+  color:#3B2945;
 }
 
 .MuiContainer-root.graphs {
@@ -133,6 +147,8 @@ p {
   align-self: flex-start;
   justify-items: center;
   padding: 1em;
+  margin-left:60px;
+  margin-right:60px;
   height:inherit;
   width: 50%;
 }
@@ -148,4 +164,134 @@ p {
   display: flex;
   align-items: center;
   margin-left: 8px;
+}
+
+#authMain {
+  margin-top:100px;
+}
+
+#authform{
+  margin-left:50px;
+}
+
+#about{
+  margin-top:80px;
+}
+
+#history{
+  margin-top:100px;
+}
+
+#prompt{
+  margin-left:10px;
+  color:#3B2945
+}
+
+#record{
+  background-color: #9f30e2;
+  color:#f0ead6;
+}
+#newParagraph{
+  background-color: #6286a3;
+  color:#f0ead6;
+}
+#stop{
+  background-color: #b593c5;;
+  color:#f0ead6;
+}
+
+#analysis{
+  background-color:#60BAAF;
+  color:#f0ead6
+}
+
+#waveform{
+  width:50vw;
+  height:50vh;
+}
+
+#phrase{
+  color: #3b2945;
+  background-color:#f0ead6;
+}
+
+#centeredText{
+  text-align:center;
+}
+
+#AnalysesBox{
+  background-color:#6286A3
+}
+
+#aboutText,#indivHistory{
+  background-color:#f0ead6;
+}
+
+.player{
+  background-color: #6286a3;
+  text-align:center;
+}
+
+.playbutton{
+  margin-left:10px;
+}
+
+.CI{
+  display: flex;
+  justify-content:space-around;
+}
+
+.google-btn {
+    margin: 25px;
+    margin-left:67px;
+    width: 80%;
+    min-width: 184px;
+    max-width: 184px;
+    height: 42px;
+    background-color: #fcfcfc;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2);
+    cursor: pointer;
+    cursor: hand;
+    align-self: center;
+    user-select: none;
+    transition: all 400ms ease 0s;
+    display: flex;
+}
+.google-btn .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    user-select: none
+}
+.google-btn .google-icon-svg {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+    user-select: none
+}
+.google-btn .btn-text {
+    float: right;
+    margin: 3px 14px 40px 35px;
+    color: #757575;
+    font-size: 14px;
+    letter-spacing: .2px;
+    font-family: Roboto;
+    user-select: none;
+    white-space: nowrap;
+}
+.google-btn:hover {
+    box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+    user-select: none
+}
+.google-btn:active {
+    box-shadow: 0 1px 1px #757575;
+    background: #F8F8F8;
+    color: #fff;
+    user-select: none
 }

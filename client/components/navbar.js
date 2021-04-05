@@ -5,7 +5,7 @@ import MenuBar from './MenuBar'
 const Navbar = () => (
   <div>
     <nav>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <div className="Menu">
             <div className="title">
               <h1>PERFORMANCE</h1>

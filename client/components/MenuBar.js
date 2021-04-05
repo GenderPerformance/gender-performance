@@ -62,9 +62,7 @@ function TemporaryDrawer({handleLogout, isLoggedIn}) {
       <Button id="closeMenu" onClick={toggleDrawer(anchor, false)}>
         Close Menu
       </Button>
-
       <br />
-
       {isLoggedIn ? (
         <List>
           {['Record', 'History', 'About'].map((text, index) => (
@@ -99,10 +97,10 @@ function TemporaryDrawer({handleLogout, isLoggedIn}) {
   //Where the drawer pulls from: right, left, top bottom
   const anchor = 'right'
   return (
-    <div>
+    <div >
       {
         <React.Fragment>
-          <Button onClick={toggleDrawer(anchor, true)}>Menu</Button>
+          <Button id='menu' onClick={toggleDrawer(anchor, true)}>Menu</Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
