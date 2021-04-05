@@ -14,11 +14,6 @@ const About = () => {
             generate a gender perception based on a recording.
           </p>
           <p>
-            The machine learning model was trained with regular speaking voices and
-            thus to designed to be used for regular speaking voices. It is a feed
-            forward network with 5 hidden layers using relu nodes.
-          </p>
-          <p>
             Labeling gender is inherently reductive and doesn't take into the
             broad spectrum of genders that exist in the world. In this, the
             application demonstrates some of the limitations of machine learning
@@ -29,9 +24,11 @@ const About = () => {
           </p>
           <p>
             This project was built using React/Redux on the frontend and Node.js
-            and Python on the backend. The original Tensorflow machine learning
-            model was built by XXXXX. Audio analysis is performed using the MDN
-            Web Audio API and X and Y libraries.
+            and Python on the backend. The Tensorflow machine learning
+            model was based on work found <a href="https://github.com/x4nth055/gender-recognition-by-voice">here</a>. The machine learning model was trained with regular speaking voices and thus to designed to be used for regular speaking voices. It is a feed forward network with 5 hidden layers using relu nodes. Audio analysis is performed using the MDN Web Audio API and the P5 library.
+          </p>
+          <p>
+            Released under the MIT License.
           </p>
         </Typography>
       </Card>
