@@ -1,16 +1,14 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {Card} from '@material-ui/core'
+import {Card, Typography} from '@material-ui/core'
 
-const About = props => {
+const About = () => {
   return (
     <React.Fragment>
       <div id="about">
       <Card id="aboutText">
-        <div>
+        <Typography>
           <p>
-            Welcome to our little project - Voice Performance. Designed as a proof
+            Welcome to our project - VisiVox. Designed as a proof
             of concept for an application to help individuals understand how their
             voice may be perceived, we use machine learning and audio analysis to
             generate a gender perception based on a recording.
@@ -35,7 +33,7 @@ const About = props => {
             model was built by XXXXX. Audio analysis is performed using the MDN
             Web Audio API and X and Y libraries.
           </p>
-        </div>
+        </Typography>
       </Card>
     </div>
     </React.Fragment>

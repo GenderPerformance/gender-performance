@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  Container,
-  Card,
-  CardContent
-} from '@material-ui/core'
+import {Container, Card, CardContent, Typography} from '@material-ui/core'
 import {fetchHistory} from '../store'
 import {connect} from 'react-redux'
 
@@ -13,8 +9,8 @@ class UserHistory extends React.Component {
     this.props.fetchHistory(this.props.user.id)
   }
 
-  getRecordingDate = (dateString) => {
-    const parsed = new Date(Date.parse(dateString));
+  getRecordingDate = dateString => {
+    const parsed = new Date(Date.parse(dateString))
     return parsed.toLocaleString()
   }
 
@@ -22,35 +18,43 @@ class UserHistory extends React.Component {
     const {history} = this.props
     return (
       <Container>
-        <h1 id='history'>Recording History</h1>
+        <Typography variant="h4" id="history">
+          Recording History
+        </Typography>
         {!history ? (
-          <h2>Loading History...</h2>
+          <Typography variant="h5">Loading History...</Typography>
         ) : (
           history.map(recording => {
             return (
-              <div>
-                <Card key={recording.id}>
+              <div key={recording.id}>
+                <Card>
                   <div id="indivHistory">
                     <div id="recording-details">
-                      <h4>Date</h4>
-                      <p>{this.getRecordingDate(recording.createdAt)}</p>
+                      <Typography variant="h5">Date</Typography>
+                      <p>
+                        <Typography>
+                          {this.getRecordingDate(recording.createdAt)}
+                        </Typography>
+                      </p>
                       <audio controls src={recording.url} />
                     </div>
                     <CardContent className="prediction-results">
-                      <h4>Prediction Results</h4>
+                      <Typography variant="h6">Prediction Results</Typography>
                       <div>
-                      <span>Feminine -- </span>
-                      <span><strong>{recording.femaleConfidence}%</strong></span>
+                        <Typography>
+                          Feminine -- {recording.femaleConfidence}%
+                        </Typography>
                       </div>
                       <div>
-                        <span>Masculine -- </span>
-                      <span><strong>{recording.maleConfidence}%</strong></span>
+                        <Typography>
+                          Masculine -- {recording.maleConfidence}%
+                        </Typography>
                       </div>
                     </CardContent>
-                    <br/>
+                    <br />
                   </div>
                 </Card>
-              <br/>
+                <br />
               </div>
             )
           })
