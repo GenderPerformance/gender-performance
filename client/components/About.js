@@ -7,8 +7,8 @@ const About = props => {
   return (
     <React.Fragment>
       <div id="about">
-      <Card>
-        <div id="aboutText">
+      <Card id="aboutText">
+        <div>
           <p>
             Welcome to our little project - Voice Performance. Designed as a proof
             of concept for an application to help individuals understand how their

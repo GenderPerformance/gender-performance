@@ -2,11 +2,15 @@ import * as d3 from 'd3'
 
 // create svg element
 export function xAxis(elem, xMin, xMax, valMin, valMax) {
+  let fontsize
+  xMax>300?fontsize = xMax/40:fontsize = xMax/20
+
   var svg = d3
     .select(elem)
     .append('svg')
     .attr('width', xMax + 30)
     .attr('height', 60)
+    .style("font-size",`${fontsize}px`) //dynamically adjust label size
 
   // Create the scale
   var x = d3
@@ -24,7 +28,7 @@ export function xAxis(elem, xMin, xMax, valMin, valMax) {
   svg
     .append('text')
     .attr('text-anchor', 'middle')
-    .attr('x', 300)
+    .attr('x', xMax/2)
     .attr('y', 50)
     .text('Frequency (Hz)')
 

@@ -24,6 +24,7 @@ class Resonance extends React.Component {
     //if the play button is hit during load.
     this.props.mediaPlayerFadeFalse()
     this.props.mediaPlayerFadeTrue()
+
     //xAxis creates an x axis for the resonance analysis
     //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of
@@ -31,7 +32,6 @@ class Resonance extends React.Component {
     xAxis('#cepstralAxis', 0, this.props.chartWidth, 0, 4000)
     this.props.setAnalysis('reso')
     window.addEventListener('resize', this.updateDimensions);
-
   }
 
   //the method that creates resonance analysis chart
