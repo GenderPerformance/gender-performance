@@ -69,13 +69,13 @@ export default function SimpleTabs(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Fade in timeout={350} >
+        <Fade in timeout={400} >
           <canvas id='canvas1'></canvas>
         </Fade>
         <SpectrogramChart/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Fade in timeout={350}>
+        <Fade in timeout={400}>
           <Resonance/>
         </Fade>
       </TabPanel>
