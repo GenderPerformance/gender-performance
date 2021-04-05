@@ -13,7 +13,6 @@ import GraphTabs from './GraphTabs'
 import { Redirect } from "react-router-dom"
 import Timeout from 'await-timeout'
 
-
 function calcHeightWidth(){
   //calculates the smallest width height dimensions
   //for the current window
