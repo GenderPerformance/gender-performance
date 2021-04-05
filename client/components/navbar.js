@@ -8,7 +8,7 @@ const Navbar = () => (
         <AppBar position="fixed">
           <div className="Menu">
             <div className="title">
-              <h1>PERFORMANCE</h1>
+              <h1>VisiVox</h1>
             </div>
             <div>
               <MenuBar />
