@@ -56,6 +56,7 @@ class Analysis extends React.Component {
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
+    this.listRef= React.createRef()
   }
 
   componentDidMount() {
@@ -97,7 +98,17 @@ class Analysis extends React.Component {
     this.props.setDimensions(windowDim.h, windowDim.w)
   }
 
-  async componentDidUpdate(prevProps) {
+  // getSnapshotBeforeUpdate(prevProps,prevState){
+  //   if(prevProps.list){
+  //     if(prevProps.list.length<this.props.list.length){
+  //       const list = this.listRef.current;
+  //       return list.scrollHeight-list.scrollTop;
+  //     }
+  //     return null
+  //   }
+  // }
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     //flips the state of mediaPlayerFade to force a re-render of the
     //fade effect of mediaplayer each time we switch analyses
     if (this.props.mediaPlayerFade === false) {
@@ -108,6 +119,12 @@ class Analysis extends React.Component {
         this.props.mediaPlayerFadeFalse()
       }
     }
+
+    // if(snapshot !==null){
+    //   const list = this.listRef.current;
+    //   list.scrollTop = list.scrollHeight - snapshot;
+    // }
+
   }
 
   render() {
@@ -117,7 +134,7 @@ class Analysis extends React.Component {
     }
     return (
       <Container className="analysisPage" {...this.props}>
-        <Typography variant="h4">Analysis</Typography>
+        <Typography variant="h4"></Typography>
         <Container className="predAndGraphs">
           <Card className="prediction">
             <Typography variant="h5">Prediction Results</Typography>
@@ -134,8 +151,8 @@ class Analysis extends React.Component {
                 <CircularProgress />
                 <br />
               </div>
-            ) : (
-              <div className="prediction-results">
+            ) : (typeof this.props.prediction.fp === 'number')
+            ? (<div className="prediction-results">
                 <div className="CI">
                   <span>
                     <Typography>Feminine -- </Typography>
@@ -153,9 +170,13 @@ class Analysis extends React.Component {
                   </span>
                 </div>
               </div>
-            )}
+            ) : (<h3 style={{textAlign:"center", color:"#3B2945", fontStyle:"italic"}}>{this.props.prediction.fp}<br/>
+                {this.props.prediction.mp}{console.log('TYPE OF:',typeof this.props.prediction.fp)}</h3>)}
           </Card>
           <Container className="graphs">
+            <br/>
+            <GraphTabs />
+            <br/>
             {this.props.recordingURL && (
               <Fade
                 in={this.props.mediaPlayerFade}
@@ -167,7 +188,6 @@ class Analysis extends React.Component {
                 <MediaPlayer />
               </Fade>
             )}
-            <GraphTabs />
           </Container>
         </Container>
       </Container>

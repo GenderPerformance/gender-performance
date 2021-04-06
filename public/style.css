@@ -8,13 +8,14 @@ a {
 }
 
 a:link {
-  color: black;
+  color: #3B2945;
+;
 }
 a:visited {
-  color: gray;
+  color: #3B2945;
 }
 a:hover {
-  color: #97b498;
+  color: white;
 }
 
 label {
@@ -52,7 +53,7 @@ p {
 }
 
 body{
-  background-color:#f0ead6
+  background-color:#f0ead6;
 }
 
 /* Record Page Components */
@@ -130,7 +131,7 @@ body{
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 80px;
   justify-content:center;
 }
 
@@ -235,6 +236,10 @@ body{
   justify-content: space-between;
   align-items: center;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 60febd9fde1bfdaaf016030e081677324e4424ae
 #waveform{
   width:550px;
   height:400px;
