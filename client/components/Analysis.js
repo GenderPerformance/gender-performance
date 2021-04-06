@@ -56,7 +56,6 @@ class Analysis extends React.Component {
     this.stop = this.stop.bind(this)
     this.onStop = this.onStop.bind(this)
     this.updateDimensions = this.updateDimensions.bind(this)
-    this.listRef= React.createRef()
   }
 
   componentDidMount() {
@@ -98,7 +97,7 @@ class Analysis extends React.Component {
     this.props.setDimensions(windowDim.h, windowDim.w)
   }
 
-  async componentDidUpdate(prevProps, prevState, snapshot) {
+  async componentDidUpdate(prevProps) {
     //flips the state of mediaPlayerFade to force a re-render of the
     //fade effect of mediaplayer each time we switch analyses
     if (this.props.mediaPlayerFade === false) {
