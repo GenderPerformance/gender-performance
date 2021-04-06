@@ -234,6 +234,8 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
 #waveform{
   width:550px;
   height:400px;

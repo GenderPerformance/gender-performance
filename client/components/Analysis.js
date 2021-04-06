@@ -134,8 +134,8 @@ class Analysis extends React.Component {
                 <CircularProgress />
                 <br />
               </div>
-            ) : (
-              <div className="prediction-results">
+            ) : (typeof this.props.prediction.fp === 'number')
+            ? (<div className="prediction-results">
                 <div className="CI">
                   <span>
                     <Typography>Feminine -- </Typography>
@@ -153,7 +153,8 @@ class Analysis extends React.Component {
                   </span>
                 </div>
               </div>
-            )}
+            ) : (<h3 style={{textAlign:"center", color:"#3B2945", fontStyle:"italic"}}>{this.props.prediction.fp}<br/>
+                {this.props.prediction.mp}{console.log('TYPE OF:',typeof this.props.prediction.fp)}</h3>)}
           </Card>
           <Container className="graphs">
             {this.props.recordingURL && (
