@@ -108,6 +108,7 @@ class Analysis extends React.Component {
         this.props.mediaPlayerFadeFalse()
       }
     }
+
   }
 
   render() {
@@ -117,7 +118,7 @@ class Analysis extends React.Component {
     }
     return (
       <Container className="analysisPage" {...this.props}>
-        <Typography variant="h4">Analysis</Typography>
+        <Typography variant="h4"></Typography>
         <Container className="predAndGraphs">
           <Card className="prediction">
             <Typography variant="h5">Prediction Results</Typography>

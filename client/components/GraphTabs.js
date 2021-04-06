@@ -61,13 +61,6 @@ export default function SimpleTabs(props) {
 
   return (
     <div className={classes.root} id='AnalysesBox'>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered="true" variant="fullWidth">
-          <Tab label="Spectrogram" {...a11yProps(0)} />
-          <Tab label="Resonance" {...a11yProps(1)} />
-          <Tab label="Waveform" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
       <TabPanel value={value} index={0}>
         <Fade in timeout={400} >
           <canvas id='canvas1'></canvas>
@@ -82,6 +75,13 @@ export default function SimpleTabs(props) {
       <TabPanel value={value} index={2}>
           <WaveForm/>
       </TabPanel>
+      <AppBar position="static">
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered="true" variant="fullWidth">
+          <Tab label="Spectrogram" {...a11yProps(0)} />
+          <Tab label="Resonance" {...a11yProps(1)} />
+          <Tab label="Waveform" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
     </div>
   );
 }

@@ -53,7 +53,7 @@ p {
 }
 
 body{
-  background-color:#f0ead6
+  background-color:#f0ead6;
 }
 
 /* Record Page Components */
@@ -81,10 +81,6 @@ body{
   margin-top: 60px;
   justify-content: space-evenly;
   flex-wrap:wrap;
-}
-
-.cepstral{
-
 }
 
 .Menu {
@@ -131,7 +127,7 @@ body{
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 80px;
   justify-content:center;
 }
 
