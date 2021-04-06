@@ -2,6 +2,7 @@ import React from 'react'
 import {AppBar} from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import MenuBar from './MenuBar'
+import {Link} from 'react-router-dom'
 
 const Navbar = () => (
   <div>
@@ -9,7 +10,7 @@ const Navbar = () => (
       <AppBar position="fixed">
         <div className="Menu">
           <div className="title">
-            <Typography variant="h4">VisiVox</Typography>
+            <Link to="/home" ><Typography variant="h4">VisiVox</Typography> </Link>
           </div>
           <div>
             <MenuBar />
