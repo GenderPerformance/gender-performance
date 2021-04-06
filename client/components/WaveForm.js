@@ -19,7 +19,6 @@ class WaveForm extends React.Component {
   }
 
   componentDidMount() {
-    console.log('waveform did mount',this.props)
     this.props.setAnalysis('wave')
     if (!this.state.wavesurfer) {
       const wavesurfer = WaveSurfer.create({
@@ -62,9 +61,6 @@ class WaveForm extends React.Component {
       let canvas = document.getElementById('waveform')
       canvas.style.height = `${this.props.chartHeight}px`
       canvas.style.width = `${this.props.chartWidth}px`
-
-
-      console.log('set waveform height and width')
     }
 
     if(this.props.analysisType!=='wave'&&this.props.getAnalysisType){
