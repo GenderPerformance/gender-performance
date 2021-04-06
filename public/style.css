@@ -306,3 +306,39 @@ body{
     color: #fff;
     user-select: none
 }
+
+
+
+/*====Recording Stuff=====*/
+
+#recordstuff{
+  display:flex;
+  flex-direction: column;
+}
+
+
+
+.title{
+  display:flex;
+  flex-direction: row;
+}
+
+
+
+#visivoxtitle{
+  text-decoration: none;
+  pointer-events:none;
+}
+
+
+#logolink{
+  display:flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+
+/* #micicon{
+  width: 5vw;
+  height: 7vh;
+} */

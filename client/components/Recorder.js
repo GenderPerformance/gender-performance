@@ -77,7 +77,8 @@ class Recorder extends React.Component {
                   <Button type="button" id="stop" onClick={this.stop}>
                     Done
                   </Button>
-                ) : (
+                ) : (<div id="recordstuff">
+                    <img src="mic.png" id="micicon" onClick={this.start}/>
                     <Button
                       size="small"
                       type="button"
@@ -86,6 +87,7 @@ class Recorder extends React.Component {
                     >
                       Record
                     </Button>
+                    </div>
                 )}
               </ButtonGroup>
             </div>
