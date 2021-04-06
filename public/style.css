@@ -8,13 +8,14 @@ a {
 }
 
 a:link {
-  color: black;
+  color: #3B2945;
+;
 }
 a:visited {
-  color: gray;
+  color: #3B2945;
 }
 a:hover {
-  color: #97b498;
+  color: white;
 }
 
 label {

@@ -157,6 +157,9 @@ class Analysis extends React.Component {
                 {this.props.prediction.mp}{console.log('TYPE OF:',typeof this.props.prediction.fp)}</h3>)}
           </Card>
           <Container className="graphs">
+            <br/>
+            <GraphTabs />
+            <br/>
             {this.props.recordingURL && (
               <Fade
                 in={this.props.mediaPlayerFade}
@@ -168,7 +171,6 @@ class Analysis extends React.Component {
                 <MediaPlayer />
               </Fade>
             )}
-            <GraphTabs />
           </Container>
         </Container>
       </Container>
