@@ -79,7 +79,6 @@ class MediaPlayer extends React.Component {
   }
 
   render() {
-    console.log('media player render')
     const {isPaused} = this.props
     return (
       <Card {...this.props}>

@@ -29,7 +29,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   ) {
     callbackURL = 'http://localhost:8080/auth/google/callback'
   } else {
-    callbackURL = 'https://performanio1.herokuapp.com/auth/google/callback'
+    callbackURL = 'https://visivox.herokuapp.com/auth/google/callback'
   }
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,

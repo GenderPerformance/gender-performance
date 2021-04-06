@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import MicIcon from '@material-ui/icons/Mic'
+import MenuIcon from '@material-ui/icons/Menu'
 import HistoryIcon from '@material-ui/icons/History'
 import InfoIcon from '@material-ui/icons/Info'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
@@ -100,7 +101,7 @@ function TemporaryDrawer({handleLogout, isLoggedIn}) {
     <div >
       {
         <React.Fragment>
-          <Button id='menu' onClick={toggleDrawer(anchor, true)}>Menu</Button>
+          <Button id='menu' onClick={toggleDrawer(anchor, true)}><MenuIcon/></Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

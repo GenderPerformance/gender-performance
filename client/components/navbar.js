@@ -1,20 +1,21 @@
 import React from 'react'
 import {AppBar} from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import MenuBar from './MenuBar'
 
 const Navbar = () => (
   <div>
     <nav>
-        <AppBar position="fixed">
-          <div className="Menu">
-            <div className="title">
-              <h1>PERFORMANCE</h1>
-            </div>
-            <div>
-              <MenuBar />
-            </div>
+      <AppBar position="fixed">
+        <div className="Menu">
+          <div className="title">
+            <Typography variant="h4">VisiVox</Typography>
           </div>
-        </AppBar>
+          <div>
+            <MenuBar />
+          </div>
+        </div>
+      </AppBar>
     </nav>
   </div>
 )
