@@ -19,12 +19,6 @@ class Resonance extends React.Component {
   }
 
   componentDidMount() {
-    //flip the fade toggle so the mediaplayer can fade in.
-    //this component takes longer to load and will error out
-    //if the play button is hit during load.
-    this.props.mediaPlayerFadeFalse()
-    this.props.mediaPlayerFadeTrue()
-
     //xAxis creates an x axis for the resonance analysis
     //should target the div element below the resonance analysis
     //the second and third arguments of xAxis should be the width of

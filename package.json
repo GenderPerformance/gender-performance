@@ -1,5 +1,5 @@
 {
-  "name": "performanio1",
+  "name": "visivox",
   "version": "2.0.0",
   "description": "app that analyzes your voice",
   "engines": {
@@ -42,6 +42,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@fontsource/roboto": "^4.2.2",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "audio-react-recorder": "^1.0.4",

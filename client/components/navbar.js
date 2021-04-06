@@ -1,23 +1,21 @@
 import React from 'react'
 import {AppBar} from '@material-ui/core'
-import MenuBar from './MenuBar';
-import {Link} from 'react-router-dom';
+import Typography from '@material-ui/core/Typography'
+import MenuBar from './MenuBar'
 
 const Navbar = () => (
   <div>
     <nav>
-        <AppBar position="fixed">
-          <div className="Menu">
-            <Link to="/home"><div className="title">
-              <img src={`/waves/wave4.png`} id="titleicon"/>
-              <h1 id="navtitle">  VisiVox</h1>
-            </div>
-            </Link>
-            <div>
-              <MenuBar />
-            </div>
+      <AppBar position="fixed">
+        <div className="Menu">
+          <div className="title">
+            <Typography variant="h4">VisiVox</Typography>
           </div>
-        </AppBar>
+          <div>
+            <MenuBar />
+          </div>
+        </div>
+      </AppBar>
     </nav>
   </div>
 )

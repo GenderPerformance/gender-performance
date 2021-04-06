@@ -82,6 +82,10 @@ body{
   flex-wrap:wrap;
 }
 
+.cepstral{
+
+}
+
 .Menu {
   display: flex;
   flex-direction: row;
@@ -97,19 +101,8 @@ body{
   padding-left: 2em;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   color: #3b2945;
-}
-
-#navtitle{
-  display: flex;
-  justify-content:first baseline;
-}
-
-#titleicon{
-  float:top;
-  height:60px;
 }
 
 /* Analysis Page Components */
@@ -149,6 +142,7 @@ body{
   max-width: fit-content;
   background-color:#f0ead6;
   color:#3B2945;
+  text-align: center;
 }
 
 .MuiContainer-root.graphs {
@@ -206,6 +200,7 @@ body{
   background-color: #6286a3;
   color:#f0ead6;
 }
+
 #stop{
   background-color: #b593c5;;
   color:#f0ead6;
@@ -216,10 +211,6 @@ body{
   color:#f0ead6
 }
 
-#waveform{
-  width:50vw;
-  height:50vh;
-}
 
 #phrase{
   color: #3b2945;
@@ -234,8 +225,18 @@ body{
   background-color:#6286A3
 }
 
-#aboutText,#indivHistory{
+#aboutText{
   background-color:#f0ead6;
+}
+
+#indivHistory{
+  background-color:#f0ead6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+#waveform{
+  width:550px;
+  height:400px;
 }
 
 .player{
