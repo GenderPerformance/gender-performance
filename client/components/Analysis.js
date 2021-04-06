@@ -98,16 +98,6 @@ class Analysis extends React.Component {
     this.props.setDimensions(windowDim.h, windowDim.w)
   }
 
-  // getSnapshotBeforeUpdate(prevProps,prevState){
-  //   if(prevProps.list){
-  //     if(prevProps.list.length<this.props.list.length){
-  //       const list = this.listRef.current;
-  //       return list.scrollHeight-list.scrollTop;
-  //     }
-  //     return null
-  //   }
-  // }
-
   async componentDidUpdate(prevProps, prevState, snapshot) {
     //flips the state of mediaPlayerFade to force a re-render of the
     //fade effect of mediaplayer each time we switch analyses
@@ -119,11 +109,6 @@ class Analysis extends React.Component {
         this.props.mediaPlayerFadeFalse()
       }
     }
-
-    // if(snapshot !==null){
-    //   const list = this.listRef.current;
-    //   list.scrollTop = list.scrollHeight - snapshot;
-    // }
 
   }
 

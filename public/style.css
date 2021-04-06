@@ -83,10 +83,6 @@ body{
   flex-wrap:wrap;
 }
 
-.cepstral{
-
-}
-
 .Menu {
   display: flex;
   flex-direction: row;
@@ -236,10 +232,7 @@ body{
   justify-content: space-between;
   align-items: center;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 60febd9fde1bfdaaf016030e081677324e4424ae
 #waveform{
   width:550px;
   height:400px;
