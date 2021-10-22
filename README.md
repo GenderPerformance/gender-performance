@@ -1,5 +1,30 @@
 # Visivox
 
+**http://visivox.herokuapp.com/home**
+
+
+Designed as a proof of concept for an application to help individuals understand how their voice may be perceived, we use machine learning and audio analysis to generate a gender perception based on a recording.
+
+Labeling gender is inherently reductive and doesn't take into the broad spectrum of genders that exist in the world. In this, the application demonstrates some of the limitations of machine learning and data classification. Our goal is not to enforce the binary further, but to hopefully provide a tool that can help individuals improve their gender performance. We're not there yet, but we hope to be one day.
+
+
+Technologies Used
+WaveSurver.JS
+React
+Redux
+Node.JS
+Amazon S3
+Google OAuth
+PostgreSQL
+Python
+Pandas
+Numpy
+Keras Tensorflow
+Librosa
+
+
+
+
 ## Install
 npm install
 npm run python-install
