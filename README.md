@@ -1,9 +1,9 @@
 # VisiVox
 
-A web application for trans folks that affirms voice transition by providing helpful auditory feedback with machine learning 
+A web application for trans folks that affirms voice transition by providing helpful auditory feedback with machine learning - [Live Version](http://visivox.herokuapp.com/home)
 
 ![visivox](https://user-images.githubusercontent.com/64286678/138532874-12095e6b-7d67-4674-abb2-a85e8915c5ca.png)
-[Live Version](http://visivox.herokuapp.com/home)
+
 
 ## Motivation
 Designed as a proof of concept for an application to help individuals understand how their voice may be perceived. We use machine learning and audio analysis to generate a gender perception based on a recording.
