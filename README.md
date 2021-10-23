@@ -1,4 +1,7 @@
-A web application for trans folks that affirms voice transition by providing helpful auditory feedback with machine learning
+# VisiVox
+
+A web application for trans folks that affirms voice transition by providing helpful auditory feedback with machine learning 
+
 ![visivox](https://user-images.githubusercontent.com/64286678/138532874-12095e6b-7d67-4674-abb2-a85e8915c5ca.png)
 [Live Version](http://visivox.herokuapp.com/home)
 
